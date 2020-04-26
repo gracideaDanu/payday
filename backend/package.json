@@ -1,0 +1,22 @@
+{
+  "name": "payday-backend-express",
+  "version": "1.0.0",
+  "description": "Backend Server for mobile web application Payday",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.mi.hdm-stuttgart.de/mwa/mwa-ss20/stockholm"
+  },
+  "keywords": [
+    "payday"
+  ],
+  "author": "Niklas Schildhauer, Pascal Bursztyn, Domenico Ferrari",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
+}
