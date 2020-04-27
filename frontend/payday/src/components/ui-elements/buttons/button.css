@@ -1,0 +1,36 @@
+.ui-button{
+    font-family: Nobel-Bold;
+    font-size: 18px;
+    height: 55px;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
+.blue{
+    color: #1021FF;
+    background:#fff;
+    border: 3px solid;
+    border-color: #1021FF;
+    outline: none;
+  }
+
+.blue:hover{
+    color: #fff;
+    background:#1021FF;
+}
+  
+.mint{
+    background: #10F9C0;
+    border: none;
+    color: #ECF0F1;
+    outline: none;
+}
+  
+.mint:hover{
+    background: #fff;
+    color: #10F9C0;
+    border: 3px solid;
+    border-color: #10F9C0;
+}

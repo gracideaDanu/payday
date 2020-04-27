@@ -1,0 +1,35 @@
+.auth-container {
+    position: absolute;
+    left: calc(50vw - 230px);
+    top: calc(50vh - 365px);
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: #FFFFFF;
+    box-shadow: 0 -5px 30px 0 rgba(0,0,0,0.10);
+    padding-top: 130px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 60px;
+    height: 540px;
+    width: 400px;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+.auth-container > form {
+    width: 350px;
+    margin-bottom: 30px;
+}
+
+.auth-button-container {
+    width: 350px;
+}
+
+.auth-container-logo{
+    position: absolute;
+    top: 40px;
+    left: calc(230px - 25px);
+}
