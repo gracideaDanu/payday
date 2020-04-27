@@ -1,5 +1,8 @@
 import React from 'react';
 import PasswordIcon from '../../../assets/icons/icon_password.svg';
+import MailIcon from '../../../assets/icons/icon_mail.svg';
+import TextIcon from '../../../assets/icons/icon_name.svg';
+
 import './input.css'
 
 const input = (props) => {
@@ -10,9 +13,12 @@ const input = (props) => {
     // } else {
     //     cssClasses = [props.classes]
     // }
-    var icon = PasswordIcon;
-    switch props.elementType {
-        case "Password": icon = PasswordIcon
+    var icon = null;
+    switch (props.elementType) {
+        case 'password': icon = PasswordIcon;
+        case 'email': icon = MailIcon;
+        case 'text': icon = TextIcon;
+        default: icon = TextIcon;
     }
 
     return (
