@@ -20,3 +20,17 @@ describe("Test", () => {
     });
   });
 });
+
+
+describe("Authentication"() => {
+  describe("SignUp", () => {
+    it("should Sign Up a user", (done => {
+      chai.request(server)
+        .post("/singup")
+        .end((err, res) => {
+          res.should.have.status(200);
+          done();
+        });
+    });
+  });
+});
