@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const Category = require('./models/category');
 
 require('dotenv').config();
 
@@ -26,6 +27,20 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json' }));
 
 app.get("/", (req, res) => res.json({ message: 'Server is running.' }));
+
+app.post('/api/category', async (req, res) => {
+  console.log("Zu erstellende Kategorie:")
+  console.log(req.body)
+  if (req.body.name && req.body.image) {
+    await Category.create(req.body)
+      .then(data => res.status(201).json(data))
+  } else {
+    res.json({
+      error: "Kategorie konnte nicht erstellt werden."
+    })
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}.`);
