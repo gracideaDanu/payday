@@ -21,6 +21,26 @@ describe("Test", () => {
   });
 });
 
+describe("Authentication test", () => {
+  describe("Post login", () => {
+    it("should login user and return token", (done) => {
+      chai
+        .request(server)
+        .post("/login/")
+        .set('content-type', 'application/json')
+        .send({
+          "email": "niklas@gmail.com",
+          "password": "password"
+        })
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property("token");
+          done();
+        });
+    });
+  });
+});
+
 // describe('useless api endpoint', function () {
 //   var token;
 //   before(function (done) {

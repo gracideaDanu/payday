@@ -48,21 +48,21 @@ services:
         ME_CONFIG_MONGODB_ADMINUSERNAME: root
         ME_CONFIG_MONGODB_ADMINPASSWORD: payday
 
-    PaydayBackend:
-        container_name: Payday-Backend
-        image: payday-backend
-        build: 
-            dockerfile: Dockerfile
-            context: ./backend
-        restart: always
-        depends_on: 
-          - mongo-express
-        ports:
-          - '8080:8080'
-        env_file:
-          - ./backend/.env
-        networks:
-          - backend
+    # PaydayBackend:
+    #     container_name: Payday-Backend
+    #     image: payday-backend
+    #     build: 
+    #         dockerfile: Dockerfile
+    #         context: ./backend
+    #     restart: always
+    #     depends_on: 
+    #       - mongo-express
+    #     ports:
+    #       - '8080:8080'
+    #     env_file:
+    #       - ./backend/.env
+    #     networks:
+    #       - backend
   
  
 networks:
