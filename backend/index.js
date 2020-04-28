@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Category = require('./models/category');
+const Login = require('./routes/login')
+const Signup = require('./routes/signup')
 
 require('dotenv').config();
 
@@ -40,6 +42,9 @@ app.post('/api/category', async (req, res) => {
     })
   }
 });
+
+app.use('/signup', Signup);
+app.use('/login', Login);
 
 
 app.listen(port, () => {

@@ -16,9 +16,12 @@
   "author": "Niklas Schildhauer, Pascal Bursztyn, Domenico Ferrari",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "chai-http": "^4.3.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-validator": "^6.4.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.10",
     "pg": "^8.0.3"
   },
