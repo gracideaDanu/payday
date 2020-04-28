@@ -1,8 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { Pool, Client } = require('pg');
-
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 require('dotenv').config();
 
@@ -11,11 +9,11 @@ const app = express();
 const port = process.env.PORT || 8080;
 const url = process.env.DB_CONN
 
-// mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-//   .then(() => console.log('Database connected successfully'))
-//   .catch(err => console.log(err));
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Database connected successfully'))
+  .catch(err => console.log(err));
 
-// mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 
 app.use((err, req, res, next) => {
   console.log(err);
