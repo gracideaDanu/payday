@@ -1,70 +1,102 @@
-version: '3.7'
+version: "3.7"
 services:
-    # adminer:
-    #     image: adminer
-    #     restart: always
-    #     ports:
-    #     - 1234:8080
+  # adminer:
+  #     image: adminer
+  #     restart: always
+  #     ports:
+  #     - 1234:8080
 
-    # postgres: 
-    #     container_name: Postgres
-    #     image: postgres
-    #     environment: 
-    #         POSTGRES_PASSWORD: postgres-payday
-    #         POSTGRES_USER: postgres-payday
-    #         POSTGRES_DB: payday
-    #     volumes: 
-    #         - ./pgdata:/var/lib/postgresql/data
-    #     networks: 
-    #         - backend
-    #     ports: 
-    #         - '5400:5400'
-    
-    mongo:
-      container_name: Mongo
-      image: mongo
-      networks:
-        - backend
-      restart: always
-      ports:
-        - '27017:27017'
-      environment:
-        MONGO_INITDB_ROOT_USERNAME: root
-        MONGO_INITDB_ROOT_PASSWORD: payday
-        MONGO_INITDB_DATABASE: payday
+  # postgres:
+  #     container_name: Postgres
+  #     image: postgres
+  #     environment:
+  #         POSTGRES_PASSWORD: postgres-payday
+  #         POSTGRES_USER: postgres-payday
+  #         POSTGRES_DB: payday
+  #     volumes:
+  #         - ./pgdata:/var/lib/postgresql/data
+  #     networks:
+  #         - backend
+  #     ports:
+  #         - '5400:5400'
 
-  
-    mongo-express:
-      container_name: Mongo-Express
-      image: mongo-express
-      restart: always
-      networks:
-        - backend
-      depends_on:
-        - mongo
-      ports:
-        - 8081:8081
-      environment:
-        ME_CONFIG_MONGODB_ADMINUSERNAME: root
-        ME_CONFIG_MONGODB_ADMINPASSWORD: payday
+  pgAdmin:
+    container_name: pgadmin-container
+    restart: always
+    image: dpage/pgadmin4
+    networks:
+      - backend
+    ports:
+      - "8000:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: root@payday.com
+      PGADMIN_DEFAULT_PASSWORD: payday
+    volumes:
+      - ./backend/pgadmin:/var/lib/pgadmin
+  postgres:
+    restart: always
+    image: postgres
+    networks:
+      - backend
+    container_name: "postgres-container"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres-payday-root
+      POSTGRES_PASSWORD: postgres-payday-password
+      POSTGRES_DB: payday
+    volumes:
+      - ./backend/postgres:/var/lib/postgresql/data
+      - ./backend/data/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
 
-    # PaydayBackend:
-    #     container_name: Payday-Backend
-    #     image: payday-backend
-    #     build: 
-    #         dockerfile: Dockerfile
-    #         context: ./backend
-    #     restart: always
-    #     depends_on: 
-    #       - mongo-express
-    #     ports:
-    #       - '8080:8080'
-    #     env_file:
-    #       - ./backend/.env
-    #     networks:
-    #       - backend
-  
- 
+  mongo:
+    container_name: mongo-container
+    image: mongo
+    networks:
+      - backend
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: payday
+      MONGO_INITDB_DATABASE: payday
+
+  mongo-express:
+    container_name: mongo-express-container
+    image: mongo-express
+    restart: always
+    networks:
+      - backend
+    depends_on:
+      - mongo
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: payday
+
+  payday-backend:
+    container_name: payday-backend-container
+    image: payday-backend
+    build:
+      dockerfile: Dockerfile
+      context: ./backend
+    restart: always
+    environment:
+      - PGPASSWORD=postgres-payday-password
+      - PGUSER=postgres-payday-root
+      - PGDATABASE=payday
+      - PGHOST=postgres
+      - PGPORT=5432
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./backend/.env
+    networks:
+      - backend
+
 networks:
   backend:
-

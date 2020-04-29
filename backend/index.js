@@ -1,20 +1,22 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const Category = require('./models/category');
-const Login = require('./routes/login')
-const Signup = require('./routes/signup')
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const Category = require("./models/category");
+const Login = require("./routes/login");
+const Signup = require("./routes/signup");
+const { Client, Pool } = require("pg");
 
-require('dotenv').config();
+require("dotenv").config();
 
 const app = express();
 
 const port = process.env.PORT || 8080;
-const url = process.env.DB_CONN
+const url = process.env.DB_CONN;
 
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Database connected successfully'))
-  .catch(err => console.log(err));
+mongoose
+  .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("Database connected successfully"))
+  .catch((err) => console.log(err));
 
 mongoose.Promise = global.Promise;
 
@@ -23,29 +25,53 @@ app.use((err, req, res, next) => {
   next();
 });
 
+const isProduction = process.env.NODE_ENV === "production";
+
+const connectionString = `postgresql://postgres-payday-root:postgres-payday-password@postgres:5432/payday`;
+
+const pool = new Pool({
+  connectionString: connectionString,
+});
+
+pool.query("SELECT * FROM test", (error, results) => {
+  if (error) {
+    throw error;
+  }
+  console.log(results.rows);
+});
+
+// const client = new Client();
+
+// client.connect();
+
+// client.
+
+// client.query("SELECT * FROM test", (err, res) => {
+//   console.log(res.rows[0].message);
+//   client.end();
+// });
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
-app.use(bodyParser.json({ type: 'application/json' }));
+app.use(bodyParser.json({ type: "application/json" }));
 
-app.get("/", (req, res) => res.json({ message: 'Server is running.' }));
+app.get("/", (req, res) => res.json({ message: "Server is running." }));
 
-app.post('/api/category', async (req, res) => {
-  console.log("Zu erstellende Kategorie:")
-  console.log(req.body)
+app.post("/api/category", async (req, res) => {
+  console.log("Zu erstellende Kategorie:");
+  console.log(req.body);
   if (req.body.name && req.body.image) {
-    await Category.create(req.body)
-      .then(data => res.status(201).json(data))
+    await Category.create(req.body).then((data) => res.status(201).json(data));
   } else {
     res.json({
-      error: "Kategorie konnte nicht erstellt werden."
-    })
+      error: "Kategorie konnte nicht erstellt werden.",
+    });
   }
 });
 
-app.use('/signup', Signup);
-app.use('/login', Login);
-
+app.use("/signup", Signup);
+app.use("/login", Login);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}.`);
