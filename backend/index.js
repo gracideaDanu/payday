@@ -33,23 +33,12 @@ const pool = new Pool({
   connectionString: connectionString,
 });
 
-pool.query("SELECT * FROM test", (error, results) => {
+pool.query("SELECT NOW()", (error, result) => {
   if (error) {
     throw error;
   }
-  console.log(results.rows);
+  console.log(result);
 });
-
-// const client = new Client();
-
-// client.connect();
-
-// client.
-
-// client.query("SELECT * FROM test", (err, res) => {
-//   console.log(res.rows[0].message);
-//   client.end();
-// });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
