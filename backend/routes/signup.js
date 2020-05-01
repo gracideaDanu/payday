@@ -1,10 +1,9 @@
-const express = require ('express');
-const { check, validationResult} = require("express-validator");
+const express = require('express');
+const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const database = require("../data/database")
 const router = express.Router();
-
-const User = require('../models/user');
 
 router.get('/test', (req, res, next) => {
     res.json({ message: "LOGIN WORKING" });
@@ -12,18 +11,18 @@ router.get('/test', (req, res, next) => {
 
 
 router.post(
-    '/', 
+    '/',
     [
         //error handling if check failed 
         check("username", "Please enter a valid username")
-        .not()
-        .isEmpty(),
+            .not()
+            .isEmpty(),
         check("name", "Please enter a valid first name")
-        .not()
-        .isEmpty(),
+            .not()
+            .isEmpty(),
         check("surname", "Please enter a valid family name")
-        .not()
-        .isEmpty(),
+            .not()
+            .isEmpty(),
         check("email", "Please enter a valid email").isEmail(),
         check("password", "Please enter a valid password").isLength({
             min: 6
@@ -45,40 +44,41 @@ router.post(
             password
         } = req.body;
         try {
-            let user = await User.findOne({
-                email
-            });
-            if (user) {
-                return res.status(400).json({
-                    msg: "User already exists"
-                })
-            }
-            user = new User({
-                username,
-                name,
-                surname,
-                email,
-                password
-            });
+            //reqeust if email ist already in use 
+            // let user = await User.findOne({
+            //     email
+            // });
+            // if (user) {
+            //     return res.status(400).json({
+            //         msg: "User already exists"
+            //     })
+            // }
 
             const salt = await bcrypt.genSalt(10);
-            user.password = await bcrypt.hash(password, salt);
+            const passwordEncrypted = await bcrypt.hash(password, salt);
 
-            await user.save();
+            var queryString = `INSERT INTO public."User"(
+                "Username", "FirstName", "LastName", "Email", "Password"
+                ) VALUES(
+                '${username}', '${name}', '${surname}', '${email}', '${passwordEncrypted}'
+                )`;
+
+            database.query(queryString, (err, res) => {
+                if (err) throw err;
+            });
 
             const payload = {
-                user: {
-                    id: user.id
-                }
-            };
-            
+                email: this.email
+            }
+
             jwt.sign(
-                payload, 
+                payload,
                 "token",
                 {
                     expiresIn: 10000
                 },
                 (err, token) => {
+                    console.log("Fehler beim jwt sign")
                     if (err) throw err;
                     res.status(200).json({
                         token
