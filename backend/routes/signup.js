@@ -93,7 +93,6 @@ router.post(
                     expiresIn: 10000
                 },
                 (err, token) => {
-                    console.log("Fehler beim jwt sign")
                     if (err) throw err;
                     res.status(200).json({
                         token
