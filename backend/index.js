@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const Login = require("./routes/login");
 const Signup = require("./routes/signup");
-const database = require("./data/database")
+const database = require("./data/db-connection")
 
 require("dotenv").config();
 
@@ -15,12 +15,12 @@ app.use((err, req, res, next) => {
 });
 
 //Kann raus, momentan zum testen drin 
-database.query("SELECT NOW()", (error, result) => {
-  if (error) {
-    throw error;
-  }
-  console.log(result);
-});
+// database.query("SELECT NOW()", (error, result) => {
+//   if (error) {
+//     throw error;
+//   }
+//   console.log(result);
+// });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

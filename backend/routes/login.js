@@ -3,7 +3,7 @@ const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
-const database = require("../data/database")
+const database = require("../data/db-connection")
 
 
 router.post(
@@ -29,39 +29,16 @@ router.post(
     var queryUser = `SELECT * FROM public."User" WHERE "Email" = '${email}';`
     console.log(queryUser)
 
-
-    const { rows } = await database.query(queryUser);
-    const dbResponse = rows[0];
-    console.log(dbResponse)
-    // database.query(queryUser, (err, res) => {
-    //   if (err) {
-    //     // return res.status(400).json({
-    //     //   message: "User doesn't exist"
-    //     // });
-    //     console.log(err)
-    //   }
-    //   console.log(res.rows);
-    //   // if (res.length === 0) {
-    //   //   return res.status(400).json({
-    //   //     message: "User doesn't exist."
-    //   //   });
-    //   // }
-
-    //   console.log("Lese den ersten Eintrag aus dem Array")
-    //   console.log(res.rows[0]);
-
-    //   user = res.rows[0];
-    //   console.log(res);
-    // });
-
-    // console.log(user)
-
     try {
-      // if (!user)
-      //   return res.status(400).json({
-      //     message: "User doesn't exist."
-      //   });
+      const { rows } = await database.query(queryUser);
+      const dbResponse = rows[0];
+      console.log(dbResponse)
 
+      if (!dbResponse) {
+        return res.status(400).json({
+          message: "User with this email does not exist"
+        });
+      }
       const isMatch = await bcrypt.compare(password, dbResponse.Password);
       if (!isMatch)
         return res.status(400).json({
@@ -85,10 +62,11 @@ router.post(
           });
         }
       );
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.error(err);
       res.status(500).json({
-        message: "Server Error"
+        message: "Server Error",
+        error: err
       });
     }
   }

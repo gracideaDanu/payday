@@ -2,7 +2,7 @@ const express = require('express');
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const database = require("../data/database")
+const database = require("../data/db-connection")
 const router = express.Router();
 
 router.get('/test', (req, res, next) => {
