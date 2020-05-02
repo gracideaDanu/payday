@@ -47,6 +47,15 @@ class Groups extends Component {
         <ListItem costs="+34,12" title="Saufgruppe" />
         <ListItem costs="-3,12" title="Biergruppe" />
         <ListItem costs="+334,12" title="1. Maigruppe" />
+        <ListItem costs="+34,12" title="Saufgruppe" />
+        <ListItem costs="-3,12" title="Biergruppe" />
+        <ListItem costs="+334,12" title="1. Maigruppe" />
+        <ListItem costs="+34,12" title="Saufgruppe" />
+        <ListItem costs="-3,12" title="Biergruppe" />
+        <ListItem costs="+334,12" title="1. Maigruppe" />
+        <ListItem costs="+34,12" title="Saufgruppe" />
+        <ListItem costs="-3,12" title="Biergruppe" />
+        <ListItem costs="+334,12" title="1. Maigruppe" />
       </div>
     );
   }

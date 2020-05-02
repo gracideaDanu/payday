@@ -1,4 +1,4 @@
-.group-list-item {
+.expense-list-item {
   background-color: white;
   margin: 20px;
   padding: 15px;
@@ -8,21 +8,28 @@
   align-items: center;
 }
 
-.group-list-item-costs {
+.expense-list-item-costs {
   font-weight: 500;
   font-size: 1.6rem;
   text-align: right;
 }
 
-.group-list-item-costs-title {
+.expense-list-item-costs-participants {
   font-weight: 300;
   font-size: 1.3rem;
-  padding-bottom: 3px;
+  padding-top: 3px;
 }
 
-.group-list-item-title {
+.expense-list-item-owner {
+  font-weight: 300;
+  font-size: 1.3rem;
+  text-align: left;
+  padding-top: 3px;
+}
+
+.expense-list-item-title {
   font-weight: 500;
-  font-size: 2rem;
+  font-size: 1.6rem;
   text-align: left;
 }
 

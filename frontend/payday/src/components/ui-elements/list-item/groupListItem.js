@@ -7,7 +7,9 @@ const GroupListItem = (props) => {
       <p className="group-list-item-title">{props.title}</p>
       <div className="group-list-item-costs">
         <p className="group-list-item-costs-title">Deine Bilanz:</p>
-        <p>{props.costs}€</p>
+        <p className={parseFloat(props.costs) > 0 ? "green" : "red"}>
+          {props.costs}€
+        </p>
       </div>
     </div>
   );
