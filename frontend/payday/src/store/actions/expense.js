@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../axios';
+import { tokenIsInvalid } from './auth';
 
 
 export const fetchExpensesSuccess = (expenses, groupID) => {
@@ -48,6 +49,16 @@ export const fetchExpenses = (token, groupID) => {
             })
             .catch(err => {
                 dispatch(fetchExpensesFail(err));
+                if (err.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.log(err.response.data);
+                    console.log(err.response.status);
+                    console.log(err.response.headers);
+                    if (err.response.status === 401) {
+                        dispatch(tokenIsInvalid());
+                    }
+                }
             });
     };
 };

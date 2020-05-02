@@ -36,6 +36,8 @@ const reducer = (state = initialState, action) => {
         case actionTypes.AUTH_SUCCESS: return authActions.authSuccess(state, action);
         case actionTypes.AUTH_FAIL: return authActions.authFail(state, action);
         case actionTypes.AUTH_LOGOUT: return authActions.authLogout(state, action);
+        case actionTypes.TOKEN_IS_INVALID: return authActions.tokenIsInvalid(state, action);
+
 
         case actionTypes.FETCH_GROUPS_START: return groupActions.fetchGroupsStart(state, action);
         case actionTypes.FETCH_GROUPS_SUCCESS: return groupActions.fetchGroupsSuccess(state, action);
@@ -48,7 +50,6 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_EXPENSES_START: return expenseActions.fetchExpensesStart(state, action);
         case actionTypes.FETCH_EXPENSES_SUCCESS: return expenseActions.fetchExpensesSuccess(state, action);
         case actionTypes.FETCH_EXPENSES_FAIL: return expenseActions.fetchExpensesFailed(state, action);
-
 
         default:
             return state;

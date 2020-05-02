@@ -219,7 +219,7 @@ class Auth extends Component {
     ));
     return (
       <div className="auth-container">
-        <img src={Logo} className="auth-container-logo"></img>
+        <img src={Logo} alt="Logo" className="auth-container-logo"></img>
         <form>{form}</form>
         <div className="auth-button-container">
           <Button clicked={this.submitHandler} btnStyle="blue">

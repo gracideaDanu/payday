@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const Login = require("./routes/login");
 const Signup = require("./routes/signup");
 const database = require("./data/db-connection")
+const cors = require('cors');
+
 
 require("dotenv").config();
 
@@ -23,6 +25,7 @@ app.use((err, req, res, next) => {
 // });
 
 app.use(bodyParser.json());
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/json" }));

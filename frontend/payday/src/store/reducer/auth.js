@@ -44,8 +44,19 @@ export const authLogout = (state, action) => {
         ...state,
         auth: {
             ...state.auth,
-            token: null, userId: null
+            token: null
         }
     });
 };
+
+export const tokenIsInvalid = (state, action) => {
+    return ({
+        ...state,
+        auth: {
+            ...state.auth,
+            token: null
+        }
+    });
+};
+
 
