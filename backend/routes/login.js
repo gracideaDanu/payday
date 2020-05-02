@@ -3,6 +3,8 @@ const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
+const database = require("../data/database")
+
 
 router.post(
   "/",
@@ -22,25 +24,52 @@ router.post(
     }
 
     const { email, password } = req.body;
-    try {
-      let user = await User.findOne({
-        email
-      });
-      if (!user)
-        return res.status(400).json({
-          message: "User Not Exist"
-        });
+    console.log(email)
 
-      const isMatch = await bcrypt.compare(password, user.password);
+    var queryUser = `SELECT * FROM public."User" WHERE "Email" = '${email}';`
+    console.log(queryUser)
+
+
+    const { rows } = await database.query(queryUser);
+    const dbResponse = rows[0];
+    console.log(dbResponse)
+    // database.query(queryUser, (err, res) => {
+    //   if (err) {
+    //     // return res.status(400).json({
+    //     //   message: "User doesn't exist"
+    //     // });
+    //     console.log(err)
+    //   }
+    //   console.log(res.rows);
+    //   // if (res.length === 0) {
+    //   //   return res.status(400).json({
+    //   //     message: "User doesn't exist."
+    //   //   });
+    //   // }
+
+    //   console.log("Lese den ersten Eintrag aus dem Array")
+    //   console.log(res.rows[0]);
+
+    //   user = res.rows[0];
+    //   console.log(res);
+    // });
+
+    // console.log(user)
+
+    try {
+      // if (!user)
+      //   return res.status(400).json({
+      //     message: "User doesn't exist."
+      //   });
+
+      const isMatch = await bcrypt.compare(password, dbResponse.Password);
       if (!isMatch)
         return res.status(400).json({
           message: "Incorrect Password !"
         });
 
       const payload = {
-        user: {
-          id: user.id
-        }
+        email: this.email
       };
 
       jwt.sign(

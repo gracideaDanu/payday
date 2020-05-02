@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)https://itnext.io/media/7779b23dd5d97caf2a22ec28f7f2bd21 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Creating helper methods – Medium</title><meta name="description" content="You can&#39;t perform that action at this time. You signed in with another tab or window. You signed out in another tab or window. Reload to refresh your session. Reload to refresh your session."><meta name="twitter:widgets:csp" content="on"><meta name="robots" content="noindex"><!--<base target="_blank">--><base href="." target="_blank"><style>body {text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family: "ff-tisa-web-pro", Georgia, Cambria, "Times New Roman", Times, serif; font-weight: 400; color: #333332; font-size: 18px; line-height: 1.4; margin: 0; background-color: white; overflow: hidden;}iframe {max-width: 100%;}</style></head><body><style>.gist .gist-file { margin-bottom: 0 !important; }.gist { text-rendering: auto; }</style><script src="./8eb007e0f686830416659226c44fd310.js" charset="utf-8"></script><link rel="stylesheet" href="./gist-embed-31007ea0d3bd9f80540adfbc55afc7bd.css"><div id="gist100657948" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-validations-js" class="file">
+    
+
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-javascript ">
+      
+<table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip="">
+      <tbody><tr>
+        <td id="file-validations-js-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-validations-js-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//app/helpers/validation.js</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-validations-js-LC2" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-validations-js-LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-k">import</span> <span class="pl-s1">env</span> <span class="pl-k">from</span> <span class="pl-s">'../../env'</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-validations-js-LC4" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-validations-js-LC5" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/**</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-validations-js-LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * isValidEmail helper method</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-validations-js-LC7" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * <span class="pl-k">@param</span> {<span class="pl-smi">string</span>} email</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-validations-js-LC8" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * <span class="pl-k">@returns</span> {<span class="pl-smi">Boolean</span>} True or False</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-validations-js-LC9" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   */</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-validations-js-LC10" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> <span class="pl-en">isValidEmail</span> <span class="pl-c1">=</span> <span class="pl-kos">(</span><span class="pl-s1">email</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-validations-js-LC11" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">const</span> <span class="pl-s1">regEx</span> <span class="pl-c1">=</span> <span class="pl-pds">/<span class="pl-cce">\S</span><span class="pl-c1">+</span>@<span class="pl-cce">\S</span><span class="pl-c1">+</span><span class="pl-cce">\.</span><span class="pl-cce">\S</span><span class="pl-c1">+</span>/</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-validations-js-LC12" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> <span class="pl-s1">regEx</span><span class="pl-kos">.</span><span class="pl-en">test</span><span class="pl-kos">(</span><span class="pl-s1">email</span><span class="pl-kos">)</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-validations-js-LC13" class="blob-code blob-code-inner js-file-line"><span class="pl-kos">}</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-validations-js-LC14" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-validations-js-LC15" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/**</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-validations-js-LC16" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * validatePassword helper method</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-validations-js-LC17" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * <span class="pl-k">@param</span> {<span class="pl-smi">string</span>} password</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="file-validations-js-LC18" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * <span class="pl-k">@returns</span> {<span class="pl-smi">Boolean</span>} True or False</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="file-validations-js-LC19" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   */</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="file-validations-js-LC20" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> <span class="pl-en">validatePassword</span> <span class="pl-c1">=</span> <span class="pl-kos">(</span><span class="pl-s1">password</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="file-validations-js-LC21" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">password</span><span class="pl-kos">.</span><span class="pl-c1">length</span> &lt;= <span class="pl-c1">5</span> <span class="pl-c1">||</span> <span class="pl-s1">password</span> <span class="pl-c1">===</span> <span class="pl-s">''</span><span class="pl-kos">)</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L22" class="blob-num js-line-number" data-line-number="22"></td>
+        <td id="file-validations-js-LC22" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> <span class="pl-c1">false</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L23" class="blob-num js-line-number" data-line-number="23"></td>
+        <td id="file-validations-js-LC23" class="blob-code blob-code-inner js-file-line">  <span class="pl-kos">}</span> <span class="pl-k">return</span> <span class="pl-c1">true</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L24" class="blob-num js-line-number" data-line-number="24"></td>
+        <td id="file-validations-js-LC24" class="blob-code blob-code-inner js-file-line"><span class="pl-kos">}</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L25" class="blob-num js-line-number" data-line-number="25"></td>
+        <td id="file-validations-js-LC25" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/**</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L26" class="blob-num js-line-number" data-line-number="26"></td>
+        <td id="file-validations-js-LC26" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * isEmpty helper method</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L27" class="blob-num js-line-number" data-line-number="27"></td>
+        <td id="file-validations-js-LC27" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * <span class="pl-k">@param</span> {<span class="pl-smi">string, integer</span>} input</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L28" class="blob-num js-line-number" data-line-number="28"></td>
+        <td id="file-validations-js-LC28" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * <span class="pl-k">@returns</span> {<span class="pl-smi">Boolean</span>} True or False</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L29" class="blob-num js-line-number" data-line-number="29"></td>
+        <td id="file-validations-js-LC29" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   */</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L30" class="blob-num js-line-number" data-line-number="30"></td>
+        <td id="file-validations-js-LC30" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> <span class="pl-en">isEmpty</span> <span class="pl-c1">=</span> <span class="pl-kos">(</span><span class="pl-s1">input</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L31" class="blob-num js-line-number" data-line-number="31"></td>
+        <td id="file-validations-js-LC31" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">input</span> <span class="pl-c1">===</span> undefined <span class="pl-c1">||</span> <span class="pl-s1">input</span> <span class="pl-c1">===</span> <span class="pl-s">''</span><span class="pl-kos">)</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L32" class="blob-num js-line-number" data-line-number="32"></td>
+        <td id="file-validations-js-LC32" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> <span class="pl-c1">true</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L33" class="blob-num js-line-number" data-line-number="33"></td>
+        <td id="file-validations-js-LC33" class="blob-code blob-code-inner js-file-line">  <span class="pl-kos">}</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L34" class="blob-num js-line-number" data-line-number="34"></td>
+        <td id="file-validations-js-LC34" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">input</span><span class="pl-kos">.</span><span class="pl-en">replace</span><span class="pl-kos">(</span><span class="pl-pds">/<span class="pl-cce">\s</span>/g</span><span class="pl-kos">,</span> <span class="pl-s">''</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-c1">length</span><span class="pl-kos">)</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L35" class="blob-num js-line-number" data-line-number="35"></td>
+        <td id="file-validations-js-LC35" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> <span class="pl-c1">false</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L36" class="blob-num js-line-number" data-line-number="36"></td>
+        <td id="file-validations-js-LC36" class="blob-code blob-code-inner js-file-line">  <span class="pl-kos">}</span> <span class="pl-k">return</span> <span class="pl-c1">true</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L37" class="blob-num js-line-number" data-line-number="37"></td>
+        <td id="file-validations-js-LC37" class="blob-code blob-code-inner js-file-line"><span class="pl-kos">}</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L38" class="blob-num js-line-number" data-line-number="38"></td>
+        <td id="file-validations-js-LC38" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L39" class="blob-num js-line-number" data-line-number="39"></td>
+        <td id="file-validations-js-LC39" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/**</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L40" class="blob-num js-line-number" data-line-number="40"></td>
+        <td id="file-validations-js-LC40" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * empty helper method</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L41" class="blob-num js-line-number" data-line-number="41"></td>
+        <td id="file-validations-js-LC41" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * <span class="pl-k">@param</span> {<span class="pl-smi">string, integer</span>} input</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L42" class="blob-num js-line-number" data-line-number="42"></td>
+        <td id="file-validations-js-LC42" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * <span class="pl-k">@returns</span> {<span class="pl-smi">Boolean</span>} True or False</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L43" class="blob-num js-line-number" data-line-number="43"></td>
+        <td id="file-validations-js-LC43" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   */</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L44" class="blob-num js-line-number" data-line-number="44"></td>
+        <td id="file-validations-js-LC44" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> <span class="pl-en">empty</span> <span class="pl-c1">=</span> <span class="pl-kos">(</span><span class="pl-s1">input</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L45" class="blob-num js-line-number" data-line-number="45"></td>
+        <td id="file-validations-js-LC45" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">input</span> <span class="pl-c1">===</span> undefined <span class="pl-c1">||</span> <span class="pl-s1">input</span> <span class="pl-c1">===</span> <span class="pl-s">''</span><span class="pl-kos">)</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L46" class="blob-num js-line-number" data-line-number="46"></td>
+        <td id="file-validations-js-LC46" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> <span class="pl-c1">true</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L47" class="blob-num js-line-number" data-line-number="47"></td>
+        <td id="file-validations-js-LC47" class="blob-code blob-code-inner js-file-line">  <span class="pl-kos">}</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L48" class="blob-num js-line-number" data-line-number="48"></td>
+        <td id="file-validations-js-LC48" class="blob-code blob-code-inner js-file-line"><span class="pl-kos">}</span><span class="pl-kos">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L49" class="blob-num js-line-number" data-line-number="49"></td>
+        <td id="file-validations-js-LC49" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L50" class="blob-num js-line-number" data-line-number="50"></td>
+        <td id="file-validations-js-LC50" class="blob-code blob-code-inner js-file-line"><span class="pl-k">export</span> <span class="pl-kos">{</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L51" class="blob-num js-line-number" data-line-number="51"></td>
+        <td id="file-validations-js-LC51" class="blob-code blob-code-inner js-file-line">  <span class="pl-en">isValidEmail</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L52" class="blob-num js-line-number" data-line-number="52"></td>
+        <td id="file-validations-js-LC52" class="blob-code blob-code-inner js-file-line">  <span class="pl-en">validatePassword</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L53" class="blob-num js-line-number" data-line-number="53"></td>
+        <td id="file-validations-js-LC53" class="blob-code blob-code-inner js-file-line">  <span class="pl-en">isEmpty</span><span class="pl-kos">,</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L54" class="blob-num js-line-number" data-line-number="54"></td>
+        <td id="file-validations-js-LC54" class="blob-code blob-code-inner js-file-line">  <span class="pl-en">empty</span></td>
+      </tr>
+      <tr>
+        <td id="file-validations-js-L55" class="blob-num js-line-number" data-line-number="55"></td>
+        <td id="file-validations-js-LC55" class="blob-code blob-code-inner js-file-line"><span class="pl-kos">}</span><span class="pl-kos">;</span></td>
+      </tr>
+</tbody></table>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/krofax/8eb007e0f686830416659226c44fd310/raw/b9056de50a15b7dfce9238d2724c7045a46b3d40/validations.js" style="float:right">view raw</a>
+        <a href="https://gist.github.com/krofax/8eb007e0f686830416659226c44fd310#file-validations-js">validations.js</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+<script>var height = -1; var delayMs = 200; if (document) {document.domain = document.domain;}function notifyResize(height) {height = height ? height : document.documentElement.offsetHeight; var resized = false; if (window.donkey && donkey.resize) {donkey.resize(height);var elements = document.getElementsByClassName("gist-data"); for (var i = 0; i < elements.length; i++) {elements[i].style.overflow = "visible"}resized = true;}if (parent && parent._resizeIframe) {var obj = {iframe: window.frameElement, height: height}; parent._resizeIframe(obj); resized = true;}if (window.location && window.location.hash === "#amp=1" && window.parent && window.parent.postMessage) {window.parent.postMessage({sentinel: "amp", type: "embed-size", height: height}, "*");}if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.resize) {window.webkit.messageHandlers.resize.postMessage(height); resized = true;}return resized;}function maybeResize() {try {if (document.documentElement.offsetHeight != height && notifyResize()) {height = document.documentElement.offsetHeight;}delayMs = Math.min(delayMs * 2, 1000000); setTimeout(maybeResize, delayMs);} catch(error) {console.log('maybeResize error: ', error)}}maybeResize();</script></body></html>
