@@ -44,6 +44,21 @@ router.post(
             password
         } = req.body;
         try {
+
+
+            var queryUser = `SELECT * FROM public."User" WHERE "Email" = '${email}';`
+            console.log(queryUser)
+
+            const { rows } = await database.query(queryUser);
+            const dbResponse = rows[0];
+            console.log(dbResponse)
+
+            if (dbResponse) {
+                return res.status(400).json({
+                    msg: "User already exists"
+                })
+            }
+
             //reqeust if email ist already in use 
             // let user = await User.findOne({
             //     email
