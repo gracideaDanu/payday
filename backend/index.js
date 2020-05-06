@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const Login = require("./routes/login");
 const Signup = require("./routes/signup");
+const API = require("./routes/api");
 const database = require("./data/db-connection")
 
 require("dotenv").config();
@@ -31,6 +32,7 @@ app.get("/", (req, res) => res.json({ message: "Server is running." }));
 
 app.use("/signup", Signup);
 app.use("/login", Login);
+app.use("/api", API);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}.`);

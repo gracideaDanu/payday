@@ -46,8 +46,10 @@ router.post(
         });
 
       const payload = {
-        email: this.email
+        email: email
       };
+
+      console.log(payload)
 
       jwt.sign(
         payload,

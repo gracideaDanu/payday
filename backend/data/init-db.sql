@@ -56,7 +56,7 @@ CREATE TABLE public."Category"
     "Name" VARCHAR NOT NULL,
     "Image" VARCHAR NOT NULL,
     "CreatedAt" timestamp NOT NULL DEFAULT NOW(),
-    CONSTRAINT "OK_Category" PRIMARY KEY ("Id")
+    CONSTRAINT "PK_Category" PRIMARY KEY ("Id")
 );
 
 
