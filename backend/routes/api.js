@@ -138,7 +138,6 @@ router.post('/category', auth, async (req, res) => {
 
     try {
         const { rows } = await database.query(queryCategoryPost);
-        // const dbResponse = rows[0];
         res.status(200).json({ message: 'Created new category' });
     } catch (e) {
         res.send({ message: "Unable to create category" })
@@ -146,37 +145,48 @@ router.post('/category', auth, async (req, res) => {
 });
 
 
+router.post('/group', auth, async (req, res) => {
+    const queryUser = `SELECT * FROM public."User" WHERE "Email" = '${req.usermail}';`;
+    const { groupname } = req.body;
+    const queryGroupPost = `INSERT INTO public."Group"("Name") VALUES ('${groupname}');`
+    var user = null;
+    try {
+        const { rows } = await database.query(queryUser);
+        user = rows[0];
+        console.log(user);
+    } catch (e) {
+        res.send({ message: "Error in fetching your user" });
+    }
+    try {
+        const { rows } = await database.query(queryGroupPost);
+        res.status(200).json({ message: 'Created new group' });
+    } catch (e) {
+        res.send({ message: "Unable to create new group" })
+    }
+});
 
 
-// var queryGroupPost = `INSERT INTO public."Group"("Id", "Name", "CreatedAt") VALUES (?, ?, ?);`;
-//   router.post('/group', auth, async (req, res) => {
-//     console.log("Zu erstellende Gruppe:")
-//     console.log(req.body)
-//       if(req.body.name && req.body.users){
-//           await Group.create(req.body)
-//             .then(data => res.status(201).json(data))
-//         }else {
-//           res.json({
-//             error: "Gruppe konnte nicht erstellt werden."
-//           })
-//         }
-//   });
-
-
-// var queryExpensePost = `INSERT INTO public."Expense"("Id", "Title", "Costs", "Category", "Group", "Owner", "CreatedAt") VALUES (?, ?, ?, ?, ?, ?, ?);`;
-//   router.post('/expense', auth, async (req, res) => {
-//     console.log("Zu erstellende Ausgabe:")
-//     console.log(req.body)
-//       if(req.body.title && req.body.costs && req.body.category 
-//         && req.body.group && req.body.participants){
-//           await Expense.create(req.body)
-//             .then(data => res.status(201).json(data))
-//         }else {
-//           res.json({
-//             error: "Ausagbe konnte nicht erstellt werden."
-//           })
-//         }
-//   });
+router.post('/expense', auth, async (req, res) => {
+    const queryUser = `SELECT * FROM public."User" WHERE "Email" = '${req.usermail}';`;
+    const { title, costs, category, group } = req.body;
+    const queryExpensePost = `INSERT INTO public."Expense"("Title", "Costs", "Category", "Group") VALUES ('${title}', '${costs}', '${category}', '${group}');`
+    var user = null;
+    try {
+        const { rows } = await database.query(queryUser);
+        user = rows[0];
+        console.log(user);
+    } catch (e) {
+        res.send({ message: "Error in fetching your user" });
+    }
+    try {
+        const { rows } = await database.query(queryExpensePost);
+        res.status(200).json({ message: 'Inserted new expense' });
+    } catch (e) {
+        res.send({ message: "Unable to insert new expense" })
+    }
+    console.log("Zu erstellende Ausgabe:")
+    console.log(req.body)
+});
 
 
 // var queryExpensePut = `UPDATE public."Expense" SET "Id"=?, "Title"=?, "Costs"=?, "Category"=?, "Group"=?, "Owner"=?, "CreatedAt"=? WHERE "Id" = ${expenseID};`;
