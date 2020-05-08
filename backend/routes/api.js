@@ -46,15 +46,15 @@ router.get('/groups', auth, async (req, res) => {
 
 
 router.get('/categories', auth, async (req, res) => {
-    const queryUser = `SELECT * FROM public."User" WHERE "Email" = '${req.usermail}';`
-    var user = null;
-    try {
-        const { rows } = await database.query(queryUser);
-        user = rows[0];
-        console.log(user);
-    } catch (e) {
-        res.send({ message: "Error in fetching your user" });
-    }
+    // const queryUser = `SELECT * FROM public."User" WHERE "Email" = '${req.usermail}';`
+    // var user = null;
+    // try {
+    //     const { rows } = await database.query(queryUser);
+    //     user = rows[0];
+    //     console.log(user);
+    // } catch (e) {
+    //     res.send({ message: "Error in fetching your user" });
+    // }
 
     const queryCategories = `SELECT * FROM public."Category";`
     try {
@@ -72,15 +72,15 @@ router.get('/categories', auth, async (req, res) => {
 
 
 router.get('/users', auth, async (req, res) => {
-    const queryUser = `SELECT * FROM public."User" WHERE "Email" = '${req.usermail}';`
-    var user = null;
-    try {
-        const { rows } = await database.query(queryUser);
-        user = rows[0];
-        console.log(user);
-    } catch (e) {
-        res.send({ message: "Error in fetching your user" });
-    }
+    // const queryUser = `SELECT * FROM public."User" WHERE "Email" = '${req.usermail}';`
+    // var user = null;
+    // try {
+    //     const { rows } = await database.query(queryUser);
+    //     user = rows[0];
+    //     console.log(user);
+    // } catch (e) {
+    //     res.send({ message: "Error in fetching your user" });
+    // }
 
     const queryUsers = `SELECT * FROM public."User";`
     try {
@@ -97,44 +97,46 @@ router.get('/users', auth, async (req, res) => {
 });
 
 
-// var queryExpense = `SELECT * FROM public."Expense" WHERE "Id" = ${expenseId};`
-//   router.get('/expense/:expenseID', auth, async (req, res) => {
-//     try {
-//       console.log(req.params.expenseID)
-//       const expense = await Expense.findById(req.params.expenseID);
-//       res.status(200).json(expense);
-//     } catch (e) {
-//       res.send({ message: "Error in fetching expense"})
-//     }
-//   });
+router.get('/expenses/:groupId', auth, async (req, res) => {
+
+    var queryExpense = `SELECT * FROM public."Expense" WHERE "Id" = '${req.params.groupId}';`
+    try {
+        const { rows } = await database.query(queryExpense);
+        const dbResponse = rows;
+        if (!dbResponse[0]) {
+            errorMessage.error = 'No expenses found';
+            return res.status(404).send(errorMessage);
+        }
+        res.status(200).json(dbResponse);
+    } catch (e) {
+        res.send({ message: "Error in fetching expenses" })
+    }
+});
 
 
-// var queryGroup = `SELECT * FROM public."Group" WHERE "Id" = ${groupId};`
-//   router.get('/group/:groupID', auth, async (req, res) => {
-//     try {
-//       console.log(req.params.groupID)
-//       const group = await Group.findById(req.params.groupID);
-//       res.status(200).json(group);
-//     } catch (e) {
-//       res.send({ message: "Error in fetching group"})
-//     }
-//   });
+
+router.get('/group/:groupId', auth, async (req, res) => {
+
+    var queryGroup = `SELECT * FROM public."Group" WHERE "Id" = '${req.params.groupId}';`
+    try {
+        const { rows } = await database.query(queryGroup);
+        const dbResponse = rows;
+        if (!dbResponse[0]) {
+            errorMessage.error = 'No group found';
+            return res.status(404).send(errorMessage);
+        }
+        res.status(200).json(dbResponse);
+    } catch (e) {
+        res.send({ message: "Error in fetching group" })
+    }
+});
 
 
 router.post('/category', auth, async (req, res) => {
-    const queryUser = `SELECT * FROM public."User" WHERE "Email" = '${req.usermail}';`;
     const { valCategory, valImage } = req.body;
     const queryCategoryPost = `INSERT INTO public."Category"("Name", "Image") VALUES ('${valCategory}', '${valImage}');`
     console.log(req.body);
     console.log(queryCategoryPost);
-    var user = null;
-    try {
-        const { rows } = await database.query(queryUser);
-        user = rows[0];
-        console.log(user);
-    } catch (e) {
-        res.send({ message: "Error in fetching your user" });
-    }
 
     try {
         const { rows } = await database.query(queryCategoryPost);
@@ -147,8 +149,9 @@ router.post('/category', auth, async (req, res) => {
 
 router.post('/group', auth, async (req, res) => {
     const queryUser = `SELECT * FROM public."User" WHERE "Email" = '${req.usermail}';`;
-    const { groupname } = req.body;
-    const queryGroupPost = `INSERT INTO public."Group"("Name") VALUES ('${groupname}');`
+    const { groupname, participants } = req.body;
+    const queryGroupPost = `INSERT INTO public."Group"("Name") VALUES ('${groupname}') RETURNING "Id";`
+
     var user = null;
     try {
         const { rows } = await database.query(queryUser);
@@ -157,12 +160,41 @@ router.post('/group', auth, async (req, res) => {
     } catch (e) {
         res.send({ message: "Error in fetching your user" });
     }
+
+    var groupId = null
     try {
         const { rows } = await database.query(queryGroupPost);
-        res.status(200).json({ message: 'Created new group' });
+        group = rows[0];
+        console.log("jetzt kommt group ID")
+        console.log(group.Id);
+        groupId = group.Id;
+        console.log(group);
+        // res.status(200).json({ message: 'Created new group' });
     } catch (e) {
         res.send({ message: "Unable to create new group" })
     }
+
+    const queryGroupUsersOwnUserPost = `INSERT INTO public."GroupUsers"("UserId, GroupId") VALUES ('${user.Id}','${groupId}');`
+    try {
+        const { rows } = await database.query(queryGroupUsersOwnUserPost);
+        group = rows[0];
+        // res.status(200).json({ message: 'Insert User to Group' });
+    } catch (e) {
+        res.send({ message: "Unable to insert user to new group" })
+    }
+    participants.forEach(async (participantId) => {
+        console.log(participantId)
+        const queryGroupUsersParticipantPost = `INSERT INTO public."GroupUsers"("UsersId, GroupId") VALUES ('${participantId}','${groupId}');`
+        try {
+            const { rows } = await database.query(queryGroupUsersParticipantPost);
+            group = rows[0];
+            res.status(200).json({ message: 'Insert new group' });
+        } catch (e) {
+            res.send({ message: "Unable to insert participant to new group" })
+        }
+    });
+
+
 });
 
 
