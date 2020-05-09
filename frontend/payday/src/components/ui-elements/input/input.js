@@ -31,7 +31,7 @@ const input = (props) => {
   return (
     <div className="ui-input-container">
       <div className="ui-input-img-wrapper">
-        <img src={icon} />
+        <img src={icon} alt="icon" />
         <input
           className="ui-input"
           {...props.elementConfig}
@@ -40,7 +40,7 @@ const input = (props) => {
           onChange={props.changed}
         />
       </div>
-      <div class="ui-input-line"></div>
+      <div className="ui-input-line"></div>
     </div>
   );
 };

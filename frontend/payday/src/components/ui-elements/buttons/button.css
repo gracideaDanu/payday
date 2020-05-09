@@ -1,6 +1,6 @@
 .ui-button {
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 1.8rem;
+  font-weight: 700;
   height: 55px;
   text-align: center;
   width: 100%;
@@ -8,20 +8,20 @@
 }
 
 .blue {
-  color: #1021ff;
+  color: var(--blue);
   background: #fff;
   border: 3px solid;
-  border-color: #1021ff;
+  border-color: var(--blue);
   outline: none;
 }
 
 .blue:hover {
   color: #fff;
-  background: #1021ff;
+  background: var(--blue);
 }
 
 .mint {
-  background: #10f9c0;
+  background: var(--mint);
   border: none;
   color: #ecf0f1;
   outline: none;
@@ -29,7 +29,7 @@
 
 .mint:hover {
   background: #fff;
-  color: #10f9c0;
+  color: var(--mint);
   border: 3px solid;
-  border-color: #10f9c0;
+  border-color: var(--mint);
 }

@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import * as actions from '../../store/actions/index';
+import { connect } from 'react-redux';
 
 import Button from "../../components/ui-elements/buttons/button";
 import Input from "../../components/ui-elements/input/input";
 import "./auth.css";
 import Logo from "../../assets/icons/logo.svg";
+
 
 const signInState = {
   controls: {
@@ -175,23 +178,23 @@ class Auth extends Component {
   };
 
   submitHandler = (event) => {
-    // event.preventDefault();
-    // if (this.state.isSignUp) {
-    //     const signUpData = {
-    //         username: this.state.controls.username.value,
-    //         name: this.state.controls.forename.value,
-    //         surname: this.state.controls.surname.value,
-    //         email: this.state.controls.email.value,
-    //         password: this.state.controls.password.value
-    //     }
-    //     this.props.onAuth(true, signUpData);
-    // } else {
-    //     const signInData = {
-    //         email: this.state.controls.email.value,
-    //         password: this.state.controls.password.value
-    //     }
-    //     this.props.onAuth(false, signInData);
-    // }
+    event.preventDefault();
+    if (this.state.isSignUp) {
+      const signUpData = {
+        username: this.state.controls.username.value,
+        name: this.state.controls.forename.value,
+        surname: this.state.controls.surname.value,
+        email: this.state.controls.email.value,
+        password: this.state.controls.password.value
+      }
+      this.props.onAuth(true, signUpData);
+    } else {
+      const signInData = {
+        email: this.state.controls.email.value,
+        password: this.state.controls.password.value
+      }
+      this.props.onAuth(false, signInData);
+    }
   };
 
   render() {
@@ -216,11 +219,11 @@ class Auth extends Component {
     ));
     return (
       <div className="auth-container">
-        <img src={Logo} className="auth-container-logo"></img>
+        <img src={Logo} alt="Logo" className="auth-container-logo"></img>
         <form>{form}</form>
         <div className="auth-button-container">
           <Button clicked={this.submitHandler} btnStyle="blue">
-            Submit{" "}
+            Submit
           </Button>
           <Button clicked={this.switchAuthModeHandler} btnStyle="mint">
             Switch to {this.state.isSignUp ? "Sign in" : "Sign up"}{" "}
@@ -231,4 +234,12 @@ class Auth extends Component {
   }
 }
 
-export default Auth;
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuth: (isSignUp, data) => dispatch(actions.auth(isSignUp, data))
+  }
+
+}
+
+export default connect(null, mapDispatchToProps)(Auth);
+
