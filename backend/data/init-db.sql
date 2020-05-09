@@ -1,4 +1,23 @@
-CREATE TABLE public."User"
+ALTER TABLE  public."GroupUsers"
+    DROP CONSTRAINT IF EXISTS public."FK_GroupUsers_User";
+ALTER TABLE  public."GroupUsers"
+    DROP CONSTRAINT IF EXISTS public."FK_GroupUsers_Group";
+ALTER TABLE  public."ExpenseParticipants"
+    DROP CONSTRAINT IF EXISTS public."FK_ExpenseParticipants_User";
+ALTER TABLE  public."ExpenseParticipants"
+    DROP CONSTRAINT IF EXISTS public."FK_ExpenseParticipants_Expense";
+
+
+DROP TABLE IF EXISTS public."User";
+DROP TABLE IF EXISTS public."Expense";
+DROP TABLE IF EXISTS public."ExpenseParticipants";
+DROP TABLE IF EXISTS public."Group";
+DROP TABLE IF EXISTS public."GroupUsers";
+DROP TABLE IF EXISTS public."Category";
+
+
+
+CREATE TABLE IF NOT EXISTS public."User"
 (
     "Id" SERIAL UNIQUE,
     "Username" VARCHAR NOT NULL,
@@ -12,7 +31,7 @@ CREATE TABLE public."User"
 );
 
 
-CREATE TABLE public."Expense"
+CREATE TABLE IF NOT EXISTS public."Expense"
 (
     "Id" SERIAL UNIQUE,
     "Title" VARCHAR NOT NULL,
@@ -24,7 +43,7 @@ CREATE TABLE public."Expense"
     CONSTRAINT "PK_Expense" PRIMARY KEY ("Id")
 );
 
-CREATE TABLE public."ExpenseParticipants"
+CREATE TABLE IF NOT EXISTS public."ExpenseParticipants"
 (
     "Id" SERIAL UNIQUE,
     "UserId" INTEGER NOT NULL,
@@ -33,7 +52,7 @@ CREATE TABLE public."ExpenseParticipants"
 );
 
 
-CREATE TABLE public."Group"
+CREATE TABLE IF NOT EXISTS public."Group"
 (
     "Id" SERIAL UNIQUE,
     "Name" VARCHAR NOT NULL,
@@ -41,7 +60,7 @@ CREATE TABLE public."Group"
     CONSTRAINT "PK_Group" PRIMARY KEY ("Id")
 );
 
-CREATE TABLE public."GroupUsers"
+CREATE TABLE IF NOT EXISTS public."GroupUsers"
 (
     "Id" SERIAL UNIQUE,
     "UserId" INTEGER NOT NULL,
@@ -50,7 +69,7 @@ CREATE TABLE public."GroupUsers"
 );
 
 
-CREATE TABLE public."Category"
+CREATE TABLE IF NOT EXISTS public."Category"
 (
     "Id" SERIAL UNIQUE,
     "Name" VARCHAR NOT NULL,
@@ -61,15 +80,11 @@ CREATE TABLE public."Category"
 
 
 ALTER TABLE  public."GroupUsers"
-    ADD CONSTRAINT "FK_GroupUsers_User" FOREIGN KEY ("UserId") REFERENCES public."User"("Id");
-
+    ADD CONSTRAINT public."FK_GroupUsers_User" FOREIGN KEY ("UserId") REFERENCES public."User"("Id");
 ALTER TABLE  public."GroupUsers"
-    ADD CONSTRAINT "FK_GroupUsers_Group" FOREIGN KEY ("GroupId") REFERENCES public."Group"("Id");
-
-
+    ADD CONSTRAINT public."FK_GroupUsers_Group" FOREIGN KEY ("GroupId") REFERENCES public."Group"("Id");
 ALTER TABLE  public."ExpenseParticipants"
-    ADD CONSTRAINT "FK_ExpenseParticipants_User" FOREIGN KEY ("UserId") REFERENCES public."User"("Id");
-
+    ADD CONSTRAINT public."FK_ExpenseParticipants_User" FOREIGN KEY ("UserId") REFERENCES public."User"("Id");
 ALTER TABLE  public."ExpenseParticipants"
-    ADD CONSTRAINT "FK_ExpenseParticipants_Expense" FOREIGN KEY ("ExpenseId") REFERENCES public."Expense"("Id");
+    ADD CONSTRAINT public."FK_ExpenseParticipants_Expense" FOREIGN KEY ("ExpenseId") REFERENCES public."Expense"("Id");
 

@@ -9,7 +9,7 @@ services:
     ports:
       - "7999:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: p
+      PGADMIN_DEFAULT_EMAIL: root@payday.com
       PGADMIN_DEFAULT_PASSWORD: payday
     volumes:
       - ./pgadmin:/var/lib/pgadmin
@@ -21,7 +21,7 @@ services:
       - backend
     container_name: "postgres-test-container"
     ports:
-      - "5432:5432"
+      - "5431:5432"
     environment:
       POSTGRES_USER: postgres-payday-root
       POSTGRES_PASSWORD: postgres-payday-password

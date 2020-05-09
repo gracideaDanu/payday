@@ -3,8 +3,29 @@ const chai = require("chai");
 const expect = require("chai").expect;
 const should = chai.should();
 const chaiHttp = require("chai-http");
+const database = require("../data/db-connection");
+
+var fs = require("fs"),
+  path = require("path"),
+  file = path.join("./data", "init-db.sql");
+
+const initScript = fs.readFileSync(file, "utf8");
+console.log(initScript);
+// const initScript = require("../data/init-db.sql");
 
 chai.use(chaiHttp);
+
+before(async () => {
+  var queryUser = initScript;
+  // var queryUser = `INSERT INTO public."Category"("Name", "Image") VALUES('Test', 'Test'); DROP TABLE public."Category";`;
+  console.log(queryUser);
+
+  try {
+    await database.query(queryUser);
+  } catch (e) {
+    console.log(e);
+  }
+});
 
 describe("Test", () => {
   describe("GET /", () => {
@@ -22,6 +43,26 @@ describe("Test", () => {
 });
 
 describe("Authentication test", () => {
+  describe("Post signup", () => {
+    it("should signup user and return token", (done) => {
+      chai
+        .request(server)
+        .post("/signup/")
+        .set("content-type", "application/json")
+        .send({
+          username: "niklas",
+          name: "Niklas",
+          surname: "Schildhauer",
+          email: "niklas@icloud.com",
+          password: "Password",
+        })
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property("token");
+          done();
+        });
+    });
+  });
   describe("Post login", () => {
     it("should login user and return token", (done) => {
       chai
@@ -29,7 +70,7 @@ describe("Authentication test", () => {
         .post("/login/")
         .set("content-type", "application/json")
         .send({
-          email: "niklas@icould.com",
+          email: "niklas@icloud.com",
           password: "Password",
         })
         .end((err, res) => {
