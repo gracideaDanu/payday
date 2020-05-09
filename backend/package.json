@@ -4,7 +4,7 @@
   "description": "Backend Server for mobile web application Payday",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "env NODE_ENV=test mocha tests"
   },
   "repository": {
     "type": "git",

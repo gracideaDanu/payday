@@ -1,9 +1,17 @@
 const { Pool } = require("pg");
+require("dotenv").config();
 
-const connectionString = `postgresql://postgres-payday-root:postgres-payday-password@postgres:5432/payday`;
+var connectionString = process.env.DB_CONN_STRING_PROD;
+
+console.log("sHier " + connectionString);
+
+if (process.env.NODE_ENV === "test") {
+  connectionString = process.env.DB_CONN_STRING_TEST;
+  console.log(connectionString);
+}
 
 const pool = new Pool({
-    connectionString: connectionString,
+  connectionString: connectionString,
 });
 
 module.exports = pool;

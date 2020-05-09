@@ -14,7 +14,7 @@ describe("Test", () => {
         .get("/")
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.have.property("message").eql("Server is running. Bla bla ");
+          res.body.should.have.property("message").eql("Server is running.");
           done();
         });
     });
@@ -27,10 +27,10 @@ describe("Authentication test", () => {
       chai
         .request(server)
         .post("/login/")
-        .set('content-type', 'application/json')
+        .set("content-type", "application/json")
         .send({
-          "email": "niklas@gmail.com",
-          "password": "password"
+          email: "niklas@icould.com",
+          password: "Password",
         })
         .end((err, res) => {
           res.should.have.status(200);
@@ -67,8 +67,6 @@ describe("Authentication test", () => {
 //     });
 // });
 // });
-
-
 
 // describe("Authentication"() => {
 //   describe("SignUp", () => {

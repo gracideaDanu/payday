@@ -89,6 +89,7 @@ services:
       - PGDATABASE=payday
       - PGHOST=postgres
       - PGPORT=5432
+      - NODE_ENV=prod
     depends_on:
       - postgres
     ports:
