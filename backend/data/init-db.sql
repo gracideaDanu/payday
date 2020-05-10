@@ -1,19 +1,19 @@
-ALTER TABLE  public."GroupUsers"
-    DROP CONSTRAINT IF EXISTS public."FK_GroupUsers_User";
-ALTER TABLE  public."GroupUsers"
-    DROP CONSTRAINT IF EXISTS public."FK_GroupUsers_Group";
-ALTER TABLE  public."ExpenseParticipants"
-    DROP CONSTRAINT IF EXISTS public."FK_ExpenseParticipants_User";
-ALTER TABLE  public."ExpenseParticipants"
-    DROP CONSTRAINT IF EXISTS public."FK_ExpenseParticipants_Expense";
+-- ALTER TABLE  public."GroupUsers"
+--     DROP CONSTRAINT IF EXISTS "FK_GroupUsers_User";
+-- ALTER TABLE  public."GroupUsers"
+--     DROP CONSTRAINT IF EXISTS "FK_GroupUsers_Group";
+-- ALTER TABLE  public."ExpenseParticipants"
+--     DROP CONSTRAINT IF EXISTS "FK_ExpenseParticipants_User";
+-- ALTER TABLE  public."ExpenseParticipants"
+--     DROP CONSTRAINT IF EXISTS "FK_ExpenseParticipants_Expense";
 
 
-DROP TABLE IF EXISTS public."User";
-DROP TABLE IF EXISTS public."Expense";
-DROP TABLE IF EXISTS public."ExpenseParticipants";
-DROP TABLE IF EXISTS public."Group";
-DROP TABLE IF EXISTS public."GroupUsers";
-DROP TABLE IF EXISTS public."Category";
+-- DROP TABLE IF EXISTS public."User";
+-- DROP TABLE IF EXISTS public."Expense";
+-- DROP TABLE IF EXISTS public."ExpenseParticipants";
+-- DROP TABLE IF EXISTS public."Group";
+-- DROP TABLE IF EXISTS public."GroupUsers";
+-- DROP TABLE IF EXISTS public."Category";
 
 
 
@@ -80,11 +80,11 @@ CREATE TABLE IF NOT EXISTS public."Category"
 
 
 ALTER TABLE  public."GroupUsers"
-    ADD CONSTRAINT public."FK_GroupUsers_User" FOREIGN KEY ("UserId") REFERENCES public."User"("Id");
+    ADD CONSTRAINT "FK_GroupUsers_User" FOREIGN KEY ("UserId") REFERENCES public."User"("Id");
 ALTER TABLE  public."GroupUsers"
-    ADD CONSTRAINT public."FK_GroupUsers_Group" FOREIGN KEY ("GroupId") REFERENCES public."Group"("Id");
+    ADD CONSTRAINT "FK_GroupUsers_Group" FOREIGN KEY ("GroupId") REFERENCES public."Group"("Id");
 ALTER TABLE  public."ExpenseParticipants"
-    ADD CONSTRAINT public."FK_ExpenseParticipants_User" FOREIGN KEY ("UserId") REFERENCES public."User"("Id");
+    ADD CONSTRAINT "FK_ExpenseParticipants_User" FOREIGN KEY ("UserId") REFERENCES public."User"("Id");
 ALTER TABLE  public."ExpenseParticipants"
-    ADD CONSTRAINT public."FK_ExpenseParticipants_Expense" FOREIGN KEY ("ExpenseId") REFERENCES public."Expense"("Id");
+    ADD CONSTRAINT "FK_ExpenseParticipants_Expense" FOREIGN KEY ("ExpenseId") REFERENCES public."Expense"("Id");
 

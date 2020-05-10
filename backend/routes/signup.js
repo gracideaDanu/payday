@@ -26,22 +26,19 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({
         // define !
-        errors: errors.array(),
+        message: errors.array(),
       });
     }
 
     const { username, name, surname, email, password } = req.body;
     try {
       var queryUser = `SELECT * FROM public."User" WHERE "Email" = '${email}';`;
-      console.log(queryUser);
-
       const { rows } = await database.query(queryUser);
       const dbResponse = rows[0];
-      console.log(dbResponse);
 
       if (dbResponse) {
         return res.status(400).json({
-          msg: "User already exists",
+          message: "User already exists",
         });
       }
 

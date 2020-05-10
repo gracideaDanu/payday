@@ -14,12 +14,6 @@ if (process.env.NODE_ENV === "test") {
   port = process.env.PORT_TEST;
 }
 
-const test = process.env.DB_NAME || "no";
-console.log(test);
-
-const test2 = process.env.DB_CONN_STRING || "no";
-console.log(test2);
-
 app.use((err, req, res, next) => {
   console.log(err);
   next();
