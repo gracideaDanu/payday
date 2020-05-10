@@ -17,8 +17,8 @@ CREATE TABLE public."Expense"
     "Id" SERIAL UNIQUE,
     "Title" VARCHAR NOT NULL,
     "Costs" FLOAT NOT NULL,
-    "Category" INTEGER NOT NULL,
-    "Group" VARCHAR NOT NULL,
+    "CategoryId" INTEGER NOT NULL,
+    "GroupId" INTEGER NOT NULL,
     "Owner" VARCHAR,
     "CreatedAt" timestamp NOT NULL DEFAULT NOW(),
     CONSTRAINT "PK_Expense" PRIMARY KEY ("Id")
@@ -67,8 +67,10 @@ ALTER TABLE  public."GroupUsers"
     ADD CONSTRAINT "FK_GroupUsers_Group" FOREIGN KEY ("GroupId") REFERENCES public."Group"("Id");
 
 ALTER TABLE  public."Expense"
-    ADD CONSTRAINT "FK_Expennse_Category" FOREIGN KEY ("Category") REFERENCES public."Category"("Id");
+    ADD CONSTRAINT "FK_Expense_Category" FOREIGN KEY ("CategoryId") REFERENCES public."Category"("Id");
 
+ALTER TABLE public."Expense"
+    ADD CONSTRAINT "FK_Expense_Group" FOREIGN KEY ("GroupId") REFERENCES public."Group"("Id");
 
 ALTER TABLE  public."ExpenseParticipants"
     ADD CONSTRAINT "FK_ExpenseParticipants_User" FOREIGN KEY ("UserId") REFERENCES public."User"("Id");
