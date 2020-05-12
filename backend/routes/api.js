@@ -202,34 +202,23 @@ router.post('/expense', auth, async (req, res) => {
     console.log(req.body)
 });
 
-// catcht aus irgend einem Grund noch "Error in fetching groups", funktioniert aber
 router.put('/expense/:expenseID', auth, async (req, res) => {
     const { title, costs, categoryId, groupId } = req.body;
     var queryExpensePut = `UPDATE public."Expense" SET "Title"='${title}', "Costs"='${costs}', "CategoryId"='${categoryId}', "GroupId"='${groupId}' WHERE "Id" = '${req.params.expenseID}';`;
     try {
-        const { rows } = await database.query(queryExpensePut);
-        const dbResponse = rows;
-        if (!dbResponse[0]) {
-            errorMessage.error = 'No expenses found';
-            return res.status(404).send(errorMessage);
-        }
+        await database.query(queryExpensePut);
         res.status(200).json({ message: 'Updated expense' });
     } catch (e) {
+        console.log(e);
         res.send({ message: "Error in fetching expenses" })
     }
 });
 
-// catcht aus irgend einem Grund noch "Error in fetching groups", funktioniert aber
 router.put('/group/:groupId', auth, async (req, res) => {
     const { name } = req.body;
     var queryGroupPut = `UPDATE public."Group" SET "Name"='${name}' WHERE "Id" = '${req.params.groupId}';`;
     try {
-        const { rows } = await database.query(queryGroupPut);
-        const dbResponse = rows;
-        if (!dbResponse[0]) {
-            errorMessage.error = 'No groups found';
-            return res.status(404).send(errorMessage);
-        }
+        await database.query(queryGroupPut);
         res.status(200).json({ message: 'Updated group' });
     } catch (e) {
         res.send({ message: "Error in fetching groups" })
@@ -237,16 +226,10 @@ router.put('/group/:groupId', auth, async (req, res) => {
 });
 
 
-// catcht aus irgend einem Grund noch "Error in fetching groups", funktioniert aber
 router.delete('/group/:groupId', auth, async (req, res) => {
     var queryGroupDelete = `DELETE FROM public."Group" WHERE "Id" = '${req.params.groupId}';`;
     try {
-        const { rows } = await database.query(queryGroupDelete);
-        const dbResponse = rows;
-        if (!dbResponse[0]) {
-            errorMessage.error = 'No groups found';
-            return res.status(404).send(errorMessage);
-        }
+        await database.query(queryGroupDelete);
         res.status(200).json({ message: 'Deleted group' });
     } catch (e) {
         res.send({ message: "Error in fetching groups" })
@@ -254,16 +237,10 @@ router.delete('/group/:groupId', auth, async (req, res) => {
 });
 
 
-// catcht aus irgend einem Grund noch "Error in fetching groups", funktioniert aber
 router.delete('/expense/:expenseId', auth, async (req, res) => {
     var queryExpenseDelete = `DELETE FROM public."Expense" WHERE "Id" = '${req.params.expenseId}';`;
     try {
-        const { rows } = await database.query(queryExpenseDelete);
-        const dbResponse = rows;
-        if (!dbResponse[0]) {
-            errorMessage.error = 'No expenses found';
-            return res.status(404).send(errorMessage);
-        }
+        await database.query(queryExpenseDelete);
         res.status(200).json({ message: 'Deleted expense' });
     } catch (e) {
         res.send({ message: "Error in fetching groups" })
