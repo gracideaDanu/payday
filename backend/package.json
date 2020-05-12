@@ -4,7 +4,7 @@
   "description": "Backend Server for mobile web application Payday",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "env NODE_ENV=test mocha tests"
   },
   "repository": {
     "type": "git",
@@ -22,8 +22,10 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
+    "fs": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.10",
+    "path": "^0.12.7",
     "pg": "^8.0.3"
   },
   "devDependencies": {
