@@ -30,36 +30,24 @@ class Groups extends Component {
     console.log(this.state);
   }
 
-  showBottomSheet() {
-    this.setState({
-      ...this.state,
-      showBottomSheet: true,
-    });
-  }
-
   render() {
     var groups = <p>Loading</p>;
     if (!this.props.groups.loading) {
       groups = this.props.groups.map((group) => (
         <p
           key={group._id}
-          onClick={this.onClickGroupHandler.bind(this, group.id)}
         >
           {group.name}
         </p>
       ));
     }
 
-    var bottomSheet = null;
-    if (this.state.showBottomSheet) {
-      bottomSheet = <BottomSheet></BottomSheet>;
-    }
 
     return (
       <div>
         {/* {groups} */}
         <ListItem
-          onClick={this.showBottomSheet.bind(this)}
+
           costs="+34,12"
           title="Saufgruppe"
         />
@@ -74,7 +62,6 @@ class Groups extends Component {
         <ListItem costs="+34,12" title="Saufgruppe" />
         <ListItem costs="-3,12" title="Biergruppe" />
         <ListItem costs="+334,12" title="1. Maigruppe" />
-        {bottomSheet}
       </div>
     );
   }
