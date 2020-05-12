@@ -24,15 +24,12 @@ router.post(
     }
 
     const { email, password } = req.body;
-    console.log(email)
 
     var queryUser = `SELECT * FROM public."User" WHERE "Email" = '${email}';`
-    console.log(queryUser)
 
     try {
       const { rows } = await database.query(queryUser);
       const dbResponse = rows[0];
-      console.log(dbResponse)
 
       if (!dbResponse) {
         return res.status(400).json({
@@ -46,8 +43,9 @@ router.post(
         });
 
       const payload = {
-        email: this.email
+        email: email
       };
+
 
       jwt.sign(
         payload,

@@ -4,6 +4,7 @@ const Login = require("./routes/login");
 const Signup = require("./routes/signup");
 const database = require("./data/db-connection");
 const cors = require("cors");
+const API = require("./routes/api");
 
 require("dotenv").config();
 
@@ -48,6 +49,7 @@ app.get("/", (req, res) => res.json({ message: "Server is running." }));
 
 app.use("/signup", Signup);
 app.use("/login", Login);
+app.use("/api", API);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}.`);

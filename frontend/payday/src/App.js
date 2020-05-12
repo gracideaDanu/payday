@@ -13,15 +13,15 @@ class App extends Component {
   };
 
   render() {
-    var privateRoutes = null;
-    if (this.state.token !== "") {
-      privateRoutes = <Route path="/home" component={Home} />;
-    }
+    // var privateRoutes = null;
+    // if (this.state.token !== undefined) {
+    //   privateRoutes = <Route path="/home" component={Home} />;
+    // }
     return (
       <div className="App">
         <Switch>
           <Route path="/auth" component={Auth} />
-          {privateRoutes}
+          {/* {privateRoutes} */}
           <Route path="/home" component={Home} />
           <Route path="/group" component={Group} />
         </Switch>
@@ -32,7 +32,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    tkn: state.auth.token,
+    // tkn: state.auth.token,
   };
 };
 

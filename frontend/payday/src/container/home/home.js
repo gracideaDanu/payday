@@ -14,33 +14,33 @@ class Groups extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchGroups(this.props.token);
+    // this.props.fetchGroups(this.props.token);
   }
 
   onClickGroupHandler(id) {
-    console.log(this.props.groups[id]._id);
-    const select = this.props.groups[id];
-    console.log(select);
-    this.setState({
-      selectedGroup: select,
-    });
-    this.props.fetchExpenses(this.props.token, this.props.groups[id]._id);
+    // console.log(this.props.groups[id]._id);
+    // const select = this.props.groups[id];
+    // console.log(select);
+    // this.setState({
+    //   selectedGroup: select,
+    // });
+    // this.props.fetchExpenses(this.props.token, this.props.groups[id]._id);
 
-    console.log(this.props.groups[id]);
-    console.log(this.state);
+    // console.log(this.props.groups[id]);
+    // console.log(this.state);
   }
 
   render() {
-    var groups = <p>Loading</p>;
-    if (!this.props.groups.loading) {
-      groups = this.props.groups.map((group) => (
-        <p
-          key={group._id}
-        >
-          {group.name}
-        </p>
-      ));
-    }
+    // var groups = <p>Loading</p>;
+    // if (!this.props.groups.loading) {
+    //   groups = this.props.groups.map((group) => (
+    //     <p
+    //       key={group._id}
+    //     >
+    //       {group.name}
+    //     </p>
+    //   ));
+    // }
 
 
     return (

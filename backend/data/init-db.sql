@@ -35,9 +35,9 @@ CREATE TABLE IF NOT EXISTS public."Expense"
 (
     "Id" SERIAL UNIQUE,
     "Title" VARCHAR NOT NULL,
-    "Costs" VARCHAR NOT NULL,
-    "Category" VARCHAR NOT NULL,
-    "Group" VARCHAR NOT NULL,
+    "Costs" FLOAT NOT NULL,
+    "CategoryId" INTEGER NOT NULL,
+    "GroupId" INTEGER NOT NULL,
     "Owner" VARCHAR,
     "CreatedAt" timestamp NOT NULL DEFAULT NOW(),
     CONSTRAINT "PK_Expense" PRIMARY KEY ("Id")
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS public."Category"
     "Name" VARCHAR NOT NULL,
     "Image" VARCHAR NOT NULL,
     "CreatedAt" timestamp NOT NULL DEFAULT NOW(),
-    CONSTRAINT "OK_Category" PRIMARY KEY ("Id")
+    CONSTRAINT "PK_Category" PRIMARY KEY ("Id")
 );
 
 
@@ -83,8 +83,14 @@ ALTER TABLE  public."GroupUsers"
     ADD CONSTRAINT "FK_GroupUsers_User" FOREIGN KEY ("UserId") REFERENCES public."User"("Id");
 ALTER TABLE  public."GroupUsers"
     ADD CONSTRAINT "FK_GroupUsers_Group" FOREIGN KEY ("GroupId") REFERENCES public."Group"("Id");
+
+ALTER TABLE  public."Expense"
+    ADD CONSTRAINT "FK_Expense_Category" FOREIGN KEY ("CategoryId") REFERENCES public."Category"("Id");
+
+ALTER TABLE public."Expense"
+    ADD CONSTRAINT "FK_Expense_Group" FOREIGN KEY ("GroupId") REFERENCES public."Group"("Id");
+
 ALTER TABLE  public."ExpenseParticipants"
     ADD CONSTRAINT "FK_ExpenseParticipants_User" FOREIGN KEY ("UserId") REFERENCES public."User"("Id");
 ALTER TABLE  public."ExpenseParticipants"
     ADD CONSTRAINT "FK_ExpenseParticipants_Expense" FOREIGN KEY ("ExpenseId") REFERENCES public."Expense"("Id");
-

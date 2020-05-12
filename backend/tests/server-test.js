@@ -10,18 +10,18 @@ const database = require("../data/db-connection");
 //   file = path.join("./data", "init-db.sql");
 
 // const initScript = fs.readFileSync(file, "utf8");
-// console.log(initScript);
+// console.error(initScript);
 // const initScript = require("../data/init-db.sql");
 
 chai.use(chaiHttp);
 
 before(async () => {
   // var queryUser = initScript;
-  var queryUser = `DELETE FROM public."User"; DELETE FROM public."Category"; DELETE FROM public."ExpenseParticipants"; DELETE FROM public."GroupUsers"; DELETE FROM public."Expense"; DELETE FROM public."Group"; DELETE FROM public."User";`;
+  var queryUser = `DELETE FROM public."ExpenseParticipants"; DELETE FROM public."GroupUsers"; DELETE FROM public."Expense"; DELETE FROM public."Category"; DELETE FROM public."Group"; DELETE FROM public."User";`;
   try {
     await database.query(queryUser);
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 });
 
@@ -152,6 +152,50 @@ describe("Authentication test", () => {
           done();
         });
     });
+    it("should login user and return token", (done) => {
+      chai
+        .request(server)
+        .post("/login/")
+        .set("content-type", "application/json")
+        .send({
+          password: "Password",
+          email: "niklas@test.com"
+        })
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property("token");
+          sessionToken = res.body.token;
+          done();
+        });
+    });
+    it("shouldn't login user", (done) => {
+      chai
+        .request(server)
+        .post("/login/")
+        .set("content-type", "application/json")
+        .send({
+          email: "niklasasdas@test.com",
+          password: "Password",
+        })
+        .end((err, res) => {
+          res.should.have.status(400);
+          done();
+        });
+    });
+    it("shouldn't login user", (done) => {
+      chai
+        .request(server)
+        .post("/login/")
+        .set("content-type", "application/json")
+        .send({
+          email: "niklas@test.com",
+          password: "",
+        })
+        .end((err, res) => {
+          res.should.have.status(400);
+          done();
+        });
+    });
   });
 });
 
@@ -187,7 +231,7 @@ describe("API test", () => {
           image: "🎳",
         })
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           done();
         });
     });
@@ -202,7 +246,7 @@ describe("API test", () => {
           image: "🍔",
         })
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           done();
         });
     });
@@ -234,12 +278,13 @@ describe("API test", () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property("categories");
-          res.body.groups.should.have.length(2);
+          res.body.categories.should.have.length(2);
           categories = res.body.categories;
           done();
         });
     });
   });
+
 
   describe("Post Group", () => {
     it("should create a new group with niklas, pascsal and max and return Status code 201", (done) => {
@@ -253,7 +298,7 @@ describe("API test", () => {
           participants: [users[0].Id, users[1].Id],
         })
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           done();
         });
     });
@@ -268,11 +313,11 @@ describe("API test", () => {
           participants: [users[0].Id],
         })
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           done();
         });
     });
-    it("shouldn't create a group and return status code 400", (done) => {
+    it("should create a group with hisself and return status code 201", (done) => {
       chai
         .request(server)
         .post("/api/group")
@@ -282,7 +327,7 @@ describe("API test", () => {
           name: "Trinkgruppe2",
         })
         .end((err, res) => {
-          res.should.have.status(400);
+          res.should.have.status(201);
           done();
         });
     });
@@ -300,8 +345,8 @@ describe("API test", () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property("groups");
-          res.body.groups.should.have.length(2);
-          group = res.body.group[0];
+          res.body.groups.should.have.length(3);
+          group = res.body.groups[0];
           done();
         });
     });
@@ -316,12 +361,12 @@ describe("API test", () => {
         .set("authentication", "Bearer " + sessionToken)
         .send({
           title: "Getränkekauf",
-          costs: "12,99",
-          category: categories[0].Id,
-          group: group.Id,
+          costs: 12.99,
+          categoryId: categories[0].Id,
+          groupId: group.Id,
         })
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           done();
         });
     });
@@ -333,12 +378,12 @@ describe("API test", () => {
         .set("authentication", "Bearer " + sessionToken)
         .send({
           title: "Essen",
-          costs: "20,99",
-          category: categories[1].Id,
-          group: group.Id,
+          costs: 20.99,
+          categoryId: categories[1].Id,
+          groupId: group.Id,
         })
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           done();
         });
     });
@@ -350,9 +395,9 @@ describe("API test", () => {
         .set("authentication", "Bearer " + sessionToken)
         .send({
           name: "Essen",
-          costs: "20,99",
-          category: categories[1].Id,
-          group: group.Id,
+          costs: 20.99,
+          categoryId: categories[1].Id,
+          groupId: group.Id,
         })
         .end((err, res) => {
           res.should.have.status(400);
@@ -368,7 +413,7 @@ describe("API test", () => {
         .send({
           title: "Essen",
           category: categories[1].Id,
-          group: group.Id,
+          groupId: group.Id,
         })
         .end((err, res) => {
           res.should.have.status(400);
@@ -383,8 +428,8 @@ describe("API test", () => {
         .set("authentication", "Bearer " + sessionToken)
         .send({
           title: "Essen",
-          costs: "12,99",
-          group: group.Id,
+          costs: 12.99,
+          groupId: group.Id,
         })
         .end((err, res) => {
           res.should.have.status(400);
@@ -399,8 +444,8 @@ describe("API test", () => {
         .set("authentication", "Bearer " + sessionToken)
         .send({
           title: "Essen",
-          costs: "12,99",
-          category: categories[1].Id,
+          costs: 12.99,
+          categoryId: categories[1].Id,
         })
         .end((err, res) => {
           res.should.have.status(400);
@@ -421,8 +466,8 @@ describe("API test", () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property("expenses");
-          res.body.groups.should.have.length(2);
-          expenses = res.body.expenses[0];
+          res.body.expenses.should.have.length(2);
+          expenses = res.body.expenses;
           done();
         });
     });
@@ -437,12 +482,29 @@ describe("API test", () => {
         .set("authentication", "Bearer " + sessionToken)
         .send({
           title: "Essen",
-          costs: "18,99",
-          category: categories[1].Id,
-          group: group.Id,
+          costs: 18.99,
+          categoryId: categories[1].Id,
+          groupId: group.Id,
         })
         .end((err, res) => {
           res.should.have.status(200);
+          done();
+        });
+    });
+    it("shouldn't replace a expense", (done) => {
+      chai
+        .request(server)
+        .put("/api/expense/" + expenses[0].Id)
+        .set("content-type", "application/json")
+        .set("authentication", "Bearer " + sessionToken)
+        .send({
+          title: "Essen",
+          costs: "18,99",
+          categoryId: categories[1].Id,
+          groupId: group.Id,
+        })
+        .end((err, res) => {
+          res.should.have.status(400);
           done();
         });
     });
