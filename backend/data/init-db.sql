@@ -79,6 +79,58 @@ CREATE TABLE IF NOT EXISTS public."Category"
 );
 
 
+INSERT INTO public."User"(
+                "Username", "FirstName", "LastName", "Email", "Password"
+                ) VALUES(
+                'payday-test-account', 'Pay', 'Day', 'test@payday.de', 'password123'
+                );
+
+                
+INSERT INTO public."User"(
+                "Username", "FirstName", "LastName", "Email", "Password"
+                ) VALUES(
+                'payday-test-account2', 'Pay2', 'Day2', 'test2@payday.de', 'password123'
+                );
+
+INSERT INTO public."User"(
+                "Username", "FirstName", "LastName", "Email", "Password"
+                ) VALUES(
+                'payday-test-account3', 'Pay3', 'Day3', 'test3@payday.de', 'password123'
+                );     
+
+
+INSERT INTO public."Category"("Name", "Image") VALUES ('Bier', 'bier.png');           
+INSERT INTO public."Category"("Name", "Image") VALUES ('Essen', 'essen.png');   
+INSERT INTO public."Category"("Name", "Image") VALUES ('Tickets', 'tickets.png');   
+
+INSERT INTO public."Group"("Name") VALUES ('Testgruppe 1');
+INSERT INTO public."GroupUsers"("UserId", "GroupId") VALUES ('1','1');
+INSERT INTO public."GroupUsers"("UserId", "GroupId") VALUES ('2','1');
+INSERT INTO public."GroupUsers"("UserId", "GroupId") VALUES ('3','1');
+
+INSERT INTO public."Group"("Name") VALUES ('Testgruppe 2');
+INSERT INTO public."GroupUsers"("UserId", "GroupId") VALUES ('1','2');
+INSERT INTO public."GroupUsers"("UserId", "GroupId") VALUES ('2','2');
+
+INSERT INTO public."Group"("Name") VALUES ('Testgruppe 3');
+INSERT INTO public."GroupUsers"("UserId", "GroupId") VALUES ('1','3');
+INSERT INTO public."GroupUsers"("UserId", "GroupId") VALUES ('2','3');
+INSERT INTO public."GroupUsers"("UserId", "GroupId") VALUES ('3','3');
+
+
+INSERT INTO public."Expense"("Title", "Costs", "CategoryId", "GroupId") VALUES ('Bier', '22.3', '1', '1');
+INSERT INTO public."Expense"("Title", "Costs", "CategoryId", "GroupId") VALUES ('Essen', '2.3', '2', '1');
+INSERT INTO public."Expense"("Title", "Costs", "CategoryId", "GroupId") VALUES ('Tickets', '42.3', '3', '1');
+
+INSERT INTO public."Expense"("Title", "Costs", "CategoryId", "GroupId") VALUES ('Bier', '22.3', '1', '2');
+INSERT INTO public."Expense"("Title", "Costs", "CategoryId", "GroupId") VALUES ('Essen', '2.3', '2', '2');
+INSERT INTO public."Expense"("Title", "Costs", "CategoryId", "GroupId") VALUES ('Tickets', '42.3', '3', '2');
+
+INSERT INTO public."Expense"("Title", "Costs", "CategoryId", "GroupId") VALUES ('Bier', '22.3', '1', '3');
+INSERT INTO public."Expense"("Title", "Costs", "CategoryId", "GroupId") VALUES ('Essen', '2.3', '2', '3');
+INSERT INTO public."Expense"("Title", "Costs", "CategoryId", "GroupId") VALUES ('Tickets', '42.3', '3', '3');
+
+
 ALTER TABLE  public."GroupUsers"
     ADD CONSTRAINT "FK_GroupUsers_User" FOREIGN KEY ("UserId") REFERENCES public."User"("Id");
 ALTER TABLE  public."GroupUsers"

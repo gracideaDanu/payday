@@ -27,22 +27,23 @@ export const fetchGroups = (token) => {
         dispatch(fetchGroupsStart());
         const config = {
             'headers': {
-                'Authorization': token,
+                'Authentication': 'Bearer ' + token,
                 'Content-Type': 'application/json'
             }
         };
         axios.get('/api/groups', config)
             .then(res => {
                 const fetchedGroups = [];
-                for (let key in res.data) {
+                for (let key in res.data.groups) {
                     fetchedGroups.push({
-                        ...res.data[key],
+                        ...res.data.groups[key],
                         id: key
                     });
                 }
                 dispatch(fetchGroupsSuccess(fetchedGroups));
             })
             .catch(err => {
+                console.log(err)
                 dispatch(fetchGroupsFail(err));
             });
     };

@@ -14,7 +14,7 @@ class Groups extends Component {
   }
 
   componentDidMount() {
-    // this.props.fetchGroups(this.props.token);
+    this.props.fetchGroups(this.props.token);
   }
 
   onClickGroupHandler(id) {
