@@ -40,7 +40,7 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   ); //Origin, X-Requested-With, Content-Type, Accept
-  res.header("Access-Control-Allow-Headers: Authorization");
+  res.header("Access-Control-Allow-Headers: Authentication");
   res.header("Access-Control-Allow-Headers: Token");
   next();
 });

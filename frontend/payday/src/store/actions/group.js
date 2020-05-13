@@ -27,7 +27,7 @@ export const fetchGroups = (token) => {
         dispatch(fetchGroupsStart());
         const config = {
             'headers': {
-                'Authorization': token,
+                'Authentication': token,
                 'Content-Type': 'application/json'
             }
         };
@@ -45,6 +45,27 @@ export const fetchGroups = (token) => {
             .catch(err => {
                 dispatch(fetchGroupsFail(err));
             });
+    };
+};
+
+export const postGroupStart = () => {
+
+}
+
+export const postGroupSuccess = () => {
+
+}
+
+export const postGroup = (groupname, participants) => {
+    return dispatch => {
+        dispatch(postGroupStart());
+        axios.post('api/groups', {
+            name: groupname,
+            participants: participants
+        })
+            .then(response => {
+                dispatch(postGroupSuccess(response));
+            })
     };
 };
 

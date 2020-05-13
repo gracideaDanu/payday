@@ -51,6 +51,10 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_EXPENSES_SUCCESS: return expenseActions.fetchExpensesSuccess(state, action);
         case actionTypes.FETCH_EXPENSES_FAIL: return expenseActions.fetchExpensesFailed(state, action);
 
+        case actionTypes.POST_EXPENSE_START: return expenseActions.postExpenseStart(state, action);
+        case actionTypes.POST_EXPENSE_SUCCESS: return expenseActions.postExpenseSuccess(state, action);
+        case actionTypes.POST_EXPENSE_FAIL: return expenseActions.postExpenseFailed(state, action);
+
         default:
             return state;
     }

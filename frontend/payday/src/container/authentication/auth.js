@@ -19,7 +19,7 @@ const signInState = {
       value: "",
       validation: {
         required: true,
-        isEmaiil: true,
+        isEmail: true,
       },
       valid: false,
       touched: false,
@@ -95,7 +95,7 @@ const signUpState = {
       value: "",
       validation: {
         required: true,
-        isEmaiil: true,
+        isEmail: true,
       },
       valid: false,
       touched: false,

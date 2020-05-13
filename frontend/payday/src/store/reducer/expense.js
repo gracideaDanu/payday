@@ -31,3 +31,22 @@ export const fetchExpensesFailed = (state, action) => {
         }
     })
 };
+
+export const postExpenseStart = (state, action) => {
+    const newState = {
+        ...state
+    }
+    return (newState);
+};
+
+export const postExpenseSuccess = (state, action) => {
+    return ({
+        ...state
+    })
+};
+
+export const postExpenseFailed = (state, action) => {
+    return ({
+        ...state
+    })
+};
