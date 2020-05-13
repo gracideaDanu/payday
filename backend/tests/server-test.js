@@ -285,8 +285,25 @@ describe("API test", () => {
     });
   });
 
+  describe("GET groups", () => {
+    it("should return error message", (done) => {
+      chai
+        .request(server)
+        .get("/api/groups")
+        .set("content-type", "application/json")
+        .set("authentication", "Bearer " + sessionToken)
+        .send()
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property("message");
+          console.log(res.body)
+          done();
+        });
+    });
+  });
 
   describe("Post Group", () => {
+
     it("should create a new group with niklas, pascsal and max and return Status code 201", (done) => {
       chai
         .request(server)
@@ -347,6 +364,22 @@ describe("API test", () => {
           res.body.should.have.property("groups");
           res.body.groups.should.have.length(3);
           group = res.body.groups[0];
+          done();
+        });
+    });
+  });
+
+  describe("GET expense", () => {
+    it("should return an error message", (done) => {
+      chai
+        .request(server)
+        .get("/api/expenses/" + group.Id)
+        .set("content-type", "application/json")
+        .set("authentication", "Bearer " + sessionToken)
+        .send()
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property("message");
           done();
         });
     });

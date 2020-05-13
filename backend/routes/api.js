@@ -23,10 +23,11 @@ router.get('/groups', auth, async (req, res) => {
     try {
         const { rows } = await database.query(queryGroups);
         const dbResponse = rows;
-        if (!dbResponse[0]) {
-            errorMessage.error = 'No groups found';
-            return res.status(404).send(errorMessage);
+        if (!(typeof dbResponse !== 'undefined' && dbResponse.length > 0)) {
+            const errorMessage = 'No groups found';
+            return res.status(404).send({ message: errorMessage });
         }
+
         res.status(200).json({ groups: dbResponse });
     } catch (e) {
         console.log(e);
@@ -41,8 +42,8 @@ router.get('/expense/:expenseId', auth, async (req, res) => {
         const { rows } = await database.query(queryExpense);
         const dbResponse = rows;
         if (!dbResponse[0]) {
-            errorMessage.error = 'No expenses found';
-            return res.status(404).send(errorMessage);
+            const errorMessage = 'No expenses found';
+            return res.status(404).send({ message: errorMessage });
         }
         res.status(200).json(dbResponse);
     } catch (e) {
@@ -58,8 +59,8 @@ router.get('/categories', auth, async (req, res) => {
         const { rows } = await database.query(queryCategories);
         const dbResponse = rows;
         if (!dbResponse[0]) {
-            errorMessage.error = 'No categories found';
-            return res.status(404).send(errorMessage);
+            const errorMessage = 'No categories found';
+            return res.status(404).send({ message: errorMessage });
         }
         res.status(200).json({ categories: dbResponse });
     } catch (e) {
@@ -85,8 +86,8 @@ router.get('/users', auth, async (req, res) => {
         const { rows } = await database.query(queryUsers);
         const dbResponse = rows;
         if (!dbResponse[0]) {
-            errorMessage.error = 'No users found';
-            return res.status(404).send(errorMessage);
+            const errorMessage = 'No users found';
+            return res.status(404).send({ message: errorMessage });
         }
         res.status(200).json({ users: dbResponse });
     } catch (e) {
@@ -105,8 +106,8 @@ router.get('/expenses/:groupId', auth, async (req, res) => {
         const { rows } = await database.query(queryExpenses);
         const dbResponse = rows;
         if (!dbResponse[0]) {
-            errorMessage.error = 'No expenses found';
-            return res.status(404).send(errorMessage);
+            const errorMessage = 'No expenses found';
+            return res.status(404).send({ message: errorMessage });
         }
         res.status(200).json({ expenses: dbResponse });
     } catch (e) {
@@ -124,8 +125,8 @@ router.get('/group/:groupId', auth, async (req, res) => {
         const { rows } = await database.query(queryGroup);
         const dbResponse = rows;
         if (!dbResponse[0]) {
-            errorMessage.error = 'No group found';
-            return res.status(404).send(errorMessage);
+            const errorMessage = 'No group found';
+            return res.status(404).send({ message: errorMessage });
         }
         res.status(200).json(dbResponse);
     } catch (e) {
