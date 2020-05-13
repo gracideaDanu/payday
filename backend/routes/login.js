@@ -37,6 +37,7 @@ router.post(
         });
       }
       const isMatch = await bcrypt.compare(password, dbResponse.Password);
+
       if (!isMatch)
         return res.status(400).json({
           message: "Incorrect Password !"

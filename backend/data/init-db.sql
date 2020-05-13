@@ -82,20 +82,20 @@ CREATE TABLE IF NOT EXISTS public."Category"
 INSERT INTO public."User"(
                 "Username", "FirstName", "LastName", "Email", "Password"
                 ) VALUES(
-                'payday-test-account', 'Pay', 'Day', 'test@payday.de', 'password123'
+                'payday-test-account', 'Pay', 'Day', 'test@payday.de', '$2a$10$C4d.4w/WWnR75ciGkeeeT.rOaA7dTjaLQmNw6VX/1cTMsw85PoiTq'
                 );
 
                 
 INSERT INTO public."User"(
                 "Username", "FirstName", "LastName", "Email", "Password"
                 ) VALUES(
-                'payday-test-account2', 'Pay2', 'Day2', 'test2@payday.de', 'password123'
+                'payday-test-account2', 'Pay2', 'Day2', 'test2@payday.de', '$2a$10$C4d.4w/WWnR75ciGkeeeT.rOaA7dTjaLQmNw6VX/1cTMsw85PoiTq'
                 );
 
 INSERT INTO public."User"(
                 "Username", "FirstName", "LastName", "Email", "Password"
                 ) VALUES(
-                'payday-test-account3', 'Pay3', 'Day3', 'test3@payday.de', 'password123'
+                'payday-test-account3', 'Pay3', 'Day3', 'test3@payday.de', '$2a$10$C4d.4w/WWnR75ciGkeeeT.rOaA7dTjaLQmNw6VX/1cTMsw85PoiTq'
                 );     
 
 
