@@ -49,3 +49,23 @@ export const fetchGroups = (token) => {
     };
 };
 
+export const postGroupStart = () => {
+
+}
+
+export const postGroupSuccess = () => {
+
+}
+
+export const postGroup = (groupname, participants) => {
+    return dispatch => {
+        dispatch(postGroupStart());
+        axios.post('api/groups', {
+            name: groupname,
+            participants: participants
+        })
+            .then(response => {
+                dispatch(postGroupSuccess(response));
+            })
+    };
+};

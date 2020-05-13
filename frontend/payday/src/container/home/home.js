@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import ListItem from "../../components/ui-elements/list-item/groupListItem";
-import BottomSheet from "../../components/bottom-sheet/bottomSheet";
+// import BottomSheet from "../../components/bottom-sheet/bottomSheet";
 
 class Groups extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedGroup: "",
-      showBottomSheet: false,
+      showBottomSheet: false
     };
   }
 
@@ -30,6 +30,8 @@ class Groups extends Component {
     // console.log(this.state);
   }
 
+
+
   render() {
     // var groups = <p>Loading</p>;
     // if (!this.props.groups.loading) {
@@ -42,27 +44,15 @@ class Groups extends Component {
     //   ));
     // }
 
-
     return (
       <div>
         {/* {groups} */}
-        <ListItem
-
-          costs="+34,12"
-          title="Saufgruppe"
-        />
-        <ListItem costs="-3,12" title="Biergruppe" />
-        <ListItem costs="+334,12" title="1. Maigruppe" />
         <ListItem costs="+34,12" title="Saufgruppe" />
         <ListItem costs="-3,12" title="Biergruppe" />
         <ListItem costs="+334,12" title="1. Maigruppe" />
         <ListItem costs="+34,12" title="Saufgruppe" />
-        <ListItem costs="-3,12" title="Biergruppe" />
-        <ListItem costs="+334,12" title="1. Maigruppe" />
-        <ListItem costs="+34,12" title="Saufgruppe" />
-        <ListItem costs="-3,12" title="Biergruppe" />
-        <ListItem costs="+334,12" title="1. Maigruppe" />
       </div>
+
     );
   }
 }

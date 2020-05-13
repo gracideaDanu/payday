@@ -27,7 +27,7 @@ export const fetchUsers = (token) => {
         dispatch(fetchUsersStart());
         const config = {
             'headers': {
-                'Authorization': token,
+                'Authentication': token,
                 'Content-Type': 'application/json'
             }
         };

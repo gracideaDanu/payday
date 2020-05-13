@@ -3,13 +3,44 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import ListItem from "../../components/ui-elements/list-item/expenseListItem";
 import BottomSheet from 'react-swipeable-bottom-sheet';
+import Button from '../../components/ui-elements/buttons/button';
+import Input from '../../components/ui-elements/input/input'
+
+
+const postExpenseState = {
+  controls: {
+    title: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Titel der Ausgabe"
+      },
+      value: ""
+    },
+    costs: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Kosten"
+      },
+      value: ""
+    },
+    categoryId: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Kategorie-ID"
+      },
+      value: ""
+    }
+  }
+};
+
 
 class Group extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      showSheet: false
-    }
+    this.state = postExpenseState;
   }
 
 
@@ -24,15 +55,44 @@ class Group extends Component {
     this.setState({
       showSheet: true
     })
-    console.log(this.state)
   }
 
-  onChangeHandler = (open) => {
+
+  inputChangedHandler = (event, controlName) => {
+    const updatedControls = {
+      ...this.state.controls,
+      [controlName]: {
+        ...this.state.controls[controlName],
+        value: event.target.value
+        // valid: this.checkValidity(
+        //   event.target.value,
+        //   this.state.controls[controlName].validation
+        // ),
+        // touched: true,
+      },
+    };
+    this.setState({ controls: updatedControls });
+    console.log(this.state);
+  };
+
+  onClickCloseHandler = () => {
     this.setState({
-      showSheet: open
+      showSheet: false
     })
-
+    console.log("clicked")
   }
+
+  submitHandler = (event) => {
+    event.preventDefault();
+    const expenseData = {
+      title: this.state.controls.title.value,
+      costs: this.state.controls.costs.value,
+      categoryId: this.state.controls.categoryId.value,
+      groupId: 1
+    }
+    this.props.onPostExpense(this.props.token, expenseData);
+  }
+
 
   render() {
 
@@ -56,87 +116,48 @@ class Group extends Component {
       ));
     }
 
+    const formElementsArray = [];
+    for (let key in this.state.controls) {
+      formElementsArray.push({
+        id: key,
+        config: this.state.controls[key],
+      });
+    }
+
+    const form = formElementsArray.map((formElement) => (
+      <Input
+        key={formElement.id}
+        elementConfig={formElement.config.elementConfig}
+        value={formElement.config.value}
+        // invalid={!formElement.config.valid}
+        // shouldValidate={formElement.config.validation}
+        // touched={formElement.config.touched}
+        changed={(event) => this.inputChangedHandler(event, formElement.id)}
+      />
+    ));
+
     return (
       <div>
-        <BottomSheet open={this.state.showSheet} overlay={true} onChange={this.onChangeHandler.bind(this)}>
+        <BottomSheet open={this.state.showSheet} overlay={true} onChange={this.onClickCloseHandler.bind(this)}>
           <div>
-            <h1>Bottom sheet modal content</h1>
-            <ul>
-              <li>Animates from bottom to top</li>
-              <li>If the content height is more than the height of the device it will be scrollable.</li>
-              <li>Clicking on the grey area will close the modal</li>
-            </ul>
-            <ListItem
-              costs="+34,12"
-              title="Saufgruppe"
-              participants="1"
-              owner="Niklas"
-            /> <ListItem
-              costs="+34,12"
-              title="Saufgruppe"
-              participants="1"
-              owner="Niklas"
-            /> <ListItem
-              costs="+34,12"
-              title="Saufgruppe"
-              participants="1"
-              owner="Niklas"
-            /> <ListItem
-              costs="+34,12"
-              title="Saufgruppe"
-              participants="1"
-              owner="Niklas"
-            /> <ListItem
-              costs="+34,12"
-              title="Saufgruppe"
-              participants="1"
-              owner="Niklas"
-            /> <ListItem
-              costs="+34,12"
-              title="Saufgruppe"
-              participants="1"
-              owner="Niklas"
-            /><ListItem
-              costs="+34,12"
-              title="Saufgruppe"
-              participants="1"
-              owner="Niklas"
-            /> <ListItem
-              costs="+34,12"
-              title="Saufgruppe"
-              participants="1"
-              owner="Niklas"
-            /> <ListItem
-              costs="+34,12"
-              title="Saufgruppe"
-              participants="1"
-              owner="Niklas"
-            /> <ListItem
-              costs="+34,12"
-              title="Saufgruppe"
-              participants="1"
-              owner="Niklas"
-            /> <ListItem
-              costs="+34,12"
-              title="Saufgruppe"
-              participants="1"
-              owner="Niklas"
-            /> <ListItem
-              costs="+34,12"
-              title="Saufgruppe"
-              participants="1"
-              owner="Niklas"
-            />
+            <h1>Add new expense</h1>
+            <div>
+              <form onSubmit={this.submitHandler}>
+                <div>
+                  {form}
+                </div>
+                <Button clicked={this.submitHandler} btnStyle="mint">Add new group</Button>
+              </form>
+            </div>
           </div>
         </BottomSheet>
         {expenses}
-
-        <button onClick={this.onClickCreateGroupHandler.bind(this)}>Bottom Sheet anzeigen</button>
-
+        <Button btnStyle="blue" clicked={this.onClickCreateGroupHandler.bind(this)}>Add new group</Button>
       </div>
     );
   }
 }
+
 
 const mapStateToProps = (state) => {
   return {
@@ -148,6 +169,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    onPostExpense: (token, data) => dispatch(actions.postExpense(token, data)),
     fetchExpenses: (token, groupID) => dispatch(actions.fetchExpenses(token, groupID)),
   };
 };

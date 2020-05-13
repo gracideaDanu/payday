@@ -3,7 +3,7 @@ export {
 } from './auth';
 
 export {
-    fetchGroups
+    fetchGroups, postGroup
 } from './group'
 
 export {
@@ -11,5 +11,5 @@ export {
 } from './user'
 
 export {
-    fetchExpenses
+    fetchExpenses, postExpense
 } from './expense'
