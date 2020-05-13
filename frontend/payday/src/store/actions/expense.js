@@ -29,7 +29,7 @@ export const fetchExpenses = (token, groupID) => {
         dispatch(fetchExpensesStart());
         const config = {
             'headers': {
-                'Authorization': token,
+                'Authentication': 'Bearer ' + token,
                 'Content-Type': 'application/json'
             }
         };
@@ -39,9 +39,9 @@ export const fetchExpenses = (token, groupID) => {
         axios.get(url, config)
             .then(res => {
                 const fetchedExpenses = [];
-                for (let key in res.data) {
+                for (let key in res.data.expenses) {
                     fetchedExpenses.push({
-                        ...res.data[key],
+                        ...res.data.expenses[key],
                         id: key
                     });
                 }

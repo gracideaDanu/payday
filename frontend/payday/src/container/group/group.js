@@ -12,7 +12,9 @@ class Group extends Component {
     }
   }
 
-  componentWillMount() {
+
+  componentDidMount() {
+    this.props.fetchExpenses(this.props.token, 1);
     this.setState({
       showSheet: false,
     });
@@ -33,22 +35,29 @@ class Group extends Component {
   }
 
   render() {
-    // const [Modal, open, close, isOpen] = useModal('root', {
-    //   preventScroll: true
-    // });
+
+    var expensesArray = []
+    var expenses = null
+    if (typeof this.props.expenses !== undefined && this.props.expenses.length > 0) {
+      for (let key in this.props.expenses) {
+        expensesArray.push({
+          id: key,
+          values: this.props.expenses[key],
+        });
+      }
+
+      expenses = expensesArray.map((expense) => (
+        <ListItem
+          costs={expense.values.Costs}
+          title={expense.values.Title}
+          participants={expense.values.Participants}
+          owner={expense.values.Owner}
+        />
+      ));
+    }
 
     return (
       <div>
-        {/* <p>Modal is Open? {isOpen ? 'Yes' : 'No'}</p>
-        <button onClick={open}>OPEN</button>
-        <Modal>
-          <div>
-            <h1>Title</h1>
-            <p>This is a customizable modal.</p>
-            <button onClick={close}>CLOSE</button>
-          </div>
-        </Modal> */}
-
         <BottomSheet open={this.state.showSheet} overlay={true} onChange={this.onChangeHandler.bind(this)}>
           <div>
             <h1>Bottom sheet modal content</h1>
@@ -120,59 +129,8 @@ class Group extends Component {
             />
           </div>
         </BottomSheet>
-        {/* {groups}  */}
-        <ListItem
-          costs="+34,12"
-          title="Saufgruppe"
-          participants="1"
-          owner="Niklas"
-        />
-        <ListItem
-          costs="+34,12"
-          title="Saufgruppe"
-          participants="1"
-          owner="Niklas"
-        /> <ListItem
-          costs="+34,12"
-          title="Saufgruppe"
-          participants="1"
-          owner="Niklas"
-        /> <ListItem
-          costs="+34,12"
-          title="Saufgruppe"
-          participants="1"
-          owner="Niklas"
-        /> <ListItem
-          costs="+34,12"
-          title="Saufgruppe"
-          participants="1"
-          owner="Niklas"
-        /> <ListItem
-          costs="+34,12"
-          title="Saufgruppe"
-          participants="1"
-          owner="Niklas"
-        /> <ListItem
-          costs="+34,12"
-          title="Saufgruppe"
-          participants="1"
-          owner="Niklas"
-        /> <ListItem
-          costs="+34,12"
-          title="Saufgruppe"
-          participants="1"
-          owner="Niklas"
-        /> <ListItem
-          costs="+34,12"
-          title="Saufgruppe"
-          participants="1"
-          owner="Niklas"
-        /> <ListItem
-          costs="+34,12"
-          title="Saufgruppe"
-          participants="1"
-          owner="Niklas"
-        />
+        {expenses}
+
         <button onClick={this.onClickCreateGroupHandler.bind(this)}>Bottom Sheet anzeigen</button>
 
       </div>
@@ -181,11 +139,17 @@ class Group extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    token: state.auth.token,
+    expenses: state.expenses.expenses,
+    selectedGroup: state.expenses.selectedGroup
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    fetchExpenses: (token, groupID) => dispatch(actions.fetchExpenses(token, groupID)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Group);

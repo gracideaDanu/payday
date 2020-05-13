@@ -239,6 +239,8 @@ router.post('/expense',
                 message: errors.array()
             });
         }
+
+        //Owner fehlt noch
         const { title, costs, categoryId, groupId } = req.body;
         const queryExpensePost = `INSERT INTO public."Expense"("Title", "Costs", "CategoryId", "GroupId") VALUES ('${title}', '${costs}', '${categoryId}', '${groupId}');`
 
