@@ -45,6 +45,7 @@ export const fetchExpenses = (token, groupID) => {
                         id: key
                     });
                 }
+
                 dispatch(fetchExpensesSuccess(fetchedExpenses, groupID));
             })
             .catch(err => {

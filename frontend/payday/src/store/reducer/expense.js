@@ -10,6 +10,7 @@ export const fetchExpensesStart = (state, action) => {
 };
 
 export const fetchExpensesSuccess = (state, action) => {
+    console.log(action.expenses);
     return ({
         ...state,
         expenses: {

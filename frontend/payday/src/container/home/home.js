@@ -33,24 +33,18 @@ class Groups extends Component {
 
 
   render() {
-    // var groups = <p>Loading</p>;
-    // if (!this.props.groups.loading) {
-    //   groups = this.props.groups.map((group) => (
-    //     <p
-    //       key={group._id}
-    //     >
-    //       {group.name}
-    //     </p>
-    //   ));
-    // }
+
+     var groups = <p>Loading</p>;
+     if (!this.props.groups.loading) {
+       groups = this.props.groups.map((group) =>(
+               <ListItem title={group.Name} key={group.Id} costs="50"/>
+           )
+          );
+     }
 
     return (
       <div>
-        {/* {groups} */}
-        <ListItem costs="+34,12" title="Saufgruppe" />
-        <ListItem costs="-3,12" title="Biergruppe" />
-        <ListItem costs="+334,12" title="1. Maigruppe" />
-        <ListItem costs="+34,12" title="Saufgruppe" />
+         {groups}
       </div>
 
     );
@@ -64,6 +58,7 @@ const mapStateToProps = (state) => {
     groups: state.groups.groups,
     loading: state.groups.loading,
     selectedGroup: state.expenses.selectedGroup,
+    expenses: state.expenses.expenses
   };
 };
 
@@ -74,5 +69,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.fetchExpenses(token, groupID)),
   };
 };
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Groups);

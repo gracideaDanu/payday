@@ -10,6 +10,7 @@ export const fetchGroupsStart = (state, action) => {
 };
 
 export const fetchGroupsSuccess = (state, action) => {
+    console.log(action.groups);
     return ({
         ...state,
         groups: {
