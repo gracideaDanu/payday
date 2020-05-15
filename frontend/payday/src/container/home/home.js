@@ -2,19 +2,89 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import ListItem from "../../components/ui-elements/list-item/groupListItem";
+import BottomSheet from 'react-swipeable-bottom-sheet';
+import Button from '../../components/ui-elements/buttons/button';
+import Input from '../../components/ui-elements/input/input'
+import { tokenIsInvalid } from "../../store/actions/auth";
 // import BottomSheet from "../../components/bottom-sheet/bottomSheet";
 
+const postGroupState = {
+  controls: {
+    name: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Titel der Gruppe"
+      },
+      value: ""
+    },
+    participants: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Teilnehmer Array"
+      },
+      value: ""
+    }
+  },
+  showSheet: false
+};
+
 class Groups extends Component {
+
   constructor(props) {
     super(props);
-    this.state = {
-      selectedGroup: "",
-      showBottomSheet: false
-    };
+    this.state = postGroupState;
   }
 
   componentDidMount() {
     this.props.fetchGroups(this.props.token);
+  }
+
+  onClickCreateGroupHandler = () => {
+    this.setState({
+      ...this.state,
+      showSheet: true
+    })
+  }
+
+
+  inputChangedHandler = (event, controlName) => {
+    const updatedControls = {
+      ...this.state.controls,
+      [controlName]: {
+        ...this.state.controls[controlName],
+        value: event.target.value
+        // valid: this.checkValidity(
+        //   event.target.value,
+        //   this.state.controls[controlName].validation
+        // ),
+        // touched: true,
+      },
+    };
+    this.setState({ ...this.state, controls: updatedControls });
+    console.log(this.state);
+  };
+
+  onClickCloseHandler = () => {
+    this.setState({
+      ...this.state,
+      showSheet: false
+    })
+    console.log("clicked")
+  }
+
+  submitHandler = (event) => {
+    event.preventDefault();
+    const groupData = {
+      name: this.state.controls.name.value,
+      participants: this.state.controls.participants.value
+    }
+    this.props.onPostGroup(this.props.token, groupData);
+    this.setState({
+      ...this.state,
+      showSheet: false
+    })
   }
 
   onClickGroupHandler(id) {
@@ -34,17 +104,51 @@ class Groups extends Component {
 
   render() {
 
-     var groups = <p>Loading</p>;
-     if (!this.props.groups.loading) {
-       groups = this.props.groups.map((group) =>(
-               <ListItem title={group.Name} key={group.Id} costs="50"/>
-           )
-          );
-     }
+    var groups = <p>Loading</p>;
+    if (!this.props.groups.loading) {
+      groups = this.props.groups.map((group) => (
+        <ListItem title={group.Name} key={group.Id} costs="50" />
+      )
+      );
+    }
+
+    const formElementsArray = [];
+    for (let key in this.state.controls) {
+      formElementsArray.push({
+        id: key,
+        config: this.state.controls[key],
+      });
+    }
+
+    const form = formElementsArray.map((formElement) => (
+      <Input
+        key={formElement.id}
+        elementConfig={formElement.config.elementConfig}
+        value={formElement.config.value}
+        // invalid={!formElement.config.valid}
+        // shouldValidate={formElement.config.validation}
+        // touched={formElement.config.touched}
+        changed={(event) => this.inputChangedHandler(event, formElement.id)}
+      />
+    ));
 
     return (
       <div>
-         {groups}
+        <BottomSheet open={this.state.showSheet} overlay={true} onChange={this.onClickCloseHandler.bind(this)}>
+          <div>
+            <h1>Add new expense</h1>
+            <div>
+              <form onSubmit={this.submitHandler}>
+                <div>
+                  {form}
+                </div>
+                <Button clicked={this.submitHandler} btnStyle="mint">Add new group</Button>
+              </form>
+            </div>
+          </div>
+        </BottomSheet>
+        {groups}
+        <Button btnStyle="blue" clicked={this.onClickCreateGroupHandler.bind(this)}>Add new group</Button>
       </div>
 
     );
@@ -65,8 +169,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchGroups: (token) => dispatch(actions.fetchGroups(token)),
-    fetchExpenses: (token, groupID) =>
-      dispatch(actions.fetchExpenses(token, groupID)),
+    postGroup: (token, data) => dispatch(actions.postGroup(token, data))
   };
 };
 

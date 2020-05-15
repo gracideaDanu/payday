@@ -38,10 +38,13 @@ const reducer = (state = initialState, action) => {
         case actionTypes.AUTH_LOGOUT: return authActions.authLogout(state, action);
         case actionTypes.TOKEN_IS_INVALID: return authActions.tokenIsInvalid(state, action);
 
-
         case actionTypes.FETCH_GROUPS_START: return groupActions.fetchGroupsStart(state, action);
         case actionTypes.FETCH_GROUPS_SUCCESS: return groupActions.fetchGroupsSuccess(state, action);
         case actionTypes.FETCH_GROUPS_FAIL: return groupActions.fetchGroupsFailed(state, action);
+
+        case actionTypes.POST_GROUPS_START: return groupActions.postGroupStart(state, action);
+        case actionTypes.POST_GROUPS_SUCCESS: return groupActions.postGroupSuccess(state, action);
+        case actionTypes.POST_GROUPS_FAIL: return groupActions.postGroupFailed(state, action);
 
         case actionTypes.FETCH_USERS_START: return userActions.fetchUsersStart(state, action);
         case actionTypes.FETCH_USERS_SUCCESS: return userActions.fetchUsersSuccess(state, action);

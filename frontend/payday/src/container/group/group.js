@@ -33,7 +33,8 @@ const postExpenseState = {
       },
       value: ""
     }
-  }
+  },
+  showSheet: false
 };
 
 
@@ -47,12 +48,14 @@ class Group extends Component {
   componentDidMount() {
     this.props.fetchExpenses(this.props.token, 1);
     this.setState({
+      ...this.state,
       showSheet: false,
     });
   }
 
-  onClickCreateGroupHandler = () => {
+  onClickCreateExpenseHandler = () => {
     this.setState({
+      ...this.state,
       showSheet: true
     })
   }
@@ -71,12 +74,13 @@ class Group extends Component {
         // touched: true,
       },
     };
-    this.setState({ controls: updatedControls });
+    this.setState({ ...this.state, controls: updatedControls });
     console.log(this.state);
   };
 
   onClickCloseHandler = () => {
     this.setState({
+      ...this.state,
       showSheet: false
     })
     console.log("clicked")
@@ -96,7 +100,7 @@ class Group extends Component {
 
   render() {
 
-    var expensesArray = []
+    const expensesArray = []
     var expenses = null
     if (typeof this.props.expenses !== undefined && this.props.expenses.length > 0) {
       for (let key in this.props.expenses) {
@@ -112,6 +116,7 @@ class Group extends Component {
           title={expense.values.Title}
           participants={expense.values.Participants}
           owner={expense.values.Owner}
+          key={expense.key}
         />
       ));
     }
@@ -152,7 +157,7 @@ class Group extends Component {
           </div>
         </BottomSheet>
         {expenses}
-        <Button btnStyle="blue" clicked={this.onClickCreateGroupHandler.bind(this)}>Add new group</Button>
+        <Button btnStyle="blue" clicked={this.onClickCreateExpenseHandler.bind(this)}>Add new group</Button>
       </div>
     );
   }
