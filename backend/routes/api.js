@@ -207,17 +207,18 @@ router.post('/group',
             return
         }
         if (typeof participants !== 'undefined' && participants.length > 0) {
-            participants.forEach(async (participantId) => {
-                const queryGroupUsersParticipantPost = `INSERT INTO public."GroupUsers"("UserId", "GroupId") VALUES ('${participantId}','${groupId}');`
-                try {
-                    const { rows } = await database.query(queryGroupUsersParticipantPost);
-                    group = rows[0];
-                } catch (e) {
-                    console.log(e);
-                    res.send({ message: "Unable to insert participant to new group" })
-                    return
-                }
-            });
+            try {
+                participants.forEach(async (participantId) => {
+                    const queryGroupUsersParticipantPost = `INSERT INTO public."GroupUsers"("UserId", "GroupId") VALUES ('${participantId}','${groupId}');`
+
+                    await database.query(queryGroupUsersParticipantPost);
+                });
+            } catch (e) {
+                console.log(e);
+                res.send({ message: "Unable to insert participant to new group" })
+                return
+
+            }
         }
 
         res.status(201).json({ message: "Created new group" })

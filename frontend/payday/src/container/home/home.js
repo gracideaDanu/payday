@@ -78,9 +78,9 @@ class Groups extends Component {
     event.preventDefault();
     const groupData = {
       name: this.state.controls.name.value,
-      participants: this.state.controls.participants.value
+      participants: [2, 3]
     }
-    this.props.onPostGroup(this.props.token, groupData);
+    this.props.postGroup(this.props.token, groupData);
     this.setState({
       ...this.state,
       showSheet: false

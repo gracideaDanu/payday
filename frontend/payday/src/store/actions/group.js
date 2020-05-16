@@ -52,21 +52,21 @@ export const fetchGroups = (token) => {
 
 export const postGroupSuccess = (groups) => {
     return {
-        type: actionTypes.FETCH_GROUPS_SUCCESS,
+        type: actionTypes.POST_GROUPS_SUCCESS,
         groups: groups
     };
 };
 
 export const postGroupFail = (error) => {
     return {
-        type: actionTypes.FETCH_GROUPS_FAIL,
+        type: actionTypes.POST_GROUPS_FAIL,
         error: error
     };
 };
 
 export const postGroupStart = () => {
     return {
-        type: actionTypes.FETCH_GROUPS_START
+        type: actionTypes.POST_GROUPS_START
     };
 };
 
@@ -81,7 +81,7 @@ export const postGroup = (token, groupData) => {
             }
         };
         const data = groupData
-        axios.post('api/groups', data, config)
+        axios.post('/api/group', data, config)
             .then(response => {
                 dispatch(postGroupSuccess(response));
                 dispatch(fetchGroups(token));
