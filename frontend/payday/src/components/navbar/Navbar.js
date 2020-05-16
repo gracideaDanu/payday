@@ -3,6 +3,8 @@ import Button from '../ui-elements/buttons/button'
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 
+import './navbar.css'
+
 
 class Navbar extends Component {
 
@@ -11,7 +13,9 @@ class Navbar extends Component {
     }
     render() {
         return (
-            <Button btnStyle="blue" clicked={this.onClickLogoutHandler.bind(this)}>Logout</Button>
+            <nav className="navbar">
+                <Button className="navbar-logout-button" btnStyle="blue" clicked={this.onClickLogoutHandler.bind(this)}>Logout</Button>
+            </nav>
         )
     }
 }

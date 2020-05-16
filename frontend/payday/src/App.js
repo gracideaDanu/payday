@@ -6,7 +6,7 @@ import Auth from "./container/authentication/auth";
 import { Route, Switch } from "react-router-dom";
 import Home from "./container/home/home";
 import Group from "./container/group/group";
-import Navbar from './components/navbar/Navbar'
+import Navbar from './components/navbar/navbar'
 
 class App extends Component {
   state = {
