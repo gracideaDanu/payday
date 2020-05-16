@@ -29,6 +29,12 @@ export const tokenIsInvalid = () => {
     }
 }
 
+export const authLogout = () => {
+    return {
+        type: actionTypes.AUTH_LOGOUT
+    }
+}
+
 export const auth = (isSignUp, data) => {
     return dispatch => {
         dispatch(authStart());
