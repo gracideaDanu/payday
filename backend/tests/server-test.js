@@ -296,7 +296,6 @@ describe("API test", () => {
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property("message");
-          console.log(res.body)
           done();
         });
     });
@@ -352,6 +351,63 @@ describe("API test", () => {
 
   var group = null;
   describe("GET groups", () => {
+    it("should login user pascal and return token", (done) => {
+      chai
+        .request(server)
+        .post("/login/")
+        .set("content-type", "application/json")
+        .send({
+          password: "Password",
+          email: "pascal@test.com"
+        })
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property("token");
+          sessionToken = res.body.token;
+          done();
+        });
+    });
+
+
+    it("should return all groups from the logged in user", (done) => {
+      chai
+        .request(server)
+        .get("/api/groups")
+        .set("content-type", "application/json")
+        .set("authentication", "Bearer " + sessionToken)
+        .send()
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property("groups");
+
+          res.body.groups.should.have.length(2);
+          group = res.body.groups[0];
+
+          done();
+        });
+    });
+  });
+
+
+
+  describe("GET groups", () => {
+    it("should login user niklas and return token", (done) => {
+      chai
+        .request(server)
+        .post("/login/")
+        .set("content-type", "application/json")
+        .send({
+          password: "Password",
+          email: "niklas@test.com"
+        })
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property("token");
+          sessionToken = res.body.token;
+
+          done();
+        });
+    });
     it("should return all groups from the logged in user", (done) => {
       chai
         .request(server)
@@ -369,11 +425,13 @@ describe("API test", () => {
     });
   });
 
+
+
   describe("GET expense", () => {
     it("should return an error message", (done) => {
       chai
         .request(server)
-        .get("/api/expenses/" + group.Id)
+        .get("/api/expenses/" + group.GroupId)
         .set("content-type", "application/json")
         .set("authentication", "Bearer " + sessionToken)
         .send()
@@ -396,7 +454,7 @@ describe("API test", () => {
           title: "Getränkekauf",
           costs: 12.99,
           categoryId: categories[0].Id,
-          groupId: group.Id,
+          groupId: group.GroupId,
         })
         .end((err, res) => {
           res.should.have.status(201);
@@ -413,7 +471,7 @@ describe("API test", () => {
           title: "Essen",
           costs: 20.99,
           categoryId: categories[1].Id,
-          groupId: group.Id,
+          groupId: group.GroupId,
         })
         .end((err, res) => {
           res.should.have.status(201);
@@ -430,7 +488,7 @@ describe("API test", () => {
           name: "Essen",
           costs: 20.99,
           categoryId: categories[1].Id,
-          groupId: group.Id,
+          groupId: group.GroupId,
         })
         .end((err, res) => {
           res.should.have.status(400);
@@ -446,7 +504,7 @@ describe("API test", () => {
         .send({
           title: "Essen",
           category: categories[1].Id,
-          groupId: group.Id,
+          groupId: group.GroupId,
         })
         .end((err, res) => {
           res.should.have.status(400);
@@ -462,7 +520,7 @@ describe("API test", () => {
         .send({
           title: "Essen",
           costs: 12.99,
-          groupId: group.Id,
+          groupId: group.GroupId,
         })
         .end((err, res) => {
           res.should.have.status(400);
@@ -492,7 +550,7 @@ describe("API test", () => {
     it("should return all expenses from certain group", (done) => {
       chai
         .request(server)
-        .get("/api/expenses/" + group.Id)
+        .get("/api/expenses/" + group.GroupId)
         .set("content-type", "application/json")
         .set("authentication", "Bearer " + sessionToken)
         .send()
@@ -517,7 +575,7 @@ describe("API test", () => {
           title: "Essen",
           costs: 18.99,
           categoryId: categories[1].Id,
-          groupId: group.Id,
+          groupId: group.GroupId,
         })
         .end((err, res) => {
           res.should.have.status(200);
@@ -534,7 +592,7 @@ describe("API test", () => {
           title: "Essen",
           costs: "18,99",
           categoryId: categories[1].Id,
-          groupId: group.Id,
+          groupId: group.GroupId,
         })
         .end((err, res) => {
           res.should.have.status(400);
@@ -562,7 +620,7 @@ describe("API test", () => {
     it("should delete a certain group", (done) => {
       chai
         .request(server)
-        .delete("/api/expense/" + group.Id)
+        .delete("/api/expense/" + group.GroupId)
         .set("content-type", "application/json")
         .set("authentication", "Bearer " + sessionToken)
         .send()

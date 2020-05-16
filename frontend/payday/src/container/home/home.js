@@ -78,7 +78,7 @@ class Groups extends Component {
     event.preventDefault();
     const groupData = {
       name: this.state.controls.name.value,
-      participants: [2, 3]
+      participants: [2]
     }
     this.props.postGroup(this.props.token, groupData);
     this.setState({
@@ -107,7 +107,7 @@ class Groups extends Component {
     var groups = <p>Loading</p>;
     if (!this.props.groups.loading) {
       groups = this.props.groups.map((group) => (
-        <ListItem title={group.Name} key={group.Id} costs="50" />
+        <ListItem title={group.Name} key={group.GroupId} costs="50" />
       )
       );
     }
