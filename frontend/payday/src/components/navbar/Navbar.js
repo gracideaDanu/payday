@@ -10,6 +10,7 @@ class Navbar extends Component {
 
     onClickLogoutHandler = () => {
         this.props.onLogout()
+
     }
     render() {
         return (

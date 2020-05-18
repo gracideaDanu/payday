@@ -5,7 +5,6 @@ import ListItem from "../../components/ui-elements/list-item/groupListItem";
 import BottomSheet from 'react-swipeable-bottom-sheet';
 import Button from '../../components/ui-elements/buttons/button';
 import Input from '../../components/ui-elements/input/input'
-import { tokenIsInvalid } from "../../store/actions/auth";
 // import BottomSheet from "../../components/bottom-sheet/bottomSheet";
 
 const postGroupState = {
@@ -39,7 +38,9 @@ class Groups extends Component {
 
   componentDidMount() {
     this.props.fetchGroups(this.props.token);
+
   }
+
 
   onClickCreateGroupHandler = () => {
     this.setState({
@@ -85,7 +86,12 @@ class Groups extends Component {
       ...this.state,
       showSheet: false
     })
-  }
+  };
+
+  accessGroupExpensesHandler = (id) => {
+    this.props.history.push("/group/" + id);
+
+  };
 
   onClickGroupHandler(id) {
     // console.log(this.props.groups[id]._id);
@@ -104,10 +110,12 @@ class Groups extends Component {
 
   render() {
 
+    {console.log(this.props.groups)}
+
     var groups = <p>Loading</p>;
     if (!this.props.groups.loading) {
       groups = this.props.groups.map((group) => (
-        <ListItem title={group.Name} key={group.GroupId} costs="50" />
+        <ListItem path={'/group/' + group.GroupId} title={group.Name} clicked={() => this.accessGroupExpensesHandler(group.GroupId)} key={group.GroupId} costs="50" />
       )
       );
     }

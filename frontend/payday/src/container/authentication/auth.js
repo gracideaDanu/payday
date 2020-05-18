@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
+import {  withRouter } from "react-router-dom";
 
 import Button from "../../components/ui-elements/buttons/button";
 import Input from "../../components/ui-elements/input/input";
@@ -121,6 +122,12 @@ const signUpState = {
 class Auth extends Component {
   state = signInState;
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.tkn !== null) {
+      this.props.history.push("/home");
+    }
+  }
+
   switchAuthModeHandler = () => {
     if (this.state.isSignUp) {
       this.setState(signInState);
@@ -239,7 +246,13 @@ const mapDispatchToProps = dispatch => {
     onAuth: (isSignUp, data) => dispatch(actions.auth(isSignUp, data))
   }
 
-}
+};
 
-export default connect(null, mapDispatchToProps)(Auth);
+const mapStateToProps = (state) => {
+  return {
+    tkn: state.auth.token,
+  };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Auth));
 

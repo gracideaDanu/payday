@@ -28,7 +28,7 @@ export const fetchGroups = (token) => {
         dispatch(fetchGroupsStart());
         const config = {
             'headers': {
-                'Authentication': 'Bearer ' + token,
+                'authentication': 'Bearer ' + token,
                 'Content-Type': 'application/json'
             }
         };

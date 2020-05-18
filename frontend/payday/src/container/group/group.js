@@ -46,7 +46,8 @@ class Group extends Component {
 
 
   componentDidMount() {
-    this.props.fetchExpenses(this.props.token, 1);
+    const fetchId= this.props.match.params.id;
+    this.props.fetchExpenses(this.props.token, fetchId);
     this.setState({
       ...this.state,
       showSheet: false,
