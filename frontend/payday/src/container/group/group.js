@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import ListItem from "../../components/ui-elements/list-item/expenseListItem";
@@ -54,6 +55,7 @@ class Group extends Component {
       ...this.state,
       showSheet: false,
     });
+    console.log(this.props.expenses)
   }
 
   onClickCreateExpenseHandler = () => {
@@ -100,6 +102,10 @@ class Group extends Component {
     this.props.onPostExpense(this.props.token, expenseData);
   }
 
+  accessSingleExpenseHanlder = (id) => {
+    this.props.history.push(this.props.location.pathname + "/expense" + id);
+  };
+
 
   render() {
 
@@ -123,6 +129,7 @@ class Group extends Component {
             title={expense.values.Title}
             participants={expense.values.Participants}
             owner={expense.values.Owner}
+            click={() => this.accessSingleExpenseHanlder(expense.values.Id)}
             key={expense.key}
         />
       });

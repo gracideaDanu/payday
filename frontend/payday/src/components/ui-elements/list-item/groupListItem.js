@@ -1,6 +1,5 @@
 import React from "react";
 import "./groupListItem.css";
-import {Link} from "react-router-dom";
 
 const GroupListItem = (props) => {
   return (

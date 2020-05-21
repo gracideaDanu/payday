@@ -7,6 +7,7 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import Home from "./container/home/home";
 import Group from "./container/group/group";
 import Navbar from './components/navbar/Navbar'
+import Expense from "./container/expense/expense";
 
 class App extends Component {
   state = {
@@ -37,7 +38,8 @@ class App extends Component {
      var privateRoutes = [];
      if (this.props.tkn !== null) {
       privateRoutes.push(<Route path="/home" component={Home} />);
-      privateRoutes.push(<Route path="/group/:id" component={Group} />);
+      privateRoutes.push(<Route path="/group:id" exact component={Group} />);
+      privateRoutes.push(<Route path="/group:id/expense:id" component={Expense}/>)
 
      }
     return (

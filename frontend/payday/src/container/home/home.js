@@ -89,7 +89,7 @@ class Groups extends Component {
   };
 
   accessGroupExpensesHandler = (id) => {
-    this.props.history.push("/group/" + id);
+    this.props.history.push("/group" + id);
 
   };
 
@@ -110,7 +110,6 @@ class Groups extends Component {
 
   render() {
 
-    {console.log(this.props.groups)}
 
     var groups = <p>Loading</p>;
     if (!this.props.groups.loading) {
