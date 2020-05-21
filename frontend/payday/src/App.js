@@ -14,7 +14,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-      console.log(this.props.groups);
+
       if (this.props.location.pathname === "/"){
           if (this.props.tkn !== null) {
 
