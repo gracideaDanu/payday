@@ -46,7 +46,7 @@ class Group extends Component {
 
 
   componentDidMount() {
-    const fetchId= this.props.match.params.id;
+    const fetchId = this.props.match.params.id;
     this.props.fetchExpenses(this.props.token, fetchId);
     this.setState({
       ...this.state,
@@ -93,7 +93,7 @@ class Group extends Component {
       title: this.state.controls.title.value,
       costs: this.state.controls.costs.value,
       categoryId: this.state.controls.categoryId.value,
-      groupId: 1
+      groupId: this.props.match.params.id
     }
     this.props.onPostExpense(this.props.token, expenseData);
   }
