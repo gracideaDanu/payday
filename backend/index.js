@@ -20,14 +20,6 @@ app.use((err, req, res, next) => {
   next();
 });
 
-//Kann raus, momentan zum testen drin
-// database.query("SELECT NOW()", (error, result) => {
-//   if (error) {
-//     throw error;
-//   }
-//   console.log(result);
-// });
-
 app.use(bodyParser.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));

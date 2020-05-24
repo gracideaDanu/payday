@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
-import {  withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import Button from "../../components/ui-elements/buttons/button";
 import Input from "../../components/ui-elements/input/input";
@@ -216,6 +216,7 @@ class Auth extends Component {
     const form = formElementsArray.map((formElement) => (
       <Input
         key={formElement.id}
+        elementType={formElement.config.elementType}
         elementConfig={formElement.config.elementConfig}
         value={formElement.config.value}
         invalid={!formElement.config.valid}

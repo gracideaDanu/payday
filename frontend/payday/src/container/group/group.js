@@ -7,10 +7,51 @@ import Button from '../../components/ui-elements/buttons/button';
 import Input from '../../components/ui-elements/input/input'
 
 
+const dropdown = {
+  location: [
+    {
+      id: 0,
+      title: 'New York',
+      selected: false,
+      key: 'location'
+    },
+    {
+      id: 1,
+      title: 'Dublin',
+      selected: false,
+      key: 'location'
+    },
+    {
+      id: 2,
+      title: 'California',
+      selected: false,
+      key: 'location'
+    },
+    {
+      id: 3,
+      title: 'Istanbul',
+      selected: false,
+      key: 'location'
+    },
+    {
+      id: 4,
+      title: 'Izmir',
+      selected: false,
+      key: 'location'
+    },
+    {
+      id: 5,
+      title: 'Oslo',
+      selected: false,
+      key: 'location'
+    }
+  ]
+}
+
 const postExpenseState = {
   controls: {
     title: {
-      elementType: "input",
+      elementType: "text-field",
       elementConfig: {
         type: "text",
         placeholder: "Titel der Ausgabe"
@@ -18,7 +59,7 @@ const postExpenseState = {
       value: ""
     },
     costs: {
-      elementType: "input",
+      elementType: "text-field",
       elementConfig: {
         type: "text",
         placeholder: "Kosten"
@@ -26,10 +67,11 @@ const postExpenseState = {
       value: ""
     },
     categoryId: {
-      elementType: "input",
+      elementType: "dropdown",
       elementConfig: {
         type: "text",
-        placeholder: "Kategorie-ID"
+        placeholder: "Kategorie-ID",
+        values: dropdown
       },
       value: ""
     }
@@ -38,10 +80,11 @@ const postExpenseState = {
 };
 
 
+
 class Group extends Component {
   constructor(props) {
     super(props);
-    this.state = postExpenseState;
+    this.state = postExpenseState
   }
 
 
@@ -133,6 +176,7 @@ class Group extends Component {
     const form = formElementsArray.map((formElement) => (
       <Input
         key={formElement.id}
+        elementType={formElement.config.elementType}
         elementConfig={formElement.config.elementConfig}
         value={formElement.config.value}
         // invalid={!formElement.config.valid}

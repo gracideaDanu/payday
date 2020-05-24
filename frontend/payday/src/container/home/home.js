@@ -110,7 +110,7 @@ class Groups extends Component {
 
   render() {
 
-    {console.log(this.props.groups)}
+    { console.log(this.props.groups) }
 
     var groups = <p>Loading</p>;
     if (!this.props.groups.loading) {
@@ -131,6 +131,7 @@ class Groups extends Component {
     const form = formElementsArray.map((formElement) => (
       <Input
         key={formElement.id}
+        elementType={formElement.config.elementType}
         elementConfig={formElement.config.elementConfig}
         value={formElement.config.value}
         // invalid={!formElement.config.valid}
