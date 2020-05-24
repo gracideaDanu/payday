@@ -1,6 +1,8 @@
 import React from "react";
 import TextField from './text-field/textField'
 import Dropdown from './dropdown/dropdown'
+import TagList from './tag-list/tagList'
+
 import './input.css'
 
 const input = (props) => {
@@ -8,7 +10,7 @@ const input = (props) => {
   var inputComponent = null
   console.log(props)
   if (props.elementType === 'dropdown') {
-    inputComponent = <Dropdown
+    inputComponent = <TagList
       elementConfig={props.elementConfig}
       value={props.value}
       changed={props.changed} />
