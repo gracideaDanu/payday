@@ -5,7 +5,6 @@ import ListItem from "../../components/ui-elements/list-item/groupListItem";
 import BottomSheet from 'react-swipeable-bottom-sheet';
 import Button from '../../components/ui-elements/buttons/button';
 import Input from '../../components/ui-elements/input/input'
-// import BottomSheet from "../../components/bottom-sheet/bottomSheet";
 
 const postGroupState = {
   controls: {
@@ -90,7 +89,6 @@ class Groups extends Component {
 
   accessGroupExpensesHandler = (id) => {
     this.props.history.push("/group/" + id);
-
   };
 
   onClickGroupHandler(id) {
@@ -110,7 +108,7 @@ class Groups extends Component {
 
   render() {
 
-    {console.log(this.props.groups)}
+    { console.log(this.props.groups) }
 
     var groups = <p>Loading</p>;
     if (!this.props.groups.loading) {
@@ -144,7 +142,7 @@ class Groups extends Component {
       <div>
         <BottomSheet open={this.state.showSheet} overlay={true} onChange={this.onClickCloseHandler.bind(this)}>
           <div>
-            <h1>Add new expense</h1>
+            <h1>Add new group</h1>
             <div>
               <form onSubmit={this.submitHandler}>
                 <div>

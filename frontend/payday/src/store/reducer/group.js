@@ -50,3 +50,39 @@ export const postGroupFailed = (state, action) => {
         ...state
     })
 };
+
+export const deleteExpenseStart = (state, action) => {
+    return ({
+        ...state
+    })
+};
+
+export const deleteExpenseSuccess = (state, action) => {
+    return ({
+        ...state
+    })
+};
+
+export const deleteExpenseFailed = (state, action) => {
+    return ({
+        ...state
+    })
+};
+
+export const deleteGroupStart = (state, action) => {
+    return ({
+        ...state
+    })
+};
+
+export const deleteGroupSuccess = (state, action) => {
+    return ({
+        ...state
+    })
+};
+
+export const deleteGroupFailed = (state, action) => {
+    return ({
+        ...state
+    })
+};

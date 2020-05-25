@@ -46,7 +46,7 @@ class Group extends Component {
 
 
   componentDidMount() {
-    const fetchId= this.props.match.params.id;
+    const fetchId = this.props.match.params.id;
     this.props.fetchExpenses(this.props.token, fetchId);
     this.setState({
       ...this.state,
@@ -93,11 +93,23 @@ class Group extends Component {
       title: this.state.controls.title.value,
       costs: this.state.controls.costs.value,
       categoryId: this.state.controls.categoryId.value,
-      groupId: 1
+      groupId: this.props.match.params.id
     }
     this.props.onPostExpense(this.props.token, expenseData);
   }
 
+  onClickDeleteGroupHandler = (event) => {
+    // this.props.onDeleteGroup(this.props.token, groupId);
+  }
+
+
+  onClickDeleteExpenseHandler = (event) => {
+    console.log(this.props);
+    const expenseId = 1;
+    this.props.onDeleteExpense(this.props.token, expenseId);
+
+    console.log("clicked delete expense");
+  }
 
   render() {
 
@@ -113,6 +125,7 @@ class Group extends Component {
 
       expenses = expensesArray.map((expense) => (
         <ListItem
+          expenseId={expense.values.Id}
           costs={expense.values.Costs}
           title={expense.values.Title}
           participants={expense.values.Participants}
@@ -158,7 +171,11 @@ class Group extends Component {
           </div>
         </BottomSheet>
         {expenses}
-        <Button btnStyle="blue" clicked={this.onClickCreateExpenseHandler.bind(this)}>Add new group</Button>
+        <Button btnStyle="blue" clicked={this.onClickCreateExpenseHandler.bind(this)}>Add new expense</Button>
+        {/* <Input ></Input> */}
+        <Button clicked={this.onClickDeleteExpenseHandler.bind(this)} btnStyle="delete">Delete expense</Button>
+        <Button clicked={this.onClickDeleteGroupHandler.bind(this)} btnStyle="delete">Delete group</Button>
+
       </div>
     );
   }
@@ -176,7 +193,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onPostExpense: (token, data) => dispatch(actions.postExpense(token, data)),
-    fetchExpenses: (token, groupID) => dispatch(actions.fetchExpenses(token, groupID)),
+    fetchExpenses: (token, groupId) => dispatch(actions.fetchExpenses(token, groupId)),
+    onDeleteExpense: (token, expenseId) => dispatch(actions.deleteExpense(token, expenseId))
+    // onDeleteGroup: (token, groupID) => dispatch(actions.deleteGroup(token, groupId))
   };
 };
 

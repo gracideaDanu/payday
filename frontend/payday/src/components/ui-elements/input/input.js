@@ -25,7 +25,7 @@ const input = (props) => {
       icon = TextIcon;
       break;
     default:
-      icon = TextIcon;
+      icon = null;
   }
 
   return (

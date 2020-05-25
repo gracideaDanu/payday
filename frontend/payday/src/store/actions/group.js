@@ -101,3 +101,19 @@ export const postGroup = (token, groupData) => {
             });
     };
 };
+
+
+
+// export const deleteGroup = (token, groupId) => {
+//     return dispach => {
+//         dispatch(deleteGroupStart());
+//         const config = {
+//             'headers': {
+//                 'Authentication': 'Bearer ' + token,
+//                 'Content-Type': 'application/json'
+//             }
+//         };
+//         const data = groupId;
+//         axios.delete('/api/group/')
+//     }
+// }

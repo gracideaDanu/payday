@@ -33,3 +33,19 @@
   border: 3px solid;
   border-color: var(--mint);
 }
+
+.delete {
+  background: var(--red);
+  border: none;
+  color: #ecf0f1;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+
+.delete:hover {
+  background: #fff;
+  color: var(--red);
+  border: 3px solid;
+  border-color: var(--red);
+}
