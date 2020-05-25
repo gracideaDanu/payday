@@ -34,10 +34,9 @@ export const fetchExpensesFailed = (state, action) => {
 };
 
 export const postExpenseStart = (state, action) => {
-    const newState = {
+    return ({
         ...state
-    }
-    return (newState);
+    })
 };
 
 export const postExpenseSuccess = (state, action) => {
@@ -47,6 +46,24 @@ export const postExpenseSuccess = (state, action) => {
 };
 
 export const postExpenseFailed = (state, action) => {
+    return ({
+        ...state
+    })
+};
+
+export const deleteExpenseStart = (state, action) => {
+    return ({
+        ...state
+    })
+};
+
+export const deleteExpenseSuccess = (state, action) => {
+    return ({
+        ...state
+    })
+};
+
+export const deleteExpenseFailed = (state, action) => {
     return ({
         ...state
     })

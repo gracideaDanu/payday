@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import ListItem from "../../components/ui-elements/list-item/groupListItem";
-import BottomSheet from 'react-swipeable-bottom-sheet';
-import Button from '../../components/ui-elements/buttons/button';
-import Input from '../../components/ui-elements/input/input'
-// import BottomSheet from "../../components/bottom-sheet/bottomSheet";
+import BottomSheet from "react-swipeable-bottom-sheet";
+import Button from "../../components/ui-elements/buttons/button";
+import Input from "../../components/ui-elements/input/input";
 
 const postGroupState = {
   controls: {
@@ -13,24 +12,23 @@ const postGroupState = {
       elementType: "input",
       elementConfig: {
         type: "text",
-        placeholder: "Titel der Gruppe"
+        placeholder: "Titel der Gruppe",
       },
-      value: ""
+      value: "",
     },
     participants: {
       elementType: "input",
       elementConfig: {
         type: "text",
-        placeholder: "Teilnehmer Array"
+        placeholder: "Teilnehmer Array",
       },
-      value: ""
-    }
+      value: "",
+    },
   },
-  showSheet: false
+  showSheet: false,
 };
 
 class Groups extends Component {
-
   constructor(props) {
     super(props);
     this.state = postGroupState;
@@ -38,24 +36,21 @@ class Groups extends Component {
 
   componentDidMount() {
     this.props.fetchGroups(this.props.token);
-
   }
-
 
   onClickCreateGroupHandler = () => {
     this.setState({
       ...this.state,
-      showSheet: true
-    })
-  }
-
+      showSheet: true,
+    });
+  };
 
   inputChangedHandler = (event, controlName) => {
     const updatedControls = {
       ...this.state.controls,
       [controlName]: {
         ...this.state.controls[controlName],
-        value: event.target.value
+        value: event.target.value,
         // valid: this.checkValidity(
         //   event.target.value,
         //   this.state.controls[controlName].validation
@@ -70,27 +65,26 @@ class Groups extends Component {
   onClickCloseHandler = () => {
     this.setState({
       ...this.state,
-      showSheet: false
-    })
-    console.log("clicked")
-  }
+      showSheet: false,
+    });
+    console.log("clicked");
+  };
 
   submitHandler = (event) => {
     event.preventDefault();
     const groupData = {
       name: this.state.controls.name.value,
-      participants: [2]
-    }
+      participants: [2],
+    };
     this.props.postGroup(this.props.token, groupData);
     this.setState({
       ...this.state,
-      showSheet: false
-    })
+      showSheet: false,
+    });
   };
 
   accessGroupExpensesHandler = (id) => {
-    this.props.history.push("/group/" + id);
-
+    this.props.history.push("/group" + id);
   };
 
   onClickGroupHandler(id) {
@@ -101,23 +95,22 @@ class Groups extends Component {
     //   selectedGroup: select,
     // });
     // this.props.fetchExpenses(this.props.token, this.props.groups[id]._id);
-
     // console.log(this.props.groups[id]);
     // console.log(this.state);
   }
 
-
-
   render() {
-
-    { console.log(this.props.groups) }
-
     var groups = <p>Loading</p>;
     if (!this.props.groups.loading) {
       groups = this.props.groups.map((group) => (
-        <ListItem path={'/group/' + group.GroupId} title={group.Name} clicked={() => this.accessGroupExpensesHandler(group.GroupId)} key={group.GroupId} costs="50" />
-      )
-      );
+        <ListItem
+          path={"/group/" + group.GroupId}
+          title={group.Name}
+          clicked={() => this.accessGroupExpensesHandler(group.GroupId)}
+          key={group.GroupId}
+          costs="50"
+        />
+      ));
     }
 
     const formElementsArray = [];
@@ -143,23 +136,31 @@ class Groups extends Component {
 
     return (
       <div>
-        <BottomSheet open={this.state.showSheet} overlay={true} onChange={this.onClickCloseHandler.bind(this)}>
+        <BottomSheet
+          open={this.state.showSheet}
+          overlay={true}
+          onChange={this.onClickCloseHandler.bind(this)}
+        >
           <div>
-            <h1>Add new expense</h1>
+            <h1>Add new group</h1>
             <div>
               <form onSubmit={this.submitHandler}>
-                <div>
-                  {form}
-                </div>
-                <Button clicked={this.submitHandler} btnStyle="mint">Add new group</Button>
+                <div>{form}</div>
+                <Button clicked={this.submitHandler} btnStyle="mint">
+                  Add new group
+                </Button>
               </form>
             </div>
           </div>
         </BottomSheet>
         {groups}
-        <Button btnStyle="blue" clicked={this.onClickCreateGroupHandler.bind(this)}>Add new group</Button>
+        <Button
+          btnStyle="blue"
+          clicked={this.onClickCreateGroupHandler.bind(this)}
+        >
+          Add new group
+        </Button>
       </div>
-
     );
   }
 }
@@ -171,16 +172,15 @@ const mapStateToProps = (state) => {
     groups: state.groups.groups,
     loading: state.groups.loading,
     selectedGroup: state.expenses.selectedGroup,
-    expenses: state.expenses.expenses
+    expenses: state.expenses.expenses,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchGroups: (token) => dispatch(actions.fetchGroups(token)),
-    postGroup: (token, data) => dispatch(actions.postGroup(token, data))
+    postGroup: (token, data) => dispatch(actions.postGroup(token, data)),
   };
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Groups);

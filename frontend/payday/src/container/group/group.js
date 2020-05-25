@@ -1,52 +1,53 @@
 import React, { Component } from "react";
+
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import ListItem from "../../components/ui-elements/list-item/expenseListItem";
-import BottomSheet from 'react-swipeable-bottom-sheet';
-import Button from '../../components/ui-elements/buttons/button';
-import Input from '../../components/ui-elements/input/input'
-
+import SumListItem from "../../components/ui-elements/list-item/sumExpenseListItem";
+import BottomSheet from "react-swipeable-bottom-sheet";
+import Button from "../../components/ui-elements/buttons/button";
+import Input from "../../components/ui-elements/input/input";
 
 const dropdown = {
   location: [
     {
       id: 0,
-      title: 'New York',
+      title: "New York",
       selected: false,
-      key: 'location'
+      key: "location",
     },
     {
       id: 1,
-      title: 'Dublin',
+      title: "Dublin",
       selected: false,
-      key: 'location'
+      key: "location",
     },
     {
       id: 2,
-      title: 'California',
+      title: "California",
       selected: false,
-      key: 'location'
+      key: "location",
     },
     {
       id: 3,
-      title: 'Istanbul',
+      title: "Istanbul",
       selected: false,
-      key: 'location'
+      key: "location",
     },
     {
       id: 4,
-      title: 'Izmir',
+      title: "Izmir",
       selected: false,
-      key: 'location'
+      key: "location",
     },
     {
       id: 5,
-      title: 'Oslo',
+      title: "Oslo",
       selected: false,
-      key: 'location'
-    }
-  ]
-}
+      key: "location",
+    },
+  ],
+};
 
 const postExpenseState = {
   controls: {
@@ -54,39 +55,36 @@ const postExpenseState = {
       elementType: "text-field",
       elementConfig: {
         type: "text",
-        placeholder: "Titel der Ausgabe"
+        placeholder: "Titel der Ausgabe",
       },
-      value: ""
+      value: "",
     },
     costs: {
       elementType: "text-field",
       elementConfig: {
         type: "text",
-        placeholder: "Kosten"
+        placeholder: "Kosten",
       },
-      value: ""
+      value: "",
     },
     categoryId: {
       elementType: "dropdown",
       elementConfig: {
         type: "text",
         placeholder: "Kategorie-ID",
-        values: dropdown
+        values: dropdown,
       },
-      value: ""
-    }
+      value: "",
+    },
   },
-  showSheet: false
+  showSheet: false,
 };
-
-
 
 class Group extends Component {
   constructor(props) {
     super(props);
-    this.state = postExpenseState
+    this.state = postExpenseState;
   }
-
 
   componentDidMount() {
     const fetchId = this.props.match.params.id;
@@ -95,22 +93,23 @@ class Group extends Component {
       ...this.state,
       showSheet: false,
     });
+    console.log(this.props.expenses);
   }
 
   onClickCreateExpenseHandler = () => {
     this.setState({
       ...this.state,
-      showSheet: true
-    })
-  }
-
+      showSheet: true,
+    });
+  };
 
   inputChangedHandler = (event, controlName) => {
+    console.log(event.target.value);
     const updatedControls = {
       ...this.state.controls,
       [controlName]: {
         ...this.state.controls[controlName],
-        value: event.target.value
+        value: event.target.value,
         // valid: this.checkValidity(
         //   event.target.value,
         //   this.state.controls[controlName].validation
@@ -125,10 +124,10 @@ class Group extends Component {
   onClickCloseHandler = () => {
     this.setState({
       ...this.state,
-      showSheet: false
-    })
-    console.log("clicked")
-  }
+      showSheet: false,
+    });
+    console.log("clicked");
+  };
 
   submitHandler = (event) => {
     event.preventDefault();
@@ -136,17 +135,40 @@ class Group extends Component {
       title: this.state.controls.title.value,
       costs: this.state.controls.costs.value,
       categoryId: this.state.controls.categoryId.value,
-      groupId: this.props.match.params.id
-    }
+      groupId: this.props.match.params.id,
+    };
     this.props.onPostExpense(this.props.token, expenseData);
-  }
+  };
 
+  onClickDeleteGroupHandler = (event) => {
+    // this.props.onDeleteGroup(this.props.token, groupId);
+  };
+
+  onClickDeleteExpenseHandler = (event) => {
+    console.log(this.props);
+    const expenseId = 4;
+    this.props.onDeleteExpense(
+      this.props.token,
+      expenseId,
+      this.props.match.params.id
+    );
+
+    console.log("clicked delete expense");
+  };
+
+  accessSingleExpenseHanlder = (id) => {
+    this.props.history.push(this.props.location.pathname + "/expense" + id);
+  };
 
   render() {
-
-    const expensesArray = []
-    var expenses = null
-    if (typeof this.props.expenses !== undefined && this.props.expenses.length > 0) {
+    const expensesArray = [];
+    let sumExpenses = null;
+    let sumExpensesItem = null;
+    var expenses = null;
+    if (
+      typeof this.props.expenses !== undefined &&
+      this.props.expenses.length > 0
+    ) {
       for (let key in this.props.expenses) {
         expensesArray.push({
           id: key,
@@ -154,15 +176,23 @@ class Group extends Component {
         });
       }
 
-      expenses = expensesArray.map((expense) => (
-        <ListItem
-          costs={expense.values.Costs}
-          title={expense.values.Title}
-          participants={expense.values.Participants}
-          owner={expense.values.Owner}
-          key={expense.key}
-        />
-      ));
+      expenses = expensesArray.map((expense) => {
+        sumExpenses += expense.values.Costs;
+        return (
+          <ListItem
+            expenseId={expense.values.Id}
+            costs={expense.values.Costs}
+            title={expense.values.Title}
+            participants={expense.values.Participants}
+            owner={expense.values.Owner}
+            click={() => this.accessSingleExpenseHanlder(expense.values.Id)}
+            key={expense.key}
+          />
+        );
+      });
+      sumExpensesItem = (
+        <SumListItem title="Sum of all expenses" costs={sumExpenses} />
+      );
     }
 
     const formElementsArray = [];
@@ -188,39 +218,65 @@ class Group extends Component {
 
     return (
       <div>
-        <BottomSheet open={this.state.showSheet} overlay={true} onChange={this.onClickCloseHandler.bind(this)}>
+        <BottomSheet
+          open={this.state.showSheet}
+          overlay={true}
+          onChange={this.onClickCloseHandler.bind(this)}
+        >
           <div>
             <h1>Add new expense</h1>
             <div>
               <form onSubmit={this.submitHandler}>
-                <div>
-                  {form}
-                </div>
-                <Button clicked={this.submitHandler} btnStyle="mint">Add new group</Button>
+                <div>{form}</div>
+                <Button clicked={this.submitHandler} btnStyle="mint">
+                  Add new group
+                </Button>
               </form>
             </div>
           </div>
         </BottomSheet>
+        {sumExpensesItem}
         {expenses}
-        <Button btnStyle="blue" clicked={this.onClickCreateExpenseHandler.bind(this)}>Add new group</Button>
+        <Button
+          btnStyle="blue"
+          clicked={this.onClickCreateExpenseHandler.bind(this)}
+        >
+          Add new expense
+        </Button>
+        {/* <Input ></Input> */}
+        <Button
+          clicked={this.onClickDeleteExpenseHandler.bind(this)}
+          btnStyle="delete"
+        >
+          Delete expense
+        </Button>
+        <Button
+          clicked={this.onClickDeleteGroupHandler.bind(this)}
+          btnStyle="delete"
+        >
+          Delete group
+        </Button>
       </div>
     );
   }
 }
 
-
 const mapStateToProps = (state) => {
   return {
     token: state.auth.token,
     expenses: state.expenses.expenses,
-    selectedGroup: state.expenses.selectedGroup
+    selectedGroup: state.expenses.selectedGroup,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onPostExpense: (token, data) => dispatch(actions.postExpense(token, data)),
-    fetchExpenses: (token, groupID) => dispatch(actions.fetchExpenses(token, groupID)),
+    fetchExpenses: (token, groupId) =>
+      dispatch(actions.fetchExpenses(token, groupId)),
+    onDeleteExpense: (token, expenseId, groupId) =>
+      dispatch(actions.deleteExpense(token, expenseId, groupId)),
+    // onDeleteGroup: (token, groupID) => dispatch(actions.deleteGroup(token, groupId))
   };
 };
 
