@@ -139,21 +139,20 @@ export const deleteExpenseStart = () => {
     };
 };
 
-export const deleteExpense = (token, expenseId) => {
+export const deleteExpense = (token, expenseId, groupId) => {
     return dispatch => {
         dispatch(deleteExpenseStart());
         const config = {
             'headers': {
-                'Authentication': 'Bearer ' + token,
+                'authentication': 'Bearer ' + token,
                 'Content-Type': 'application/json'
             }
         };
         console.log(expenseId)
         const url = '/api/expense/' + expenseId
         console.log(config)
-        const groupId = 6;
-        const data = expenseId
-        axios.delete(url, data, config)
+
+        axios.delete(url, config)
             .then(res => {
                 console.log("Expense deleted")
                 dispatch(deleteExpenseSuccess());

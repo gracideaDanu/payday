@@ -105,8 +105,8 @@ class Group extends Component {
 
   onClickDeleteExpenseHandler = (event) => {
     console.log(this.props);
-    const expenseId = 1;
-    this.props.onDeleteExpense(this.props.token, expenseId);
+    const expenseId = 4;
+    this.props.onDeleteExpense(this.props.token, expenseId, this.props.match.params.id);
 
     console.log("clicked delete expense");
   }
@@ -194,7 +194,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onPostExpense: (token, data) => dispatch(actions.postExpense(token, data)),
     fetchExpenses: (token, groupId) => dispatch(actions.fetchExpenses(token, groupId)),
-    onDeleteExpense: (token, expenseId) => dispatch(actions.deleteExpense(token, expenseId))
+    onDeleteExpense: (token, expenseId, groupId) => dispatch(actions.deleteExpense(token, expenseId, groupId))
     // onDeleteGroup: (token, groupID) => dispatch(actions.deleteGroup(token, groupId))
   };
 };
