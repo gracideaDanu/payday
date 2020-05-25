@@ -8,6 +8,10 @@
   align-items: center;
 }
 
+.group-list-item:hover{
+  cursor: pointer;
+}
+
 .group-list-item-costs {
   font-weight: 500;
   font-size: 1.6rem;

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Button from '../buttons/button';
 
 
-
 const GroupListItem = (props) => {
     return (
         <div className="group-list-item" onClick={props.clicked}>

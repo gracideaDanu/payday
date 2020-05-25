@@ -1,0 +1,44 @@
+.Sumexpense-list-item {
+    background-color: white;
+    margin: 20px 20px 60px 20px;
+    padding: 45px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.expense-list-item-costs {
+    font-weight: 500;
+    font-size: 1.6rem;
+    text-align: right;
+}
+
+.expense-list-item-costs-participants {
+    font-weight: 300;
+    font-size: 1.3rem;
+    padding-top: 3px;
+}
+
+.expense-list-item-owner {
+    font-weight: 300;
+    font-size: 1.3rem;
+    text-align: left;
+    padding-top: 3px;
+}
+
+.expense-list-item-title {
+    font-weight: 500;
+    font-size: 1.6rem;
+    text-align: left;
+}
+
+.green {
+    color: var(--green);
+}
+
+.red {
+    color: var(--red);
+}

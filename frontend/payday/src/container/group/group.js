@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import ListItem from "../../components/ui-elements/list-item/expenseListItem";
+import SumListItem from "../../components/ui-elements/list-item/sumExpenseListItem";
 import BottomSheet from 'react-swipeable-bottom-sheet';
 import Button from '../../components/ui-elements/buttons/button';
 import Input from '../../components/ui-elements/input/input'
+
 
 
 const postExpenseState = {
@@ -52,6 +55,7 @@ class Group extends Component {
       ...this.state,
       showSheet: false,
     });
+    console.log(this.props.expenses)
   }
 
   onClickCreateExpenseHandler = () => {
@@ -98,6 +102,7 @@ class Group extends Component {
     this.props.onPostExpense(this.props.token, expenseData);
   }
 
+
   onClickDeleteGroupHandler = (event) => {
     // this.props.onDeleteGroup(this.props.token, groupId);
   }
@@ -111,10 +116,18 @@ class Group extends Component {
     console.log("clicked delete expense");
   }
 
+  accessSingleExpenseHanlder = (id) => {
+    this.props.history.push(this.props.location.pathname + "/expense" + id);
+  };
+
+
+
   render() {
 
-    const expensesArray = []
-    var expenses = null
+    const expensesArray = [];
+    let sumExpenses = null;
+    let sumExpensesItem = null;
+    var expenses = null;
     if (typeof this.props.expenses !== undefined && this.props.expenses.length > 0) {
       for (let key in this.props.expenses) {
         expensesArray.push({
@@ -123,16 +136,28 @@ class Group extends Component {
         });
       }
 
-      expenses = expensesArray.map((expense) => (
-        <ListItem
+
+      expenses = expensesArray.map((expense) => {
+
+        sumExpenses += expense.values.Costs;
+        return <ListItem
           expenseId={expense.values.Id}
           costs={expense.values.Costs}
           title={expense.values.Title}
           participants={expense.values.Participants}
           owner={expense.values.Owner}
+          click={() => this.accessSingleExpenseHanlder(expense.values.Id)}
           key={expense.key}
+
         />
-      ));
+      });
+      sumExpensesItem = (
+        <SumListItem
+          title="Sum of all expenses"
+          costs={sumExpenses}
+        />
+
+      )
     }
 
     const formElementsArray = [];
@@ -170,6 +195,7 @@ class Group extends Component {
             </div>
           </div>
         </BottomSheet>
+        {sumExpensesItem}
         {expenses}
         <Button btnStyle="blue" clicked={this.onClickCreateExpenseHandler.bind(this)}>Add new expense</Button>
         {/* <Input ></Input> */}
