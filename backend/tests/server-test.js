@@ -286,7 +286,7 @@ describe("API test", () => {
   });
 
   describe("GET groups", () => {
-    it("should return error message", (done) => {
+    it("should return an empty array", (done) => {
       chai
         .request(server)
         .get("/api/groups")
@@ -294,8 +294,8 @@ describe("API test", () => {
         .set("authentication", "Bearer " + sessionToken)
         .send()
         .end((err, res) => {
-          res.should.have.status(404);
-          res.body.should.have.property("message");
+          res.should.have.status(200);
+          res.body.should.have.property("groups");
           done();
         });
     });
@@ -428,7 +428,7 @@ describe("API test", () => {
 
 
   describe("GET expense", () => {
-    it("should return an error message", (done) => {
+    it("should return an empty array", (done) => {
       chai
         .request(server)
         .get("/api/expenses/" + group.GroupId)
@@ -436,8 +436,8 @@ describe("API test", () => {
         .set("authentication", "Bearer " + sessionToken)
         .send()
         .end((err, res) => {
-          res.should.have.status(404);
-          res.body.should.have.property("message");
+          res.should.have.status(200);
+          res.body.should.have.property("expenses");
           done();
         });
     });

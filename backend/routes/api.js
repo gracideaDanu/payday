@@ -25,8 +25,10 @@ router.get('/groups', auth, async (req, res) => {
         const { rows } = await database.query(queryGroups);
         const dbResponse = rows;
         if (!(typeof dbResponse !== 'undefined' && dbResponse.length > 0)) {
-            const errorMessage = 'No groups found';
-            return res.status(404).send({ message: errorMessage });
+            return res.status(200).json({ groups: [] })
+
+            // const errorMessage = 'No groups found';
+            // return res.status(404).send({ message: errorMessage });
         }
 
         res.status(200).json({ groups: dbResponse });
@@ -60,8 +62,10 @@ router.get('/categories', auth, async (req, res) => {
         const { rows } = await database.query(queryCategories);
         const dbResponse = rows;
         if (!dbResponse[0]) {
-            const errorMessage = 'No categories found';
-            return res.status(404).send({ message: errorMessage });
+            return res.status(200).json({ categories: [] })
+
+            // const errorMessage = 'No categories found';
+            // return res.status(404).send({ message: errorMessage });
         }
         res.status(200).json({ categories: dbResponse });
     } catch (e) {
@@ -87,8 +91,10 @@ router.get('/users', auth, async (req, res) => {
         const { rows } = await database.query(queryUsers);
         const dbResponse = rows;
         if (!dbResponse[0]) {
-            const errorMessage = 'No users found';
-            return res.status(404).send({ message: errorMessage });
+            return res.status(200).json({ users: [] })
+
+            // const errorMessage = 'No users found';
+            // return res.status(404).send({ message: errorMessage });
         }
         res.status(200).json({ users: dbResponse });
     } catch (e) {
@@ -107,8 +113,9 @@ router.get('/expenses/:groupId', auth, async (req, res) => {
         const { rows } = await database.query(queryExpenses);
         const dbResponse = rows;
         if (!dbResponse[0]) {
-            const errorMessage = 'No expenses found';
-            return res.status(404).send({ message: errorMessage });
+            return res.status(200).json({ expenses: [] })
+            // const errorMessage = 'No expenses found';
+            // return res.status(404).send({ message: errorMessage });
         }
         res.status(200).json({ expenses: dbResponse });
     } catch (e) {
