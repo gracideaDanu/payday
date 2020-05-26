@@ -1,9 +1,4 @@
-export const initialState = {
-    token: null,
-    // userId: null, //wird vielleicht noch nützlich sein hier noch mehr Informationen zu speichern.
-    error: null,
-    loading: false
-};
+import { initialState } from './reducer'
 
 export const authStart = (state, action) => {
     return ({
@@ -41,21 +36,13 @@ export const authFail = (state, action) => {
 
 export const authLogout = (state, action) => {
     return ({
-        ...state,
-        auth: {
-            ...state.auth,
-            token: null
-        }
+        ...initialState
     });
 };
 
 export const tokenIsInvalid = (state, action) => {
     return ({
-        ...state,
-        auth: {
-            ...state.auth,
-            token: null
-        }
+        ...initialState
     });
 };
 

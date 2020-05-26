@@ -33,9 +33,7 @@ export const fetchExpenses = (token, groupId) => {
                 'Content-Type': 'application/json'
             }
         };
-        console.log(groupId)
         const url = '/api/expenses/' + groupId
-        console.log(config)
         axios.get(url, config)
             .then(res => {
                 const fetchedExpenses = [];
@@ -93,13 +91,10 @@ export const postExpense = (token, expenseData) => {
                 'Content-Type': 'application/json'
             }
         };
-        console.log(expenseData)
         const url = '/api/expense'
-        console.log(config)
         const data = expenseData
         axios.post(url, data, config)
             .then(res => {
-                console.log("Expense posted")
                 dispatch(postExpenseSuccess());
                 dispatch(fetchExpenses(token, expenseData.groupId));
             })

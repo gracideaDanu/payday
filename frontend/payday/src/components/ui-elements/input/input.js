@@ -7,8 +7,7 @@ import "./input.css";
 
 const input = (props) => {
   var inputComponent = null;
-  console.log(props);
-  if (props.elementType === "dropdown") {
+  if (props.elementType === "tagList") {
     inputComponent = (
       <TagList
         elementConfig={props.elementConfig}

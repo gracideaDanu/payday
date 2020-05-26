@@ -167,14 +167,14 @@ class Auth extends Component {
     return isValid;
   }
 
-  inputChangedHandler = (event, controlName) => {
+  inputChangedHandler = (value, controlName) => {
     const updatedControls = {
       ...this.state.controls,
       [controlName]: {
         ...this.state.controls[controlName],
-        value: event.target.value,
+        value: value,
         valid: this.checkValidity(
-          event.target.value,
+          value,
           this.state.controls[controlName].validation
         ),
         touched: true,

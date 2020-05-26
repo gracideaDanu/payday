@@ -14,3 +14,6 @@ export {
     fetchExpenses, postExpense, deleteExpense
 } from './expense'
 
+export {
+    fetchCategories
+} from './categroy'

@@ -9,11 +9,16 @@ class TagList extends Component {
     super(props);
     this.state = {
       headerTitle: this.props.elementConfig.placeholder,
+      selected: 0
     };
   }
 
   onSelectItemHandler(id) {
     this.props.changed(id);
+    this.setState({
+      ...this.state,
+      selected: id
+    })
   }
 
   render() {
@@ -32,29 +37,17 @@ class TagList extends Component {
         icon = TextIcon;
     }
 
-    const listOpen = this.state.listOpen;
-    const values = this.props.elementConfig.values.location;
 
-    const valuesArray = [];
-    for (let key in values) {
-      valuesArray.push({
-        id: key,
-        config: values[key],
-      });
-    }
-    console.log(valuesArray);
-    console.log(values);
-    const list = valuesArray.map((item) => (
+    const list = this.props.elementConfig.values.map((item) => (
       <li
-        className="ui-dropdown-list-item"
+        className={this.state.selected === item.config.id ? "ui-tag-list-item-selected" : ""}
         key={item.id}
-        onClick={() => this.onSelectItemHandler(item.id)}
+        onClick={() => this.onSelectItemHandler(item.config.id)}
       >
         {item.config.title}
       </li>
     ));
 
-    console.log(list);
     return (
       <div className="ui-input-container">
         <div className="ui-input-img-wrapper">

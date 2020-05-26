@@ -3,9 +3,15 @@ import * as groupActions from './group'
 import * as authActions from './auth'
 import * as expenseActions from './expense'
 import * as userActions from './user'
+import * as categoryActions from './category'
 
 
-const initialState = {
+export const initialState = {
+    categories: {
+        categories: [],
+        loading: false,
+        error: null
+    },
     expenses: {
         expenses: [],
         selectedGroup: "",
@@ -53,6 +59,10 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_EXPENSES_START: return expenseActions.fetchExpensesStart(state, action);
         case actionTypes.FETCH_EXPENSES_SUCCESS: return expenseActions.fetchExpensesSuccess(state, action);
         case actionTypes.FETCH_EXPENSES_FAIL: return expenseActions.fetchExpensesFailed(state, action);
+
+        case actionTypes.FETCH_CATEGORIES_START: return categoryActions.fetchCategoriesStart(state, action);
+        case actionTypes.FETCH_CATEGORIES_SUCCESS: return categoryActions.fetchCategoriesSuccess(state, action);
+        case actionTypes.FETCH_CATEGORIES_FAIL: return categoryActions.fetchCategoriesFailed(state, action);
 
         case actionTypes.POST_EXPENSE_START: return expenseActions.postExpenseStart(state, action);
         case actionTypes.POST_EXPENSE_SUCCESS: return expenseActions.postExpenseSuccess(state, action);

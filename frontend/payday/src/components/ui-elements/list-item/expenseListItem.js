@@ -7,7 +7,7 @@ const expenseListItem = (props) => {
     <div className="expense-list-item" onClick={props.click}>
       <div>
         <p className="expense-list-item-title">{props.title}</p>
-        <p className="expense-list-item-owner">von {props.owner}</p>
+        <p className="expense-list-item-owner">Kategorie {props.category}</p>
       </div>
       <div className="expense-list-item-costs">
         <p>{props.costs}€</p>

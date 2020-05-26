@@ -16,6 +16,7 @@ export const fetchGroupsSuccess = (state, action) => {
         groups: {
             ...state.groups,
             loading: false,
+            error: action.error,
             groups: action.groups
         }
     })

@@ -10,7 +10,6 @@ export const fetchExpensesStart = (state, action) => {
 };
 
 export const fetchExpensesSuccess = (state, action) => {
-    console.log(action.expenses);
     return ({
         ...state,
         expenses: {
@@ -25,9 +24,9 @@ export const fetchExpensesSuccess = (state, action) => {
 export const fetchExpensesFailed = (state, action) => {
     return ({
         ...state,
-
         expenses: {
             ...state.expenses,
+            error: action.error,
             loading: false
         }
     })

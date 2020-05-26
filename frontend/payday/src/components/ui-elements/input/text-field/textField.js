@@ -18,7 +18,6 @@ class TextField extends Component {
     }
 
     inputChangedHandler = (event) => {
-        console.log(this.props)
         this.props.changed(event.target.value);
     }
 
@@ -37,8 +36,6 @@ class TextField extends Component {
             default:
                 icon = TextIcon;
         }
-
-        console.log(this.props)
 
         return (
             <div className="ui-input-container">

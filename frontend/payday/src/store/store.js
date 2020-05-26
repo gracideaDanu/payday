@@ -39,13 +39,11 @@ const store = createStore(reducer,
 
 store.subscribe(throttle(() => {
     saveState({
-        groups: store.getState().groups,
-        users: store.getState().users,
-        expenses: store.getState().expenses,
-        auth: {
-            ...store.getState().auth,
-            token: store.getState().auth.token
-        }
+        ...store.getState()
+        // groups: store.getState().groups,
+        // users: store.getState().users,
+        // expenses: store.getState().expenses,
+        // auth: store.getState().auth
     });
 }, 1000));
 

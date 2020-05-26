@@ -25,6 +25,7 @@ export const fetchUsersFailed = (state, action) => {
         ...state,
         users: {
             ...state.users,
+            error: action.error,
             loading: false
         }
     })
