@@ -108,16 +108,11 @@ class Group extends Component {
   }
 
 
-  onClickDeleteExpenseHandler = (event) => {
-    console.log(this.props);
-    const expenseId = 4;
-    this.props.onDeleteExpense(this.props.token, expenseId, this.props.match.params.id);
 
-    console.log("clicked delete expense");
-  }
 
-  accessSingleExpenseHanlder = (id) => {
+  accessSingleExpenseHandler = (id) => {
     this.props.history.push(this.props.location.pathname + "/expense" + id);
+    console.log(id);
   };
 
 
@@ -146,7 +141,7 @@ class Group extends Component {
           title={expense.values.Title}
           participants={expense.values.Participants}
           owner={expense.values.Owner}
-          click={() => this.accessSingleExpenseHanlder(expense.values.Id)}
+          click={() => this.accessSingleExpenseHandler(expense.values.Id)}
           key={expense.key}
 
         />
@@ -199,7 +194,7 @@ class Group extends Component {
         {expenses}
         <Button btnStyle="blue" clicked={this.onClickCreateExpenseHandler.bind(this)}>Add new expense</Button>
         {/* <Input ></Input> */}
-        <Button clicked={this.onClickDeleteExpenseHandler.bind(this)} btnStyle="delete">Delete expense</Button>
+
         <Button clicked={this.onClickDeleteGroupHandler.bind(this)} btnStyle="delete">Delete group</Button>
 
       </div>
@@ -220,7 +215,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onPostExpense: (token, data) => dispatch(actions.postExpense(token, data)),
     fetchExpenses: (token, groupId) => dispatch(actions.fetchExpenses(token, groupId)),
-    onDeleteExpense: (token, expenseId, groupId) => dispatch(actions.deleteExpense(token, expenseId, groupId))
     // onDeleteGroup: (token, groupID) => dispatch(actions.deleteGroup(token, groupId))
   };
 };
