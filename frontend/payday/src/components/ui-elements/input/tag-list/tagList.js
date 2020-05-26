@@ -12,10 +12,8 @@ class TagList extends Component {
     };
   }
 
-  onSelectItemHandler(event) {
-    event.setTarget("test");
-    this.props.changed(event, "test");
-    console.log(event);
+  onSelectItemHandler(id) {
+    this.props.changed(id);
   }
 
   render() {
@@ -50,7 +48,7 @@ class TagList extends Component {
       <li
         className="ui-dropdown-list-item"
         key={item.id}
-        onClick={(event) => this.onSelectItemHandler(event)}
+        onClick={() => this.onSelectItemHandler(item.id)}
       >
         {item.config.title}
       </li>

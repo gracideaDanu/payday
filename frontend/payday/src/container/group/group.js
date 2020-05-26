@@ -103,13 +103,14 @@ class Group extends Component {
     });
   };
 
-  inputChangedHandler = (event, controlName) => {
-    console.log(event.target.value);
+  inputChangedHandler = (value, controlName) => {
+    console.log(value);
+    console.log(controlName);
     const updatedControls = {
       ...this.state.controls,
       [controlName]: {
         ...this.state.controls[controlName],
-        value: event.target.value,
+        value: value,
         // valid: this.checkValidity(
         //   event.target.value,
         //   this.state.controls[controlName].validation
@@ -212,7 +213,7 @@ class Group extends Component {
         // invalid={!formElement.config.valid}
         // shouldValidate={formElement.config.validation}
         // touched={formElement.config.touched}
-        changed={(event) => this.inputChangedHandler(event, formElement.id)}
+        changed={(value) => this.inputChangedHandler(value, formElement.id)}
       />
     ));
 
