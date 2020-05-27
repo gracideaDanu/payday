@@ -17,10 +17,9 @@ Insert abstract here
 
 | Date       | Milestone                             |
 | ---------- | ------------------------------------- |
-| xx.04.2020 | Kick-Off (Online Webinar)             |
-| ...        | ...                                   |
-| ...        | ...                                   |
-| xx.xx.2020 | Project Presentation (Online Webinar) |
+| 24.04.2020 | Kick-Off (Online Webinar)             |
+| 22.05.2020 | Mid-term Presentation                 |
+| 19.06.2020 | Project Presentation (Online Webinar) |
 
 {put your own milestones into this table}
 
