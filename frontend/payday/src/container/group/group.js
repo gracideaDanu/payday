@@ -7,6 +7,7 @@ import SumListItem from "../../components/ui-elements/list-item/sumExpenseListIt
 import BottomSheet from "react-swipeable-bottom-sheet";
 import Button from "../../components/ui-elements/buttons/button";
 import Input from "../../components/ui-elements/input/input";
+import Navbar from "../../components/navbar/Navbar";
 
 
 const postExpenseState = {
@@ -196,6 +197,7 @@ class Group extends Component {
 
     return (
       <div>
+        <Navbar />
         <BottomSheet
           open={this.state.showSheet}
           overlay={true}

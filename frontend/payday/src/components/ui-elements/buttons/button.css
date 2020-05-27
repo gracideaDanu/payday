@@ -49,3 +49,37 @@
   border: 3px solid;
   border-color: var(--red);
 }
+
+.logout {
+  background: var(--red);
+  width: 100px;
+  border: none;
+  color: #ecf0f1;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+
+.logout:hover {
+  background: #fff;
+  color: var(--red);
+  border: 3px solid;
+  border-color: var(--red);
+}
+/* 
+.back {
+  background: var(--blue);
+  width: 100px;
+  border: none;
+  color: #ecf0f1;
+  outline: none;
+  margin: 0;
+  padding: 0;
+} */
+
+/* .back:hover {
+  background: #fff;
+  color: var(--red);
+  border: 3px solid;
+  border-color: var(--red);
+} */

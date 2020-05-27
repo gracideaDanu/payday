@@ -16,38 +16,37 @@ class App extends Component {
 
   componentDidMount() {
 
-      if (this.props.location.pathname === "/"){
-          if (this.props.tkn !== null) {
+    if (this.props.location.pathname === "/") {
+      if (this.props.tkn !== null) {
 
-              this.props.history.push("/home");
-          }
-          else {
-              this.props.history.push("/auth")
-          }
+        this.props.history.push("/home");
       }
+      else {
+        this.props.history.push("/auth")
+      }
+    }
 
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-     if (prevProps.tkn !== this.props.tkn){
-         this.props.history.replace("/auth");
-     }
+    if (prevProps.tkn !== this.props.tkn) {
+      this.props.history.replace("/auth");
+    }
   }
 
-    render() {
-     var privateRoutes = [];
-     if (this.props.tkn !== null) {
+  render() {
+    var privateRoutes = [];
+    if (this.props.tkn !== null) {
       privateRoutes.push(<Route path="/home" component={Home} />);
       privateRoutes.push(<Route path="/group:id" exact component={Group} />);
-      privateRoutes.push(<Route path="/group:id/expense:id" component={Expense}/>)
+      privateRoutes.push(<Route path="/group:id/expense:id" component={Expense} />)
 
-     }
+    }
     return (
       <div className="App">
-        <Navbar />
         <Switch>
           <Route path="/auth" component={Auth} />
-           {privateRoutes}
+          {privateRoutes}
         </Switch>
       </div>
     );
@@ -56,8 +55,8 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-     tkn: state.auth.token,
-      groups: state.groups.groups
+    tkn: state.auth.token,
+    groups: state.groups.groups
   };
 };
 
