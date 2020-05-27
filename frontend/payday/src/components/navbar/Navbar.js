@@ -14,14 +14,9 @@ class Navbar extends Component {
 
     }
 
-    accessHomeHandler = () => {
-        console.log(this.props)
-        history.push("/home");
-    }
     render() {
         return (
             <nav className="navbar">
-                <Button clicked={this.accessHomeHandler.bind(this)} btnStyle="mint">Home</Button>
                 <Button className="navbar-logout-button" btnStyle="blue" clicked={this.onClickLogoutHandler.bind(this)}>Logout</Button>
 
             </nav>
