@@ -51,8 +51,13 @@ class Expense extends Component {
 
     onClickDeleteExpenseHandler = (event) => {
         var path = this.props.location.pathname;
-        var groupId = path.charAt(6)
-        var expenseId = path.slice(-1)
+        console.log(path)
+        path = path.match(/[a-z]+|[^a-z]+/gi);
+        console.log(path)
+        var groupId = path[2].slice(0, -1)
+        console.log("GroupId: " + groupId)
+        var expenseId = path[4]
+        console.log("ExpenseId: " + expenseId)
         this.props.onDeleteExpense(this.props.token, expenseId, this.props.match.params.id);
         console.log("deleted expense with id " + expenseId);
         this.props.history.push("/group" + groupId);
