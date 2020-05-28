@@ -159,7 +159,7 @@ describe("Authentication test", () => {
         .set("content-type", "application/json")
         .send({
           password: "Password",
-          email: "niklas@test.com"
+          email: "niklas@test.com",
         })
         .end((err, res) => {
           res.should.have.status(200);
@@ -302,7 +302,6 @@ describe("API test", () => {
   });
 
   describe("Post Group", () => {
-
     it("should create a new group with niklas, pascsal and max and return Status code 201", (done) => {
       chai
         .request(server)
@@ -358,7 +357,7 @@ describe("API test", () => {
         .set("content-type", "application/json")
         .send({
           password: "Password",
-          email: "pascal@test.com"
+          email: "pascal@test.com",
         })
         .end((err, res) => {
           res.should.have.status(200);
@@ -367,7 +366,6 @@ describe("API test", () => {
           done();
         });
     });
-
 
     it("should return all groups from the logged in user", (done) => {
       chai
@@ -388,8 +386,6 @@ describe("API test", () => {
     });
   });
 
-
-
   describe("GET groups", () => {
     it("should login user niklas and return token", (done) => {
       chai
@@ -398,7 +394,7 @@ describe("API test", () => {
         .set("content-type", "application/json")
         .send({
           password: "Password",
-          email: "niklas@test.com"
+          email: "niklas@test.com",
         })
         .end((err, res) => {
           res.should.have.status(200);
@@ -425,13 +421,11 @@ describe("API test", () => {
     });
   });
 
-
-
   describe("GET expense", () => {
     it("should return an empty array", (done) => {
       chai
         .request(server)
-        .get("/api/expenses/" + group.GroupId)
+        .get("/api/expenses/" + group.Id)
         .set("content-type", "application/json")
         .set("authentication", "Bearer " + sessionToken)
         .send()
@@ -454,7 +448,7 @@ describe("API test", () => {
           title: "Getränkekauf",
           costs: 12.99,
           categoryId: categories[0].Id,
-          groupId: group.GroupId,
+          groupId: group.Id,
         })
         .end((err, res) => {
           res.should.have.status(201);
@@ -471,7 +465,7 @@ describe("API test", () => {
           title: "Essen",
           costs: 20.99,
           categoryId: categories[1].Id,
-          groupId: group.GroupId,
+          groupId: group.Id,
         })
         .end((err, res) => {
           res.should.have.status(201);
@@ -488,7 +482,7 @@ describe("API test", () => {
           name: "Essen",
           costs: 20.99,
           categoryId: categories[1].Id,
-          groupId: group.GroupId,
+          groupId: group.Id,
         })
         .end((err, res) => {
           res.should.have.status(400);
@@ -504,7 +498,7 @@ describe("API test", () => {
         .send({
           title: "Essen",
           category: categories[1].Id,
-          groupId: group.GroupId,
+          groupId: group.Id,
         })
         .end((err, res) => {
           res.should.have.status(400);
@@ -520,7 +514,7 @@ describe("API test", () => {
         .send({
           title: "Essen",
           costs: 12.99,
-          groupId: group.GroupId,
+          groupId: group.Id,
         })
         .end((err, res) => {
           res.should.have.status(400);
@@ -550,7 +544,7 @@ describe("API test", () => {
     it("should return all expenses from certain group", (done) => {
       chai
         .request(server)
-        .get("/api/expenses/" + group.GroupId)
+        .get("/api/expenses/" + group.Id)
         .set("content-type", "application/json")
         .set("authentication", "Bearer " + sessionToken)
         .send()
@@ -575,7 +569,7 @@ describe("API test", () => {
           title: "Essen",
           costs: 18.99,
           categoryId: categories[1].Id,
-          groupId: group.GroupId,
+          groupId: group.Id,
         })
         .end((err, res) => {
           res.should.have.status(200);
@@ -592,7 +586,7 @@ describe("API test", () => {
           title: "Essen",
           costs: "18,99",
           categoryId: categories[1].Id,
-          groupId: group.GroupId,
+          groupId: group.Id,
         })
         .end((err, res) => {
           res.should.have.status(400);
@@ -620,7 +614,7 @@ describe("API test", () => {
     it("should delete a certain group", (done) => {
       chai
         .request(server)
-        .delete("/api/expense/" + group.GroupId)
+        .delete("/api/expense/" + group.Id)
         .set("content-type", "application/json")
         .set("authentication", "Bearer " + sessionToken)
         .send()

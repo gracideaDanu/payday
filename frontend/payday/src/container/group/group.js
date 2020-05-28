@@ -144,8 +144,12 @@ class Group extends Component {
 
   getGroupNameById = (id) => {
     const group = this.props.groups.filter(function (item) {
+      console.log(item.Id);
+      console.log(id);
+      console.log(item.Id === Number(id));
       return item.Id === Number(id);
     });
+    console.log(group);
     return group[0] ? group[0].Name : "";
   };
 

@@ -105,15 +105,18 @@ class Groups extends Component {
   render() {
     var groups = <p>Loading</p>;
     if (!this.props.groups.loading) {
-      groups = this.props.groups.map((group) => (
-        <ListItem
-          path={"/group/" + group.GroupId}
-          title={group.Name}
-          clicked={() => this.accessGroupExpensesHandler(group.GroupId)}
-          key={group.GroupId}
-          costs="50"
-        />
-      ));
+      groups = this.props.groups.map((group) => {
+        console.log(group);
+        return (
+          <ListItem
+            path={"/group/" + group.Id}
+            title={group.Name}
+            clicked={() => this.accessGroupExpensesHandler(group.Id)}
+            key={group.Id}
+            costs="50"
+          />
+        );
+      });
     }
 
     const formElementsArray = [];
