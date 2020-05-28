@@ -209,7 +209,10 @@ class Group extends Component {
 
     return (
       <div>
-        <Navbar title={this.getGroupNameById(this.props.match.params.id)} />
+        <Navbar
+          title={this.getGroupNameById(this.props.match.params.id)}
+          history={this.props.history}
+        />
         <BottomSheet
           open={this.state.showSheet}
           overlay={true}
