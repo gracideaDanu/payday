@@ -139,7 +139,7 @@ class Groups extends Component {
 
     return (
       <div>
-        <Navbar title="Meine Gruppen" />
+        <Navbar title="Meine Gruppen" history={this.props.history} />
         <BottomSheet
           open={this.state.showSheet}
           overlay={true}

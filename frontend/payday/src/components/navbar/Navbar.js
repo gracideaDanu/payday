@@ -14,11 +14,14 @@ class Navbar extends Component {
 
   onClickHomeHandler = () => {
     console.log("HomeHandler");
+    this.props.history.push("/home");
+
     // history.push('home')
   };
 
   onClickBackHandler = () => {
     console.log("Back");
+    this.props.history.goBack();
   };
 
   render() {
