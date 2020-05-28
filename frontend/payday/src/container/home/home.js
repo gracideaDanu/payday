@@ -6,6 +6,7 @@ import BottomSheet from "react-swipeable-bottom-sheet";
 import Button from "../../components/ui-elements/buttons/button";
 import Input from "../../components/ui-elements/input/input";
 import Navbar from "../../components/navbar/Navbar";
+import "./home.css";
 
 const postGroupState = {
   controls: {
@@ -148,7 +149,7 @@ class Groups extends Component {
           overlay={true}
           onChange={this.onClickCloseHandler.bind(this)}
         >
-          <div>
+          <div className="home-bottom-sheet">
             <h1>Add new group</h1>
             <div>
               <form onSubmit={this.submitHandler}>
@@ -161,12 +162,14 @@ class Groups extends Component {
           </div>
         </BottomSheet>
         {groups}
-        <Button
-          btnStyle="blue"
-          clicked={this.onClickCreateGroupHandler.bind(this)}
-        >
-          Add new group
-        </Button>
+        <div className="home-add-button">
+          <Button
+            btnStyle="blue"
+            clicked={this.onClickCreateGroupHandler.bind(this)}
+          >
+            Add new group
+          </Button>
+        </div>
       </div>
     );
   }

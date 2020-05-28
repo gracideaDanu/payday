@@ -12,6 +12,10 @@
 
 .navbar > h1 {
   padding-bottom: 20px;
+  color: white;
+  font-size: 30px;
+  text-transform: uppercase;
+  letter-spacing: 3.5px;
 }
 
 .navbar ul li {
@@ -50,11 +54,4 @@
 
 #home-button svg:hover {
   cursor: pointer;
-}
-
-h1 {
-  color: white;
-  font-size: 30px;
-  text-transform: uppercase;
-  letter-spacing: 3.5px;
 }
