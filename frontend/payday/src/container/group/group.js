@@ -9,6 +9,8 @@ import Button from "../../components/ui-elements/buttons/button";
 import Input from "../../components/ui-elements/input/input";
 import Navbar from "../../components/navbar/Navbar";
 
+import "./group.css";
+
 const postExpenseState = {
   controls: {
     title: {
@@ -214,7 +216,7 @@ class Group extends Component {
           overlay={true}
           onChange={this.onClickCloseHandler.bind(this)}
         >
-          <div>
+          <div className="group-bottom-sheet">
             <h1>Add new expense</h1>
             <div>
               <form onSubmit={this.submitHandler}>
@@ -228,20 +230,22 @@ class Group extends Component {
         </BottomSheet>
         {sumExpensesItem}
         {expenses}
-        <Button
-          btnStyle="blue"
-          clicked={this.onClickCreateExpenseHandler.bind(this)}
-        >
-          Add new expense
-        </Button>
-        {/* <Input ></Input> */}
+        <div className="group-buttons-container">
+          <Button
+            btnStyle="blue"
+            clicked={this.onClickCreateExpenseHandler.bind(this)}
+          >
+            Add new expense
+          </Button>
+          {/* <Input ></Input> */}
 
-        <Button
-          clicked={this.onClickDeleteGroupHandler.bind(this)}
-          btnStyle="delete"
-        >
-          Delete group
-        </Button>
+          <Button
+            clicked={this.onClickDeleteGroupHandler.bind(this)}
+            btnStyle="delete"
+          >
+            Delete group
+          </Button>
+        </div>
       </div>
     );
   }
