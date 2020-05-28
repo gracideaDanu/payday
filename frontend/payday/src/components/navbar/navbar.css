@@ -1,8 +1,47 @@
-.navbar {
-
+.navbar ul{
+list-style-type: none;
+margin: 0;
+padding: 0;
+display: flex;
+justify-content: space-between;
 }
 
+.navbar ul li {
+    display: inline;
+    padding: 20px;
+}
 
 .navbar-logout-button {
     width: 60px;
 }
+
+#back-button, #logout-button, #home-button {
+    width: 37px;
+    height: 37px;
+    background-color: var(--blue);
+    border: none;
+    outline: none;
+    padding: 0;
+  }
+      
+  #back-button svg, #logout-button svg, #home-button svg {
+    height: 37px;
+    fill: white;
+  }
+
+  #back-button svg:hover, #logout-button svg:hover{
+    fill: var(--blue);
+    background-color: white;
+    cursor: pointer;
+  }
+
+  #home-button svg:hover{
+    cursor: pointer;
+  }
+
+  h1 {
+      color: white;
+      font-size: 30px;
+      text-transform: uppercase;
+      letter-spacing: 3.5px;
+  }

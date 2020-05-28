@@ -7,6 +7,7 @@ import SumListItem from "../../components/ui-elements/list-item/sumExpenseListIt
 import BottomSheet from "react-swipeable-bottom-sheet";
 import Button from "../../components/ui-elements/buttons/button";
 import Input from "../../components/ui-elements/input/input";
+import Navbar from "../../components/navbar/Navbar";
 
 const postExpenseState = {
   controls: {
@@ -149,6 +150,13 @@ class Group extends Component {
     return category[0] ? category[0].Name : "";
   };
 
+  getGroupNameById = (id) => {
+    const group = this.props.groups.filter(function (item) {
+      return item.Id === Number(id);
+    });
+    return group[0] ? group[0].Name : "";
+  };
+
   render() {
     const expensesArray = [];
     let sumExpenses = null;
@@ -201,6 +209,7 @@ class Group extends Component {
 
     return (
       <div>
+        <Navbar title={this.getGroupNameById(this.props.match.params.id)} />
         <BottomSheet
           open={this.state.showSheet}
           overlay={true}
@@ -250,6 +259,7 @@ const mapStateToProps = (state) => {
     expenses: state.expenses.expenses,
     categories: state.categories.categories,
     selectedGroup: state.expenses.selectedGroup,
+    groups: state.groups.groups,
   };
 };
 
