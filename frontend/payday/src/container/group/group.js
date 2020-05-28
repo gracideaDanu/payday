@@ -130,17 +130,9 @@ class Group extends Component {
     // this.props.onDeleteGroup(this.props.token, groupId);
   };
 
-  onClickDeleteExpenseHandler = (event) => {
-    const expenseId = 4;
-    this.props.onDeleteExpense(
-      this.props.token,
-      expenseId,
-      this.props.match.params.id
-    );
-  };
-
-  accessSingleExpenseHanlder = (id) => {
+  accessSingleExpenseHandler = (id) => {
     this.props.history.push(this.props.location.pathname + "/expense" + id);
+    console.log(id);
   };
 
   getCategoryNameById = (id) => {
@@ -175,7 +167,7 @@ class Group extends Component {
             participants={expense.Participants}
             owner={expense.Owner}
             category={this.getCategoryNameById(expense.CategoryId)}
-            click={() => this.accessSingleExpenseHanlder(expense.Id)}
+            click={() => this.accessSingleExpenseHandler(expense.Id)}
             key={expense.Id}
           />
         );
@@ -239,12 +231,7 @@ class Group extends Component {
           Add new expense
         </Button>
         {/* <Input ></Input> */}
-        <Button
-          clicked={this.onClickDeleteExpenseHandler.bind(this)}
-          btnStyle="delete"
-        >
-          Delete expense
-        </Button>
+
         <Button
           clicked={this.onClickDeleteGroupHandler.bind(this)}
           btnStyle="delete"
@@ -271,52 +258,8 @@ const mapDispatchToProps = (dispatch) => {
     onPostExpense: (token, data) => dispatch(actions.postExpense(token, data)),
     fetchExpenses: (token, groupId) =>
       dispatch(actions.fetchExpenses(token, groupId)),
-    onDeleteExpense: (token, expenseId, groupId) =>
-      dispatch(actions.deleteExpense(token, expenseId, groupId)),
-    // onDeleteGroup: (token, groupID) => dispatch(actions.deleteGroup(token, groupId))
     fetchCategories: (token) => dispatch(actions.fetchCategories(token)),
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Group);
-
-// const dropdown = {
-//   location: [
-//     {
-//       id: 0,
-//       title: "New York",
-//       selected: false,
-//       key: "location",
-//     },
-//     {
-//       id: 1,
-//       title: "Dublin",
-//       selected: false,
-//       key: "location",
-//     },
-//     {
-//       id: 2,
-//       title: "California",
-//       selected: false,
-//       key: "location",
-//     },
-//     {
-//       id: 3,
-//       title: "Istanbul",
-//       selected: false,
-//       key: "location",
-//     },
-//     {
-//       id: 4,
-//       title: "Izmir",
-//       selected: false,
-//       key: "location",
-//     },
-//     {
-//       id: 5,
-//       title: "Oslo",
-//       selected: false,
-//       key: "location",
-//     },
-//   ],
-// };
