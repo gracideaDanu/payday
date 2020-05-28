@@ -8,7 +8,6 @@ import BottomSheet from "react-swipeable-bottom-sheet";
 import Button from "../../components/ui-elements/buttons/button";
 import Input from "../../components/ui-elements/input/input";
 
-
 const postExpenseState = {
   controls: {
     title: {
@@ -49,32 +48,31 @@ class Group extends Component {
   componentDidMount() {
     const fetchId = this.props.match.params.id;
     this.props.fetchExpenses(this.props.token, fetchId);
-    this.props.fetchCategories(this.props.token)
-      .then(res => {
-        const valuesArray = [];
-        for (let key in res.data.categories) {
-          valuesArray.push({
-            id: key,
-            config: {
-              title: res.data.categories[key].Name,
-              id: res.data.categories[key].Id
-            }
-          });
-        }
-        this.setState({
-          ...this.state,
-          controls: {
-            ...this.state.controls,
-            category: {
-              ...this.state.controls.category,
-              elementConfig: {
-                ...this.state.controls.category.elementConfig,
-                values: valuesArray
-              }
-            }
-          }
+    this.props.fetchCategories(this.props.token).then((res) => {
+      const valuesArray = [];
+      for (let key in res.data.categories) {
+        valuesArray.push({
+          id: key,
+          config: {
+            title: res.data.categories[key].Name,
+            id: res.data.categories[key].Id,
+          },
         });
+      }
+      this.setState({
+        ...this.state,
+        controls: {
+          ...this.state.controls,
+          category: {
+            ...this.state.controls.category,
+            elementConfig: {
+              ...this.state.controls.category.elementConfig,
+              values: valuesArray,
+            },
+          },
+        },
       });
+    });
     this.setState({
       ...this.state,
       showSheet: false,
@@ -146,10 +144,10 @@ class Group extends Component {
 
   getCategoryNameById = (id) => {
     const category = this.props.categories.filter(function (item) {
-      return item.Id === id
-    })
-    return category[0] ? category[0].Name : ""
-  }
+      return item.Id === id;
+    });
+    return category[0] ? category[0].Name : "";
+  };
 
   render() {
     const expensesArray = [];
@@ -159,19 +157,26 @@ class Group extends Component {
 
     var expenses = <p>Loading</p>;
     if (!this.props.expenses.loading) {
-      expenses = this.props.expenses.map((expense) => (
-        <ListItem
-          expenseId={expense.Id}
-          costs={expense.Costs}
-          title={expense.Title}
-          participants={expense.Participants}
-          owner={expense.Owner}
-          category={this.getCategoryNameById(expense.CategoryId)}
-          click={() => this.accessSingleExpenseHanlder(expense.Id)}
-          key={expense.Id}
-        />
-      ));
+      expenses = this.props.expenses.map((expense) => {
+        sumExpenses += expense.Costs;
+        return (
+          <ListItem
+            expenseId={expense.Id}
+            costs={expense.Costs}
+            title={expense.Title}
+            participants={expense.Participants}
+            owner={expense.Owner}
+            category={this.getCategoryNameById(expense.CategoryId)}
+            click={() => this.accessSingleExpenseHanlder(expense.Id)}
+            key={expense.Id}
+          />
+        );
+      });
     }
+
+    sumExpensesItem = (
+      <SumListItem title="Sum of all expenses" costs={sumExpenses} />
+    );
 
     const formElementsArray = [];
     for (let key in this.state.controls) {
@@ -251,16 +256,16 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onPostExpense: (token, data) => dispatch(actions.postExpense(token, data)),
-    fetchExpenses: (token, groupId) => dispatch(actions.fetchExpenses(token, groupId)),
-    onDeleteExpense: (token, expenseId, groupId) => dispatch(actions.deleteExpense(token, expenseId, groupId)),
+    fetchExpenses: (token, groupId) =>
+      dispatch(actions.fetchExpenses(token, groupId)),
+    onDeleteExpense: (token, expenseId, groupId) =>
+      dispatch(actions.deleteExpense(token, expenseId, groupId)),
     // onDeleteGroup: (token, groupID) => dispatch(actions.deleteGroup(token, groupId))
     fetchCategories: (token) => dispatch(actions.fetchCategories(token)),
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Group);
-
-
 
 // const dropdown = {
 //   location: [
