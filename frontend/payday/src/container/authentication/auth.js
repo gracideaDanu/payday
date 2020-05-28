@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import * as actions from '../../store/actions/index';
-import { connect } from 'react-redux';
+import * as actions from "../../store/actions/index";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import Button from "../../components/ui-elements/buttons/button";
 import Input from "../../components/ui-elements/input/input";
 import "./auth.css";
 import Logo from "../../assets/icons/logo.svg";
-
 
 const signInState = {
   controls: {
@@ -192,14 +191,14 @@ class Auth extends Component {
         name: this.state.controls.forename.value,
         surname: this.state.controls.surname.value,
         email: this.state.controls.email.value,
-        password: this.state.controls.password.value
-      }
+        password: this.state.controls.password.value,
+      };
       this.props.onAuth(true, signUpData);
     } else {
       const signInData = {
         email: this.state.controls.email.value,
-        password: this.state.controls.password.value
-      }
+        password: this.state.controls.password.value,
+      };
       this.props.onAuth(false, signInData);
     }
   };
@@ -226,27 +225,28 @@ class Auth extends Component {
       />
     ));
     return (
-      <div className="auth-container">
-        <img src={Logo} alt="Logo" className="auth-container-logo"></img>
-        <form>{form}</form>
-        <div className="auth-button-container">
-          <Button clicked={this.submitHandler} btnStyle="blue">
-            Submit
-          </Button>
-          <Button clicked={this.switchAuthModeHandler} btnStyle="mint">
-            Switch to {this.state.isSignUp ? "Sign in" : "Sign up"}{" "}
-          </Button>
+      <div className="auth-background">
+        <div className="auth-container">
+          <img src={Logo} alt="Logo" className="auth-container-logo"></img>
+          <form>{form}</form>
+          <div className="auth-button-container">
+            <Button clicked={this.submitHandler} btnStyle="blue">
+              Submit
+            </Button>
+            <Button clicked={this.switchAuthModeHandler} btnStyle="mint">
+              Switch to {this.state.isSignUp ? "Sign in" : "Sign up"}{" "}
+            </Button>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onAuth: (isSignUp, data) => dispatch(actions.auth(isSignUp, data))
-  }
-
+    onAuth: (isSignUp, data) => dispatch(actions.auth(isSignUp, data)),
+  };
 };
 
 const mapStateToProps = (state) => {
@@ -256,4 +256,3 @@ const mapStateToProps = (state) => {
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Auth));
-
