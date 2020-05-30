@@ -124,7 +124,7 @@ router.get("/group/:groupId", auth, async (req, res) => {
       const errorMessage = "No group found";
       return res.status(404).send({ message: errorMessage });
     }
-    res.status(200).json(dbResponse);
+    res.status(200).json(dbResponse[0]);
   } catch (e) {
     console.log(e);
     res.send({ message: "Error in fetching group" });
@@ -283,8 +283,8 @@ router.put(
 );
 
 router.put("/group/:groupId", auth, async (req, res) => {
-  const { name } = req.body;
-  var queryGroupPut = `UPDATE public."Group" SET "Name"='${name}' WHERE "Id" = '${req.params.groupId}';`;
+  const { name, receipted } = req.body;
+  var queryGroupPut = `UPDATE public."Group" SET "Name"='${name}', "Receipted"='${receipted}' WHERE "Id" = '${req.params.groupId}';`;
   try {
     await database.query(queryGroupPut);
     res.status(200).json({ message: "Updated group" });

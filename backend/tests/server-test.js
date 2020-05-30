@@ -610,6 +610,37 @@ describe("API test", () => {
     });
   });
 
+  describe("PUT a group", () => {
+    it("should receipt a certain group", (done) => {
+      chai
+        .request(server)
+        .put("/api/group/" + group.Id)
+        .set("content-type", "application/json")
+        .set("authentication", "Bearer " + sessionToken)
+        .send({
+          name: group.Name,
+          receipted: true,
+        })
+        .end((err, res) => {
+          res.should.have.status(200);
+          done();
+        });
+    });
+    it("should return a receipted group", (done) => {
+      chai
+        .request(server)
+        .get("/api/group/" + group.Id)
+        .set("content-type", "application/json")
+        .set("authentication", "Bearer " + sessionToken)
+        .send()
+        .end((err, res) => {
+          res.should.have.status(200);
+          expect(res.body.Receipted).to.equal(true);
+          done();
+        });
+    });
+  });
+
   describe("DELETE group", () => {
     it("should delete a certain group", (done) => {
       chai
