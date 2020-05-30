@@ -17,7 +17,7 @@ router.get("/groups", auth, async (req, res) => {
   //Hier muss eine Abfrage rein, welcher User eingeloggt ist! Join erstellen!
   // const queryGroups = `SELECT * FROM public."Group";`
 
-  const queryGroups = `SELECT public."Group"."Id", public."Group"."Name" FROM public."Group" INNER JOIN public."GroupUsers" ON public."Group"."Id"=public."GroupUsers"."GroupId" 
+  const queryGroups = `SELECT public."Group"."Id", public."Group"."Name", public."Group"."Receipted" FROM public."Group" INNER JOIN public."GroupUsers" ON public."Group"."Id"=public."GroupUsers"."GroupId" 
     WHERE public."GroupUsers"."UserId" = '${user.Id}';`;
   try {
     const { rows } = await database.query(queryGroups);

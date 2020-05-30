@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS public."Group"
 (
     "Id" SERIAL UNIQUE,
     "Name" VARCHAR NOT NULL,
+    "Receipted" BOOLEAN DEFAULT FALSE,
     "CreatedAt" timestamp NOT NULL DEFAULT NOW(),
     CONSTRAINT "PK_Group" PRIMARY KEY ("Id")
 );
@@ -112,7 +113,7 @@ INSERT INTO public."Group"("Name") VALUES ('Testgruppe 2');
 INSERT INTO public."GroupUsers"("UserId", "GroupId") VALUES ('1','2');
 INSERT INTO public."GroupUsers"("UserId", "GroupId") VALUES ('2','2');
 
-INSERT INTO public."Group"("Name") VALUES ('Testgruppe 3');
+INSERT INTO public."Group"("Name", "Receipted") VALUES ('Testgruppe 3', TRUE);
 INSERT INTO public."GroupUsers"("UserId", "GroupId") VALUES ('1','3');
 INSERT INTO public."GroupUsers"("UserId", "GroupId") VALUES ('2','3');
 INSERT INTO public."GroupUsers"("UserId", "GroupId") VALUES ('3','3');
