@@ -7,22 +7,32 @@ import "./input.css";
 
 const input = (props) => {
   var inputComponent = null;
-  if (props.elementType === "tagList") {
-    inputComponent = (
-      <TagList
-        elementConfig={props.elementConfig}
-        value={props.value}
-        changed={props.changed}
-      />
-    );
-  } else {
-    inputComponent = (
-      <TextField
-        elementConfig={props.elementConfig}
-        value={props.value}
-        changed={props.changed}
-      />
-    );
+
+  switch (props.elementType) {
+    case ('tagList'):
+      inputComponent = (
+        <TagList
+          elementConfig={props.elementConfig}
+          value={props.value}
+          changed={props.changed}
+        />);
+      break;
+    case ('dropdown'):
+      inputComponent = (
+        <Dropdown
+          elementConfig={props.elementConfig}
+          value={props.value}
+          changed={props.changed}
+        />);
+      break;
+    default:
+      inputComponent = (
+        <TextField
+          elementConfig={props.elementConfig}
+          value={props.value}
+          changed={props.changed}
+        />
+      );
   }
 
   return <div className="ui-input-container">{inputComponent}</div>;
