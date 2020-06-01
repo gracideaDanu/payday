@@ -11,7 +11,7 @@ import "./home.css";
 const postGroupState = {
   controls: {
     name: {
-      elementType: "input",
+      elementType: "textField",
       elementConfig: {
         type: "text",
         placeholder: "Titel der Gruppe",
@@ -19,10 +19,11 @@ const postGroupState = {
       value: "",
     },
     participants: {
-      elementType: "input",
+      elementType: "dropdown",
       elementConfig: {
         type: "text",
         placeholder: "Teilnehmer Array",
+        values: [],
       },
       value: "",
     },
@@ -38,6 +39,35 @@ class Groups extends Component {
 
   componentDidMount() {
     this.props.fetchGroups(this.props.token);
+    this.props.fetchUsers(this.props.token).then((res) => {
+      const valuesArray = [];
+      for (let key in res.data.users) {
+        valuesArray.push({
+          id: key,
+
+          label: res.data.users[key].Username,
+          value: res.data.users[key].Id,
+
+        });
+      }
+      this.setState({
+        ...this.state,
+        controls: {
+          ...this.state.controls,
+          participants: {
+            ...this.state.controls.participants,
+            elementConfig: {
+              ...this.state.controls.participants.elementConfig,
+              values: valuesArray,
+            },
+          },
+        },
+      });
+    });
+    this.setState({
+      ...this.state,
+      showSheet: false,
+    });
   }
 
   onClickCreateGroupHandler = () => {
@@ -48,8 +78,6 @@ class Groups extends Component {
   };
 
   inputChangedHandler = (value, controlName) => {
-    console.log(value);
-    console.log(controlName);
     const updatedControls = {
       ...this.state.controls,
       [controlName]: {
@@ -63,7 +91,6 @@ class Groups extends Component {
       },
     };
     this.setState({ ...this.state, controls: updatedControls });
-    console.log(this.state);
   };
 
   onClickCloseHandler = () => {
@@ -76,6 +103,13 @@ class Groups extends Component {
 
   submitHandler = (event) => {
     event.preventDefault();
+    // const category = this.props.categories.filter(function (item) {
+    //   return item.Id === id;
+    // });
+    const participants = []
+    this.state.controls.participants.value.map((participant) => {
+      participants.push(participant.value)
+    })
     const groupData = {
       name: this.state.controls.name.value,
       participants: [2],
@@ -107,7 +141,6 @@ class Groups extends Component {
     var groups = <p>Loading</p>;
     if (!this.props.groups.loading) {
       groups = this.props.groups.map((group) => {
-        console.log(group);
         return (
           <ListItem
             path={"/group/" + group.Id}
@@ -190,6 +223,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchGroups: (token) => dispatch(actions.fetchGroups(token)),
     postGroup: (token, data) => dispatch(actions.postGroup(token, data)),
+    fetchUsers: (token) => dispatch(actions.fetchUsers(token))
   };
 };
 

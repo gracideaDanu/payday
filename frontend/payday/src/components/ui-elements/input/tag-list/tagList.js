@@ -5,22 +5,6 @@ import TextIcon from "../../../../assets/icons/icon_name.svg";
 import "./tagList.css";
 
 const TagList = (props) => {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     headerTitle: this.props.elementConfig.placeholder,
-  //     selected: 0
-  //   };
-  // }
-
-  const onSelectItemHandler = (id) => {
-    this.props.changed(id);
-    this.setState({
-      ...this.state,
-      selected: id
-    })
-  }
-
 
   var icon = null;
   switch (props.elementConfig.type) {
@@ -40,11 +24,11 @@ const TagList = (props) => {
 
   const list = props.elementConfig.values.map((item) => (
     <li
-      className={props.value === item.config.id ? "ui-tag-list-item-selected" : ""}
+      className={props.value === item.value ? "ui-tag-list-item-selected" : ""}
       key={item.id}
-      onClick={() => props.changed(item.config.id)}
+      onClick={() => props.changed(item.value)}
     >
-      {item.config.title}
+      {item.label}
     </li >
   ));
 

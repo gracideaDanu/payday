@@ -22,12 +22,12 @@ export const fetchUsersStart = () => {
     };
 };
 
-export const fetchUsers = (token) => {
-    return dispatch => {
+export const fetchUsers = (token) => dispatch => {
+    return new Promise((resolve, reject) => {
         dispatch(fetchUsersStart());
         const config = {
             'headers': {
-                'Authentication': token,
+                'Authentication': 'Bearer ' + token,
                 'Content-Type': 'application/json'
             }
         };
@@ -41,10 +41,13 @@ export const fetchUsers = (token) => {
                     });
                 }
                 dispatch(fetchUsersSuccess(fetchedUsers));
+                resolve(res)
             })
             .catch(err => {
                 dispatch(fetchUsersFail(err));
+                reject(err)
             });
-    };
+
+    });
 };
 

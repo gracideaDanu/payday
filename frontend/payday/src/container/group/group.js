@@ -56,10 +56,8 @@ class Group extends Component {
       for (let key in res.data.categories) {
         valuesArray.push({
           id: key,
-          config: {
-            title: res.data.categories[key].Name,
-            id: res.data.categories[key].Id,
-          },
+          label: res.data.categories[key].Name,
+          value: res.data.categories[key].Id,
         });
       }
       this.setState({
